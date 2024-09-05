@@ -11,6 +11,9 @@ package testers;
  * @author Scott C Johnson (scj@cs.rit.edu)
  */
 
+import provided.*;
+import interpreter.*;
+
 import java.util.ArrayList;
 
 public class JottTokenizerTester {
@@ -145,7 +148,7 @@ public class JottTokenizerTester {
 
     private boolean runTest(TestCase test){
         System.out.println("Running Test: " + test.testName);
-        ArrayList<Token> testResults = JottTokenizer.tokenize(test.fileName);
+        ArrayList<Token> testResults = Interpreter.tokenize(test.fileName);
         if(test.error){
             if(testResults != null){
                 System.err.println("\tFailed Test: " + test.testName);

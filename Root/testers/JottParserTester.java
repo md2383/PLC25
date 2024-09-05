@@ -7,6 +7,9 @@ package testers;
   This tester assumes a working and valid tokenizer.
  */
 
+import provided.*;
+import interpreter.*;
+
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -70,7 +73,7 @@ public class JottParserTester {
 
     private boolean parserTest(TestCase test, String orginalJottCode){
         try {
-            ArrayList<Token> tokens = JottTokenizer.tokenize("parserTestCases/" + test.fileName);
+            ArrayList<Token> tokens = Interpreter.tokenize("parserTestCases/" + test.fileName);
 
             if (tokens == null) {
                 System.err.println("\tFailed Test: " + test.testName);
@@ -115,7 +118,7 @@ public class JottParserTester {
                 e.printStackTrace();
             }
 
-            ArrayList<Token> newTokens = JottTokenizer.tokenize("parserTestCases/parserTestTemp.jott");
+            ArrayList<Token> newTokens = Interpreter.tokenize("parserTestCases/parserTestTemp.jott");
 
             if (newTokens == null) {
                 System.err.println("\tFailed Test: " + test.testName);
