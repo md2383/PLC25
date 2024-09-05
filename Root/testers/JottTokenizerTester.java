@@ -12,7 +12,7 @@ package testers;
  */
 
 import provided.*;
-import interpreter.*;
+import jott_interpreter.*;
 
 import java.util.ArrayList;
 

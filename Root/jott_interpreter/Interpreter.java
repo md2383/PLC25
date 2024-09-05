@@ -1,4 +1,4 @@
-package interpreter;
+package jott_interpreter;
 
 import java.util.ArrayList;
 

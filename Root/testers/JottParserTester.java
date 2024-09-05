@@ -8,7 +8,7 @@ package testers;
  */
 
 import provided.*;
-import interpreter.*;
+import jott_interpreter.*;
 
 import java.io.FileWriter;
 import java.io.IOException;
