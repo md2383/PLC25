@@ -18,7 +18,9 @@ public class Interpreter {
         while (scanner.hasNext()) {
             c = scanner.next();
             // Cases
-            if (c == '#') { // Comments (#)
+            if (c == ' ') {}
+                continue;
+            } else if (c == '#') { // Comments (#)
                 c = scanner.next();
                 if (c == '\n') {
                     continue;
