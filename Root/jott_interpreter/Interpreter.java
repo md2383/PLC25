@@ -14,11 +14,42 @@ public class Interpreter {
     public static ArrayList<Token> tokenize(String filename) {
         // File scanning
         Scanner scanner = new Scanner(filename);
+        char c;
         while (scanner.hasNext()) {
-            char c = scanner.next();
+            c = scanner.next();
             // Cases
-            if () {
-                
+            if (c == '#') { // Comments (#)
+                c = scanner.next();
+                if (c == '\n') {
+                    continue;
+                } else if (c == '#') {
+                    c = scanner.next();
+                    if (c == '\n') {
+                        continue;
+                    } else if (c == '#') {
+                        boolean end = false;
+                        while (!end) {
+                            c = scanner.next();
+                            if (c == '#') {
+                                c = scanner.next();
+                                if (c == '#') {
+                                    c = scanner.next();
+                                    if (c == '#') {
+                                        end = true;
+                                    }
+                                }
+                            }
+                        }
+                    } else {
+                        while (c != '\n') {
+                            continue;
+                        }
+                    }
+                } else {
+                    while (c != '\n') {
+                        continue;
+                    }
+                }
             }
         }
 
