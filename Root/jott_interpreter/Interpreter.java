@@ -1,7 +1,8 @@
 package jott_interpreter;
 
+import java.io.*;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 import provided.*;
 
@@ -12,48 +13,32 @@ public class Interpreter {
     }
 
     public static ArrayList<Token> tokenize(String filename) {
-        // File scanning
-        Scanner scanner = new Scanner(filename);
-        char c;
-        while (scanner.hasNext()) {
-            c = scanner.next();
-            // Cases
-            if (c == ' ') {
-                continue;
-            } else if (c == '#') { // Comments (#)
-                c = scanner.next();
-                if (c == '\n') {
-                    continue;
-                } else if (c == '#') {
-                    c = scanner.next();
-                    if (c == '\n') {
-                        continue;
-                    } else if (c == '#') {
-                        boolean end = false;
-                        while (!end) {
-                            c = scanner.next();
-                            if (c == '#') {
-                                c = scanner.next();
-                                if (c == '#') {
-                                    c = scanner.next();
-                                    if (c == '#') {
-                                        end = true;
-                                    }
-                                }
-                            }
-                        }
-                    } else {
-                        while (c != '\n') {
-                            continue;
-                        }
-                    }
-                } else {
-                    while (c != '\n') {
-                        continue;
-                    }
-                }
+        final int EOF = -1; // for use by BufferedReader
+        
+        // Input Stream Wrapper
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(
+                new FileInputStream(filename), Charset.forName("UTF-8")))) { 
+            int c;
+            char character;
+
+            // Main While Loop
+            while((c = reader.read()) != EOF) {
+                character = (char)(c);
+
+                // TODO: token cases
+
             }
-        }
+        } catch (FileNotFoundException fnfE) {
+            // Buffered Exception: possible future need
+            fnfE.printStackTrace();
+            System.exit(1);
+        } catch (IOException ioE) {
+            // Buffered Exception: possible future need
+            ioE.printStackTrace();
+            System.exit(1);
+        } /* catch(CustomException E) {
+            // TODO: Possible route to easily handle token errors
+        } */
 
         return null; // TODO: Implement this method
     }
