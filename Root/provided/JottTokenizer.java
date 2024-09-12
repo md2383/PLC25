@@ -24,7 +24,9 @@ public class JottTokenizer {
      * @return an ArrayList of Jott Tokens
      */
     public static ArrayList<Token> tokenize(String filename) {
+
       final int EOF = -1; // for use by BufferedReader
+      ArrayList<Token> tokens = new ArrayList<Token>();
 
       // Input Stream Wrapper
       try (BufferedReader reader = new BufferedReader(new InputStreamReader(
@@ -36,7 +38,7 @@ public class JottTokenizer {
         while ((c = reader.read()) != EOF) {
           character = (char) (c);
 
-          Token token;
+          Token token = new Token("-_ERRORTOKEN_-", filename, 0, TokenType.ASSIGN);
 
           // Whitespaces
           if (Character.isWhitespace(character)) {
@@ -56,7 +58,6 @@ public class JottTokenizer {
 
           // Comma
           if (character == ',') {
-            // Comma
             token = new Token(",", filename, 0, TokenType.COMMA);
           }
 
@@ -81,6 +82,12 @@ public class JottTokenizer {
            * ": go to check string function
            */
           
+          // Add token to arraylist
+          if (token.getToken().equals("-_ERRORTOKEN_-")) {
+            System.out.println("Error Token: " + character);
+          } else {
+            tokens.add(token);
+          }
         }
       } catch (FileNotFoundException fnfE) {
         // Buffered Exception: possible future need
@@ -90,11 +97,12 @@ public class JottTokenizer {
         // Buffered Exception: possible future need
         ioE.printStackTrace();
         System.exit(1);
-      } /*
-         * catch(CustomException E) {
-         * // TODO: Possible route to easily handle token errors
-         * }
-         */
+      }
+      /*
+       * catch(CustomException E) {
+       * // TODO: Possible route to easily handle token errors
+       * }
+       */
 
       return null; // TODO: Implement this method
     }
