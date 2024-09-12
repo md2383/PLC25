@@ -32,8 +32,51 @@ public class JottTokenizer {
         while ((c = reader.read()) != EOF) {
           character = (char) (c);
 
-          // TODO: token cases
+          Token token;
 
+          // Whitespaces
+          if (Character.isWhitespace(character)) {
+            // Ignore
+          }
+
+          // Comments
+          if (character == '#') {
+            // Ignore until newline
+            while ((c = reader.read()) != EOF) {
+              character = (char) (c);
+              if (character == '\n') {
+                break;
+              }
+            }
+          }
+
+          // Comma
+          if (character == ',') {
+            // Comma
+            token = new Token(",", filename, 0, TokenType.COMMA);
+          }
+
+          // TODO Implement Tokenizer Cases
+          /*
+           * Whitespace: Ignore                                 - Miguel          
+           * "#": comment, Ignore until newline                 - Miguel
+           * ",": comma                                         - Miguel
+           * "]": rBracket                                      - Miguel
+           * "[": lBracket                                      - Miguel
+           * "}": rBrace                                        - Miguel
+           * "{": lBrace                                        - Miguel
+           * "=": go to check equals function                   - Miguel
+           * "<>": go to check not equals function              - Miguel
+           * "/" or "*" or "+" or "-": mathOp                   - Aum
+           * ";": semicolon
+           * ".": got to check digit and dot function (hasDot set to true) - Aum
+           * digit: go to check digit and dot function (hasDot set to false) - Aum
+           * letter: go to check letter function
+           * ":": go to check colon function
+           * "!": go to check not equals function
+           * ": go to check string function
+           */
+          
         }
       } catch (FileNotFoundException fnfE) {
         // Buffered Exception: possible future need
