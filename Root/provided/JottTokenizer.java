@@ -57,24 +57,21 @@ public class JottTokenizer {
 
           // Division
           if (character == '/') {
-            // Division
             token = new Token("/", filename, 0, TokenType.MATH_OP);
           }
           // Multiplication
           if (character == '*') {
-            // Multiplication
             token = new Token("*", filename, 0, TokenType.MATH_OP);
           }
           // Addition
           if (character == '+') {
-            // Addition
             token = new Token("+", filename, 0, TokenType.MATH_OP);
           }
           // Subtraction
           if (character == '-') {
-            // Subtraction
             token = new Token("-", filename, 0, TokenType.MATH_OP);
           }
+          
 
           // TODO Implement Tokenizer Cases
           /*
