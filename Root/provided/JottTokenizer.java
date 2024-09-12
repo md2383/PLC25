@@ -1,18 +1,7 @@
 package provided;
 
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.nio.charset.Charset;
-
-/**
- * This class is responsible for tokenizing Jott code.
- * 
- * @author 
- **/
-
 import java.util.ArrayList;
 
 public class JottTokenizer {
@@ -61,6 +50,12 @@ public class JottTokenizer {
             token = new Token(",", filename, 0, TokenType.COMMA);
           }
 
+          // Semicolon
+          if (character == ';') {
+            token = new Token(";", filename, 0, TokenType.SEMICOLON);
+          }
+
+
           // TODO Implement Tokenizer Cases
           /*
            * Whitespace: Ignore                                 - Miguel          
@@ -73,13 +68,13 @@ public class JottTokenizer {
            * "=": go to check equals function                   - Miguel
            * "<>": go to check not equals function              - Miguel
            * "/" or "*" or "+" or "-": mathOp                   - Aum
-           * ";": semicolon
+           * ";": semicolon                                     - Neav 
            * ".": got to check digit and dot function (hasDot set to true) - Aum
            * digit: go to check digit and dot function (hasDot set to false) - Aum
            * letter: go to check letter function
-           * ":": go to check colon function
+           * ":": go to check colon function                    - Neav
            * "!": go to check not equals function
-           * ": go to check string function
+           * ": go to check string function      
            */
           
           // Add token to arraylist
