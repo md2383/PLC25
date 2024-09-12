@@ -81,6 +81,7 @@ public class JottTokenizer {
                 str = str + Character.toString(character);
               } else {
                 token = new Token(str, filename, 0, TokenType.STRING);
+                tokens.add(token);
                 break;
               }
               
