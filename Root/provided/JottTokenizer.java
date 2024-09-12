@@ -184,8 +184,22 @@ public class JottTokenizer {
               token = new Token(":", filename, 0, TokenType.COLON);
             }
           }
+          
+          // id, keyword
+          if (Character.isLetter(character)) {
+            String tokenString = String.valueOf(c);
+
+            while((c = reader.read()) != EOF) {
+              character = (char)(c);
+              if(Character.isLetterOrDigit(character)) { tokenString += character; } 
+              else { break; }
+            }
+
+            token = new Token("", filename, 0, TokenType.ID_KEYWORD);
+          }
 
           // TODO Implement Tokenizer Cases
+          
           /*
            * Whitespace: Ignore - Miguel
            * "#": comment, Ignore until newline - Miguel
@@ -200,10 +214,10 @@ public class JottTokenizer {
            * ";": semicolon - Neav
            * ".": got to check digit and dot function (hasDot set to true) - Aum
            * digit: go to check digit and dot function (hasDot set to false) - Aum
-           * letter: go to check letter function
+           * letter: go to check letter function                - Jacob
            * ":": go to check colon function - Neav
-           * "!": go to check not equals function
-           * ": go to check string function
+           * "!": go to check not equals function               - Jacob
+           * ": go to check string function                     - Ian
            */
           
           // Add token to arraylist
