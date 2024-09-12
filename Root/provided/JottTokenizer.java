@@ -49,6 +49,20 @@ public class JottTokenizer {
             token = new Token(",", filename, 0, TokenType.COMMA);
           }
 
+          if (character == '"') {
+            String str = Character.toString(character);
+            while ((c = reader.read()) != EOF) {
+              character = (char) c;
+              if (character != '"') {
+                str = str + Character.toString(character);
+              } else {
+                token = new Token(str, filename, 0, TokenType.STRING);
+                break;
+              }
+              
+            }
+          }
+
           // TODO Implement Tokenizer Cases
           /*
            * Whitespace: Ignore                                 - Miguel          
