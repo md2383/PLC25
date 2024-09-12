@@ -35,7 +35,31 @@ public class JottTokenizer {
         // Main While Loop
         while ((c = reader.read()) != EOF) {
           character = (char) (c);
-          
+
+          Token token;
+
+          // Whitespaces
+          if (Character.isWhitespace(character)) {
+            // Ignore
+          }
+
+          // Comments
+          if (character == '#') {
+            // Ignore until newline
+            while ((c = reader.read()) != EOF) {
+              character = (char) (c);
+              if (character == '\n') {
+                break;
+              }
+            }
+          }
+
+          // Comma
+          if (character == ',') {
+            // Comma
+            token = new Token(",", filename, 0, TokenType.COMMA);
+          }
+
           // TODO Implement Tokenizer Cases
           /*
            * Whitespace: Ignore                                 - Miguel          
