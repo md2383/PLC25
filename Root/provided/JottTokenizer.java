@@ -31,7 +31,8 @@ public class JottTokenizer {
 
           // Whitespaces
           if (Character.isWhitespace(character)) {
-            // Ignore
+            // Go to next character
+            continue;
           }
 
           // Comments
