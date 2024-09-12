@@ -30,6 +30,7 @@ public class JottTokenizer {
 
           if (character == '\n') {
             linenum++;
+            continue;
           }
 
           Token token = new Token("-_ERRORTOKEN_-", filename, linenum, TokenType.ASSIGN);
