@@ -38,7 +38,7 @@ public class JottTokenizer {
           
           // TODO Implement Tokenizer Cases
           /*
-           * Whitespace: Ignore
+           * Whitespace: Ignore                         
            * "#": comment, Ignore until newline
            * ",": comma
            * "]": rBracket
@@ -47,7 +47,7 @@ public class JottTokenizer {
            * "{": lBrace
            * "=": go to check equals function
            * "<>": go to check not equals function
-           * "/" or "*" or "+" or "-": go to check mathop function
+           * "/" or "*" or "+" or "-": mathOp
            * ";": semicolon
            * ".": got to check digit and dot function (hasDot set to true)
            * digit: go to check digit and dot function (hasDot set to false)
