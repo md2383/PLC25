@@ -35,9 +35,28 @@ public class JottTokenizer {
         // Main While Loop
         while ((c = reader.read()) != EOF) {
           character = (char) (c);
-
-          // TODO: token cases
-
+          
+          // TODO Implement Tokenizer Cases
+          /*
+           * Whitespace: Ignore
+           * "#": comment, Ignore until newline
+           * ",": comma
+           * "]": rBracket
+           * "[": lBracket
+           * "}": rBrace
+           * "{": lBrace
+           * "=": go to check equals function
+           * "<>": go to check not equals function
+           * "/" or "*" or "+" or "-": go to check mathop function
+           * ";": semicolon
+           * ".": got to check digit and dot function (hasDot set to true)
+           * digit: go to check digit and dot function (hasDot set to false)
+           * letter: go to check letter function
+           * ":": go to check colon function
+           * "!": go to check not equals function
+           * ": go to check string function
+           */
+          
         }
       } catch (FileNotFoundException fnfE) {
         // Buffered Exception: possible future need
