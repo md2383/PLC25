@@ -170,18 +170,18 @@ public class JottTokenizer {
           // TODO Implement Tokenizer Cases
           /*
            * Whitespace: Ignore - Miguel
-           * "#": comment, Ignore until newline - Miguel
-           * ",": comma - Miguel
-           * "]": rBracket - Miguel
-           * "[": lBracket - Miguel
-           * "}": rBrace - Miguel
-           * "{": lBrace - Miguel
-           * "=": go to check equals function - Miguel
-           * "<>": go to check the greater/less than functions - Miguel
-           * "/" or "*" or "+" or "-": mathOp - Aum
-           * ";": semicolon - Neav
-           * ".": got to check digit and dot function (hasDot set to true) - Aum
-           * digit: go to check digit and dot function (hasDot set to false) - Aum
+           * "#": comment, Ignore until newline                 - Miguel Ready to test
+           * ",": comma                                         - Miguel Ready to test
+           * "]": rBracket                                      - Miguel Ready to test
+           * "[": lBracket                                      - Miguel Ready to test
+           * "}": rBrace                                        - Miguel Ready to test
+           * "{": lBrace                                        - Miguel Ready to test
+           * "=": go to check equals function                   - Miguel Ready to test
+           * "<>": go to check the greater/less than functions  - Miguel Ready to test
+           * "/" or "*" or "+" or "-": mathOp                   - Aum
+           * ";": semicolon                                     - Neav
+           * ".": got to check digit and dot function (hasDot set to true)    - Aum
+           * digit: go to check digit and dot function (hasDot set to false)  - Aum
            * letter: go to check letter function
            * ":": go to check colon function - Neav
            * "!": go to check not equals function
