@@ -71,7 +71,7 @@ public class JottTokenizer {
            * ";": semicolon
            * ".": got to check digit and dot function (hasDot set to true) - Aum
            * digit: go to check digit and dot function (hasDot set to false) - Aum
-           * letter: go to check letter function
+           * letter: go to check letter function                - Jacob
            * ":": go to check colon function
            * "!": go to check not equals function
            * ": go to check string function
