@@ -47,10 +47,10 @@ public class JottTokenizer {
            * "{": lBrace                                        - Miguel
            * "=": go to check equals function                   - Miguel
            * "<>": go to check not equals function              - Miguel
-           * "/" or "*" or "+" or "-": mathOp
+           * "/" or "*" or "+" or "-": mathOp                   - Aum
            * ";": semicolon
-           * ".": got to check digit and dot function (hasDot set to true)
-           * digit: go to check digit and dot function (hasDot set to false)
+           * ".": got to check digit and dot function (hasDot set to true) - Aum
+           * digit: go to check digit and dot function (hasDot set to false) - Aum
            * letter: go to check letter function
            * ":": go to check colon function
            * "!": go to check not equals function
