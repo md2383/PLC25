@@ -150,6 +150,21 @@ public class JottTokenizer {
             // Subtraction
             token = new Token("-", filename, linenum, TokenType.MATH_OP);
           }
+          
+          if (character == '"') {
+            String str = Character.toString(character);
+            while ((c = reader.read()) != EOF) {
+              character = (char) c;
+              if (character != '"') {
+                str = str + Character.toString(character);
+              } else {
+                token = new Token(str, filename, 0, TokenType.STRING);
+                tokens.add(token);
+                break;
+              }
+              
+            }
+          }
 
           // TODO Implement Tokenizer Cases
           /*
