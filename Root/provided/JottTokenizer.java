@@ -2,13 +2,6 @@ package provided;
 
 import java.io.*;
 import java.nio.charset.Charset;
-
-/**
- * This class is responsible for tokenizing Jott code.
- * 
- * @author 
- **/
-
 import java.util.ArrayList;
 
 public class JottTokenizer {
@@ -74,7 +67,7 @@ public class JottTokenizer {
            * letter: go to check letter function                - Jacob
            * ":": go to check colon function
            * "!": go to check not equals function
-           * ": go to check string function
+           * ": go to check string function                     - Ian
            */
           
         }
