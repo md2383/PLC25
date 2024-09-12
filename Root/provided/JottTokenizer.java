@@ -13,7 +13,9 @@ public class JottTokenizer {
      * @return an ArrayList of Jott Tokens
      */
     public static ArrayList<Token> tokenize(String filename) {
+
       final int EOF = -1; // for use by BufferedReader
+      ArrayList<Token> tokens = new ArrayList<Token>();
 
       // Input Stream Wrapper
       try (BufferedReader reader = new BufferedReader(new InputStreamReader(
@@ -25,11 +27,12 @@ public class JottTokenizer {
         while ((c = reader.read()) != EOF) {
           character = (char) (c);
 
-          Token token;
+          Token token = new Token("-_ERRORTOKEN_-", filename, 0, TokenType.ASSIGN);
 
           // Whitespaces
           if (Character.isWhitespace(character)) {
-            // Ignore
+            // Go to next character
+            continue;
           }
 
           // Comments
@@ -45,23 +48,31 @@ public class JottTokenizer {
 
           // Comma
           if (character == ',') {
-            // Comma
             token = new Token(",", filename, 0, TokenType.COMMA);
           }
 
-          if (character == '"') {
-            String str = Character.toString(character);
-            while ((c = reader.read()) != EOF) {
-              character = (char) c;
-              if (character != '"') {
-                str = str + Character.toString(character);
-              } else {
-                token = new Token(str, filename, 0, TokenType.STRING);
-                break;
-              }
-              
-            }
+          // Semicolon
+          if (character == ';') {
+            token = new Token(";", filename, 0, TokenType.SEMICOLON);
           }
+
+          // Division
+          if (character == '/') {
+            token = new Token("/", filename, 0, TokenType.MATH_OP);
+          }
+          // Multiplication
+          if (character == '*') {
+            token = new Token("*", filename, 0, TokenType.MATH_OP);
+          }
+          // Addition
+          if (character == '+') {
+            token = new Token("+", filename, 0, TokenType.MATH_OP);
+          }
+          // Subtraction
+          if (character == '-') {
+            token = new Token("-", filename, 0, TokenType.MATH_OP);
+          }
+          
 
           // TODO Implement Tokenizer Cases
           /*
@@ -75,15 +86,21 @@ public class JottTokenizer {
            * "=": go to check equals function                   - Miguel
            * "<>": go to check not equals function              - Miguel
            * "/" or "*" or "+" or "-": mathOp                   - Aum
-           * ";": semicolon
+           * ";": semicolon                                     - Neav 
            * ".": got to check digit and dot function (hasDot set to true) - Aum
            * digit: go to check digit and dot function (hasDot set to false) - Aum
-           * letter: go to check letter function                - Jacob
-           * ":": go to check colon function
+           * letter: go to check letter function
+           * ":": go to check colon function                    - Neav
            * "!": go to check not equals function
-           * ": go to check string function                     - Ian
+           * ": go to check string function      
            */
           
+          // Add token to arraylist
+          if (token.getToken().equals("-_ERRORTOKEN_-")) {
+            System.out.println("Error Token: " + character);
+          } else {
+            tokens.add(token);
+          }
         }
       } catch (FileNotFoundException fnfE) {
         // Buffered Exception: possible future need
@@ -93,11 +110,12 @@ public class JottTokenizer {
         // Buffered Exception: possible future need
         ioE.printStackTrace();
         System.exit(1);
-      } /*
-         * catch(CustomException E) {
-         * // TODO: Possible route to easily handle token errors
-         * }
-         */
+      }
+      /*
+       * catch(CustomException E) {
+       * // TODO: Possible route to easily handle token errors
+       * }
+       */
 
       return null; // TODO: Implement this method
     }
