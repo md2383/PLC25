@@ -160,11 +160,11 @@ public class JottTokenizer {
                 if (Character.isLetterOrDigit(character) || character == ' ') {
                   str = str + Character.toString(character);
                 } else {
-                  // error
+                  token = new Token("-_ERRORTOKEN_-", filename, linenum, TokenType.ASSIGN);
+                  break;
                 }
               } else {
                 token = new Token(str, filename, linenum, TokenType.STRING);
-                tokens.add(token);
                 break;
               }
               
