@@ -170,6 +170,19 @@ public class JottTokenizer {
               
             }
           }
+          // Colon
+          if (character == ':') {
+            reader.mark(1);
+            if ((c = reader.read()) == ':' )
+            {
+              token = new Token("::", filename, 0, TokenType.FC_HEADER);
+            }
+            else
+            {
+              reader.reset();
+              token = new Token(":", filename, 0, TokenType.COLON);
+            }
+          }
 
           // TODO Implement Tokenizer Cases
           /*
