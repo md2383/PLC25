@@ -157,9 +157,13 @@ public class JottTokenizer {
             while ((c = reader.read()) != EOF) {
               character = (char) c;
               if (character != '"') {
-                str = str + Character.toString(character);
+                if (Character.isLetterOrDigit(character) || character == ' ') {
+                  str = str + Character.toString(character);
+                } else {
+                  // error
+                }
               } else {
-                token = new Token(str, filename, 0, TokenType.STRING);
+                token = new Token(str, filename, linenum, TokenType.STRING);
                 tokens.add(token);
                 break;
               }
