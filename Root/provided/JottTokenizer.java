@@ -164,6 +164,7 @@ public class JottTokenizer {
                   break;
                 }
               } else {
+                str = str + Character.toString(character);
                 token = new Token(str, filename, linenum, TokenType.STRING);
                 break;
               }
