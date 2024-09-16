@@ -201,9 +201,8 @@ public class JottTokenizer {
           reader.mark(1);
 
           while ((c = reader.read()) != EOF) {
-            character = (char) (c);
-            if (Character.isLetterOrDigit(character)) {
-              tokenString += character;
+            if (Character.isLetterOrDigit(c)) {
+              tokenString += c;
               reader.mark(1);
             } else {
               reader.reset();
@@ -223,7 +222,18 @@ public class JottTokenizer {
           }
         }
 
-        // TODO Implement Tokenizer Cases
+        /* NEEDS TO GET DONE */
+        // TODO Consolidate if statements to if/else chain to prevent implicit fallthrough and token cancellation
+        // TODO Implement Exception throws for following errors
+        //    TODO String: check if string characters are allowed
+        //    TODO String: Error on EOF
+        //    TODO Number: Error on invalid '.'
+        // TODO May need to account for carriage returns in newline ('\r')
+
+        /* SUGGESTIONS */
+        // TODO Mathops can be reduced to a single if statement
+        // TODO '<', '>' can be implemented in a single statement
+        // TODO centralize global token string for tokens with more than 1 character
 
         /*
          * Whitespace: Ignore - Miguel
@@ -263,7 +273,7 @@ public class JottTokenizer {
     } catch(SyntaxError E) {
       System.err.println("Syntax Error");
       System.err.println(E.getMessage());
-      System.err.println("filename.jott:" + filename);
+      System.err.println(filename + ":" + linenum);
     }
 
     return null; // TODO: Implement this method
