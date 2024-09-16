@@ -138,7 +138,47 @@ public class JottTokenizer {
             }
           }
         }
+        // Dot
+        if( character == '.') {
+          String tokenString = String.valueOf(character);
+          reader.mark(1);
+          if ((c = reader.read()) != EOF) {
+            character = (char) (c);
+            if (Character.isDigit(character)) {
+              tokenString += character;
+              while ((c = reader.read()) != EOF) {
+                character = (char) (c);
+                if (Character.isDigit(character)) {
+                  tokenString += character;
+                  reader.mark(1);
+                } else {
+                  reader.reset();
+                  break;
+                }
+              }
+              token = new Token(tokenString, filename, linenum, TokenType.NUMBER);
+            } else {
+              throw new SyntaxError("Invalid token \".\". \".\" expects following digit");
+            }
+          }
+        }
 
+        // Digit
+        if (Character.isDigit(character)) {
+          String tokenString = String.valueOf(character);
+          while ((c = reader.read()) != EOF) {
+            character = (char) (c);
+            if (Character.isDigit(character)) {
+              tokenString += character;
+              reader.mark(1);
+            } else {
+              reader.reset();
+              break;
+            }
+          }
+          token = new Token(tokenString, filename, linenum, TokenType.NUMBER);
+        }
+        
         // Semicolon
         if (character == ';') {
           token = new Token(";", filename, linenum, TokenType.SEMICOLON);
