@@ -214,7 +214,11 @@ public class JottTokenizer {
           while ((c = reader.read()) != EOF) {
             character = (char) c;
             if (character != '"') {
-              str = str + Character.toString(character);
+              if (Character.isLetterOrDigit(character) || character == ' ') {
+                str = str + Character.toString(character);
+              } else {
+                throw new SyntaxError("Invalid string token at line " + linenum + ": String must only contain letters, digits, or spaces.");
+              }
             } else {
               token = new Token(str, filename, 0, TokenType.STRING);
               tokens.add(token);
@@ -265,7 +269,6 @@ public class JottTokenizer {
         /* NEEDS TO GET DONE */
         // TODO Consolidate if statements to if/else chain to prevent implicit fallthrough and token cancellation
         // TODO Implement Exception throws for following errors
-        //    TODO String: check if string characters are allowed
         //    TODO String: Error on EOF
         //    TODO Number: Error on invalid '.'
         // TODO May need to account for carriage returns in newline ('\r')
