@@ -220,12 +220,14 @@ public class JottTokenizer {
                 throw new SyntaxError("Invalid string token at line " + linenum + ": String must only contain letters, digits, or spaces.");
               }
             } else {
-              token = new Token(str, filename, 0, TokenType.STRING);
-              tokens.add(token);
+              token = new Token(str, filename, linenum, TokenType.STRING);
               break;
             }
-
           }
+          if (token.getToken() == "-_ERRORTOKEN_-") {
+            throw new SyntaxError("Incomplete string token at line " + linenum + ": String must end with '\"'.");
+          }
+          tokens.add(token);
         }
 
         // Colon
@@ -269,7 +271,8 @@ public class JottTokenizer {
         /* NEEDS TO GET DONE */
         // TODO Consolidate if statements to if/else chain to prevent implicit fallthrough and token cancellation
         // TODO Implement Exception throws for following errors
-        //    TODO String: Error on EOF
+        //    TODO String: Error on invalid characters (Implemented)
+        //    TODO String: Error on EOF (Implemented)
         //    TODO Number: Error on invalid '.'
         // TODO May need to account for carriage returns in newline ('\r')
 
