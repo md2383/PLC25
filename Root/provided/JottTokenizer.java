@@ -37,7 +37,7 @@ public class JottTokenizer {
     final int EOF = -1; // for use by BufferedReader
 
     ArrayList<Token> tokens = new ArrayList<>();
-    int linenum = 0;
+    int linenum = 1;
 
     // Input Stream Wrapper
     try (BufferedReader reader = new BufferedReader(new InputStreamReader(
@@ -233,8 +233,9 @@ public class JottTokenizer {
           reader.mark(1);
 
           while ((c = reader.read()) != EOF) {
-            if (Character.isLetterOrDigit(c)) {
-              tokenString += c;
+            character = (char)(c);
+            if (Character.isLetterOrDigit(character)) {
+              tokenString += character;
               reader.mark(1);
             } else {
               reader.reset();
@@ -309,6 +310,7 @@ public class JottTokenizer {
       System.err.println("Syntax Error");
       System.err.println(E.getMessage());
       System.err.println(filename + ":" + linenum);
+      return null;
     }
 
     return tokens;
