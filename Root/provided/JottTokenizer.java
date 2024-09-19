@@ -34,9 +34,9 @@ public class JottTokenizer {
    * @return an ArrayList of Jott Tokens
    */
   public static ArrayList<Token> tokenize(String filename) {
-
     final int EOF = -1; // for use by BufferedReader
-    ArrayList<Token> tokens = new ArrayList<Token>();
+    
+    ArrayList<Token> tokens = new ArrayList<>();
     int linenum = 0;
 
     // Input Stream Wrapper
@@ -330,6 +330,6 @@ public class JottTokenizer {
       System.err.println(filename + ":" + linenum);
     }
 
-    return null; // TODO: Implement this method
+    return tokens;
   }
 }
