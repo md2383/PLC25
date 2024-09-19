@@ -232,7 +232,6 @@ public class JottTokenizer {
           if (token.getToken().equals("-_ERRORTOKEN_-")) {
             throw new SyntaxError("Incomplete string token at line " + linenum + ": String must end with '\"'.");
           }
-          tokens.add(token);
         }
 
         // Colon
