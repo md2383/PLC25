@@ -204,7 +204,7 @@ public class JottTokenizer {
               if (Character.isLetterOrDigit(character) || character == ' ') {
                 str = str + Character.toString(character);
               } else {
-                throw new SyntaxError("Invalid string token at line " + linenum + ": String must only contain letters, digits, or spaces.");
+                throw new SyntaxError("Invalid string token. String must contain only letters, digits, or spaces.");
               }
             } else {
               token = new Token(str, filename, linenum, TokenType.STRING);
@@ -212,9 +212,8 @@ public class JottTokenizer {
             }
           }
           if (token.getToken().equals("-_ERRORTOKEN_-")) {
-            throw new SyntaxError("Incomplete string token at line " + linenum + ": String must end with '\"'.");
+            throw new SyntaxError("Incomplete string token. String must end with '\"'.");
           }
-          tokens.add(token);
         }
 
         // Colon
