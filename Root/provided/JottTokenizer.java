@@ -27,6 +27,10 @@ public class JottTokenizer {
    * 
    * @param filename the name of the file to tokenize; can be relative or absolute
    *                 path
+   * @exception SyntaxError Exception caught in method; Error output to System.err
+   *          Error format: Syntax Error
+   *                        {Error Message}
+   *                        {filename}:{linenum}
    * @return an ArrayList of Jott Tokens
    */
   public static ArrayList<Token> tokenize(String filename) {
@@ -138,6 +142,7 @@ public class JottTokenizer {
             }
           }
         }
+
         // Dot
         if( character == '.') {
           String tokenString = String.valueOf(character);
@@ -271,10 +276,13 @@ public class JottTokenizer {
         /* NEEDS TO GET DONE */
         // TODO Consolidate if statements to if/else chain to prevent implicit fallthrough and token cancellation
         // TODO Implement Exception throws for following errors
-        //    TODO String: Error on invalid characters (Implemented)
-        //    TODO String: Error on EOF (Implemented)
+        //    String: Error on invalid characters (Implemented)
+        //    String: Error on EOF (Implemented)
         //    TODO Number: Error on invalid '.'
+        //      TODO Dot: needs a syntax error on dot following digits following dot
+        //      TODO Digit: needs to account for dots, and syntax errors on invalid dots
         // TODO May need to account for carriage returns in newline ('\r')
+        // TODO String: currently double adds tokens to arraylist -> all tokens are added at end of main loop
 
         /* SUGGESTIONS */
         // TODO Mathops can be reduced to a single if statement
