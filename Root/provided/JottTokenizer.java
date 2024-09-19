@@ -148,6 +148,7 @@ public class JottTokenizer {
           boolean contains_dot = character == '.';
           reader.mark(1);
           while ((c = reader.read()) != EOF) {
+            character = (char)(c);
             if(Character.isDigit(c)) { tokenString += character; }
             else if(character == '.') {
               if(contains_dot) {
@@ -207,6 +208,7 @@ public class JottTokenizer {
                 throw new SyntaxError("Invalid string token. String must contain only letters, digits, or spaces.");
               }
             } else {
+              str += character;
               token = new Token(str, filename, linenum, TokenType.STRING);
               break;
             }
@@ -220,10 +222,10 @@ public class JottTokenizer {
         if (character == ':') {
           reader.mark(1);
           if ((c = reader.read()) == ':') {
-            token = new Token("::", filename, 0, TokenType.FC_HEADER);
+            token = new Token("::", filename, linenum, TokenType.FC_HEADER);
           } else {
             reader.reset();
-            token = new Token(":", filename, 0, TokenType.COLON);
+            token = new Token(":", filename, linenum, TokenType.COLON);
           }
         }
 
