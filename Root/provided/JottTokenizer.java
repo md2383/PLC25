@@ -35,7 +35,7 @@ public class JottTokenizer {
    */
   public static ArrayList<Token> tokenize(String filename) {
     final int EOF = -1; // for use by BufferedReader
-    
+
     ArrayList<Token> tokens = new ArrayList<>();
     int linenum = 0;
 
@@ -143,45 +143,27 @@ public class JottTokenizer {
           }
         }
 
-        // Dot
-        if( character == '.') {
+        if(Character.isDigit(character) || character == '.') {
           String tokenString = String.valueOf(character);
+          boolean contains_dot = character == '.';
           reader.mark(1);
-          if ((c = reader.read()) != EOF) {
-            character = (char) (c);
-            if (Character.isDigit(character)) {
-              tokenString += character;
-              while ((c = reader.read()) != EOF) {
-                character = (char) (c);
-                if (Character.isDigit(character)) {
-                  tokenString += character;
-                  reader.mark(1);
-                } else {
-                  reader.reset();
-                  break;
-                }
-              }
-              token = new Token(tokenString, filename, linenum, TokenType.NUMBER);
-            } else {
-              throw new SyntaxError("Invalid token \".\". \".\" expects following digit");
-            }
-          }
-        }
-
-        // Digit
-        if (Character.isDigit(character)) {
-          String tokenString = String.valueOf(character);
           while ((c = reader.read()) != EOF) {
-            character = (char) (c);
-            if (Character.isDigit(character)) {
-              tokenString += character;
-              reader.mark(1);
+            if(Character.isDigit(c)) { tokenString += character; }
+            else if(character == '.') {
+              if(contains_dot) {
+                throw new SyntaxError("Invalid token \\\".\\\". \\\".\\\" expects following digit");
+              } else {
+                contains_dot = true;
+                tokenString += character;
+              }
             } else {
               reader.reset();
               break;
             }
+            reader.mark(1);
           }
           token = new Token(tokenString, filename, linenum, TokenType.NUMBER);
+          if(c == EOF) { reader.reset(); }
         }
         
         // Semicolon
