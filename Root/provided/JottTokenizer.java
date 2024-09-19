@@ -222,7 +222,7 @@ public class JottTokenizer {
               if (Character.isLetterOrDigit(character) || character == ' ') {
                 str = str + Character.toString(character);
               } else {
-                throw new SyntaxError("Invalid string token. String must only contain letters, digits, or spaces.");
+                throw new SyntaxError("Invalid string token. String must contain only letters, digits, or spaces.");
               }
             } else {
               token = new Token(str, filename, linenum, TokenType.STRING);
