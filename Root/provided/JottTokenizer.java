@@ -5,7 +5,7 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 
 /**
- * 
+ * Tokenization class containing Jott Tokenizer
  */
 public class JottTokenizer {
 
@@ -36,7 +36,9 @@ public class JottTokenizer {
   public static ArrayList<Token> tokenize(String filename) {
     final int EOF = -1; // for use by BufferedReader
 
-    ArrayList<Token> tokens = new ArrayList<>();
+    // Output ArrayList, final to prevent accidental deletion
+    final ArrayList<Token> tokens = new ArrayList<>();
+
     int linenum = 1;
 
     // Input Stream Wrapper
@@ -44,63 +46,58 @@ public class JottTokenizer {
         new FileInputStream(filename), Charset.forName("UTF-8")))) {
       int c;
       char character;
-      Token token;
+      String tokenString;
+      Token token = null; // Explicit initialization
 
-      // Main While Loop
+      //! Main While Loop
       while ((c = reader.read()) != EOF) {
         character = (char) (c);
 
-        if (character == '\n') {
-          linenum++;
-          continue;
-        }
-
-        token = new Token("-_ERRORTOKEN_-", filename, linenum, TokenType.ASSIGN);
-
-        // Whitespaces
+        /* Whitespaces (and Newline) */ 
         if (Character.isWhitespace(character)) {
-          // Go to next character
+          // NOTE: \n counts as whitespace -> implicit fallthrough
+          // newline updates linenum
+          if (character == '\n') { linenum++; }
+          // Ignore Whitespace
           continue;
         }
 
-        // Comments
-        if (character == '#') {
-          while((c = reader.read()) != EOF) {
-            if((character = (char)(c)) == '\n') { break; }
-          }
+        /* Comments */ 
+        else if (character == '#') {
+          reader.readLine();
           linenum++;
           continue;
         }
 
-        // Comma
-        if (character == ',') {
+        /* Comma */ 
+        else if (character == ',') {
           token = new Token(",", filename, linenum, TokenType.COMMA);
         }
 
-        // Right Bracket
-        if (character == ']') {
+        /* Right Bracket */ 
+        else if (character == ']') {
           token = new Token("]", filename, linenum, TokenType.R_BRACKET);
         }
 
-        // Left Bracket
-        if (character == '[') {
+        /* Left Bracket */ 
+        else if (character == '[') {
           token = new Token("[", filename, linenum, TokenType.L_BRACKET);
         }
 
-        // Right Brace
-        if (character == '}') {
+        /* Right Brace */ 
+        else if (character == '}') {
           token = new Token("}", filename, linenum, TokenType.R_BRACE);
         }
 
-        // Left Brace
-        if (character == '{') {
+        /* Left Brace */ 
+        else if (character == '{') {
           token = new Token("{", filename, linenum, TokenType.L_BRACE);
         }
 
-        // Equals
-        if (character == '=') {
+        /* Equals */ 
+        else if (character == '=') {
           token = new Token("=", filename, linenum, TokenType.ASSIGN);
-          // Check for double equals and mark tmhe position in the reader
+          // Check for double equals and mark then position in the reader
           reader.mark(1);
           if ((c = reader.read()) != EOF) {
             character = (char) (c);
@@ -110,121 +107,93 @@ public class JottTokenizer {
               // Go back one character
               reader.reset();
             }
-          }
+          } else { reader.reset(); }
         }
 
-        // Greater Than / Greater Than or Equal To
-        if (character == '<') {
-          // Check for Less Than or Less Than or Equal To
+        /* Greater Than | Greater Than or Equal To */
+        /* Less Than    | Less Than or Equal To */
+        else if (character == '<' || character == '>') {
+          tokenString = String.valueOf(character);
           reader.mark(1);
-          if ((c = reader.read()) != EOF) {
-            character = (char) (c);
-            if (character == '=') {
-              token = new Token("<=", filename, linenum, TokenType.REL_OP);
-            } else {
-              // Go back one character
-              reader.reset();
-              token = new Token("<", filename, linenum, TokenType.REL_OP);
-            }
+          if ((c = reader.read()) == EOF) {
+            // Go back one character
+            reader.reset();
+          } else { // >= and <=
+            character = (char)(c);
+            if (character == '=') { tokenString += character; } 
+            else { reader.reset(); } // Go back one character
           }
+          token = new Token(tokenString, filename, linenum, TokenType.REL_OP);
         }
 
-        // Less Than / Less Than or Equal To
-        if (character == '>') {
-          // Check for Less Than or Less Than or Equal To
-          reader.mark(1);
-          if ((c = reader.read()) != EOF) {
-            character = (char) (c);
-            if (character == '=') {
-              token = new Token(">=", filename, linenum, TokenType.REL_OP);
-            } else {
-              // Go back one character
-              reader.reset();
-              token = new Token(">", filename, linenum, TokenType.REL_OP);
-            }
-          }
-        }
+        /* Digits (and Dots) */
+        else if(Character.isDigit(character) || character == '.') {
+          tokenString = String.valueOf(character);
+          boolean contains_dot = (character == '.');
 
-        if(Character.isDigit(character) || character == '.') {
-          String tokenString = String.valueOf(character);
-          boolean contains_dot = character == '.';
           reader.mark(1);
           while ((c = reader.read()) != EOF) {
             character = (char)(c);
             if(Character.isDigit(c)) { tokenString += character; }
             else if(character == '.') {
               if(contains_dot) {
-                throw new SyntaxError("Invalid token \\\".\\\". \\\".\\\" expects following digit");
+                throw new SyntaxError("Duplicate token \".\" is invalid");
               } else {
                 contains_dot = true;
                 tokenString += character;
               }
-            } else {
+            } else { // not a digit or a '.'
               reader.reset();
               break;
             }
             reader.mark(1);
           }
-          if(tokenString.equals(".")) {
-            throw new SyntaxError("Invalid token \\\".\\\". \\\".\\\" expects following digit");
-          }
-          token = new Token(tokenString, filename, linenum, TokenType.NUMBER);
           if(c == EOF) { reader.reset(); }
+
+          if(tokenString.equals(".")) {
+            throw new SyntaxError("Invalid token \".\". \".\" expects following digit");
+          }
+
+          token = new Token(tokenString, filename, linenum, TokenType.NUMBER);
         }
         
-        // Semicolon
-        if (character == ';') {
+        /* Semicolon */
+        else if (character == ';') {
           token = new Token(";", filename, linenum, TokenType.SEMICOLON);
         }
 
-        // Division
-        if (character == '/') {
-          // Division
-          token = new Token("/", filename, linenum, TokenType.MATH_OP);
+        /* Division | Multiplication | Addition | Subtraction */
+        else if (
+            character == '/' || 
+            character == '*' || 
+            character == '+' || 
+            character == '-'
+          ) {
+          token = new Token(String.valueOf(character), filename, linenum, TokenType.MATH_OP);
         }
 
-        // Multiplication
-        if (character == '*') {
-          // Multiplication
-          token = new Token("*", filename, linenum, TokenType.MATH_OP);
-        }
-
-        // Addition
-        if (character == '+') {
-          // Addition
-          token = new Token("+", filename, linenum, TokenType.MATH_OP);
-        }
-
-        // Subtraction
-        if (character == '-') {
-          // Subtraction
-          token = new Token("-", filename, linenum, TokenType.MATH_OP);
-        }
-
-        // String
-        if (character == '"') {
-          String str = Character.toString(character);
+        /* String */ 
+        else if (character == '"') {
+          tokenString = Character.toString(character);
           while ((c = reader.read()) != EOF) {
-            character = (char) c;
+            tokenString += (character = (char) c);
             if (character != '"') {
-              if (Character.isLetterOrDigit(character) || character == ' ') {
-                str = str + Character.toString(character);
-              } else {
+              // If character is NOT a letter, digit, or character; SyntaxError
+              if (!(Character.isLetterOrDigit(character) || character == ' ')) {
                 throw new SyntaxError("Invalid string token. String must contain only letters, digits, or spaces.");
-              }
+              } // no else: preemptively added character to tokenString
             } else {
-              str += character;
-              token = new Token(str, filename, linenum, TokenType.STRING);
+              token = new Token(tokenString, filename, linenum, TokenType.STRING);
               break;
             }
           }
-          if (token.getToken().equals("-_ERRORTOKEN_-")) {
+          if (c == EOF) {
             throw new SyntaxError("Incomplete string token. String must end with '\"'.");
           }
         }
 
-        // Colon
-        if (character == ':') {
+        /* Colon */ 
+        else if (character == ':') {
           reader.mark(1);
           if ((c = reader.read()) == ':') {
             token = new Token("::", filename, linenum, TokenType.FC_HEADER);
@@ -234,9 +203,9 @@ public class JottTokenizer {
           }
         }
 
-        // id, keyword
-        if (Character.isLetter(character)) {
-          String tokenString = String.valueOf(character);
+        /* Id | Keyword */ 
+        else if (Character.isLetter(character)) {
+          tokenString = String.valueOf(character);
           reader.mark(1);
 
           while ((c = reader.read()) != EOF) {
@@ -249,12 +218,13 @@ public class JottTokenizer {
               break;
             }
           }
+          if(c == EOF) { reader.reset(); }
 
           token = new Token(tokenString, filename, linenum, TokenType.ID_KEYWORD);
         }
 
-        // Not Equals
-        if(character == '!') {
+        /* Not Equals */ 
+        else if(character == '!') {
           if ((c = reader.read()) == '=') { // doesn't need EOF check, if EOF -> else {Syntax Error}
             token = new Token("!=", filename, linenum, TokenType.REL_OP);
           } else {
@@ -262,48 +232,15 @@ public class JottTokenizer {
           }
         }
 
-        /* NEEDS TO GET DONE */
-        // TODO Consolidate if statements to if/else chain to prevent implicit fallthrough and token cancellation
-        // TODO Implement Exception throws for following errors
-        //    String: Error on invalid characters (Implemented)
-        //    String: Error on EOF (Implemented)
-        //    TODO Number: Error on invalid '.'
-        //      TODO Dot: needs a syntax error on dot following digits following dot
-        //      TODO Digit: needs to account for dots, and syntax errors on invalid dots
-        // TODO May need to account for carriage returns in newline ('\r')
-        // TODO String: currently double adds tokens to arraylist -> all tokens are added at end of main loop
-
-        /* SUGGESTIONS */
-        // TODO Mathops can be reduced to a single if statement
-        // TODO '<', '>' can be implemented in a single statement
-        // TODO centralize global token string for tokens with more than 1 character
-
-        /*
-         * Whitespace: Ignore - Miguel
-         * "#": comment, Ignore until newline - Miguel
-         * ",": comma - Miguel
-         * "]": rBracket - Miguel
-         * "[": lBracket - Miguel
-         * "}": rBrace - Miguel
-         * "{": lBrace - Miguel
-         * "=": go to check equals function - Miguel
-         * "<>": go to check the greater/less than functions - Miguel
-         * "/" or "*" or "+" or "-": mathOp - Aum
-         * ";": semicolon - Neav
-         * ".": got to check digit and dot function (hasDot set to true) - Aum
-         * digit: go to check digit and dot function (hasDot set to false) - Aum
-         * letter: go to check letter function - Jacob
-         * ":": go to check colon function - Neav
-         * "!": go to check not equals function - Jacob
-         * ": go to check string function - Ian
-         */
-
-        // Add token to arraylist
-        if (token.getToken().equals("-_ERRORTOKEN_-")) {
-          System.out.println("Error Token: " + character);
-        } else {
-          tokens.add(token);
+        /* Invalid Token */
+        else {
+          throw new SyntaxError("Invalid Token: " + character);
         }
+        
+        tokens.add(token);  // Adds token generated to ArrayList
+
+        token = null;       // Explicit variable reset for debugging
+        tokenString = null; // Explicit variable reset for debugging
       }
     } catch (FileNotFoundException fnfE) {
       // Buffered Exception: possible future need
