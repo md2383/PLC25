@@ -65,9 +65,11 @@ public class JottTokenizer {
 
         // Comments
         if (character == '#') {
-          reader.readLine();
+          while((c = reader.read()) != EOF) {
+            if((character = (char)(c)) == '\n') { break; }
+          }
           linenum++;
-          break;
+          continue;
         }
 
         // Comma
@@ -162,6 +164,9 @@ public class JottTokenizer {
               break;
             }
             reader.mark(1);
+          }
+          if(tokenString.equals(".")) {
+            throw new SyntaxError("Invalid token \\\".\\\". \\\".\\\" expects following digit");
           }
           token = new Token(tokenString, filename, linenum, TokenType.NUMBER);
           if(c == EOF) { reader.reset(); }
