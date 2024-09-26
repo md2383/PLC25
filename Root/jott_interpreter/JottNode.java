@@ -5,29 +5,17 @@ import provided.Token;
 
 public class JottNode {
     
-    private JottNode parent;
     private ArrayList<Token> Tokens;
     private ArrayList<JottNode> children;
 
     // JottNode is a class that represents a node in the Jott parse tree.
     public JottNode() {
-        this.parent = null;
         this.children = new ArrayList<JottNode>();
     }
 
     // Same thing as above, but with a parent node.
-    public JottNode( JottNode parent ) {
-        this.parent = parent;
-        this.children = new ArrayList<JottNode>();
-    }
-
-    // Getters and setters for the parent and children of the node.
-    public JottNode getParent() {
-        return this.parent;
-    }
-
-    public void setParent(JottNode parent) {
-        this.parent = parent;
+    public JottNode( ArrayList<JottNode> children ) {
+        this.children = children;
     }
 
     public ArrayList<JottNode> getChildren() {
