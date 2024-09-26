@@ -2,17 +2,28 @@ package jott_interpreter;
 
 import java.util.ArrayList;
 
+/**
+ * JottNode is a class that represents a node in the Jott parse tree.
+ */
 public class JottNode {
     
     private JottNode parent;
     private ArrayList<JottNode> children;
 
-    // JottNode is a class that represents a node in the Jott parse tree.
+    /**
+     * Head of the Parse Tree.
+     * The parent is null, this is the start of the Tree.
+     */
     public JottNode() {
         this.parent = null;
         this.children = new ArrayList<JottNode>();
     }
 
+    /**
+     * Child node initializer.
+     * 
+     * @param parent    The token dictating the resulting parseTree's grammer
+     */
     public JottNode( JottNode parent ) {
         this.parent = parent;
         this.children = new ArrayList<JottNode>();
