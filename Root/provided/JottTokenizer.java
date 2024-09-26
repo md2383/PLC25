@@ -4,22 +4,12 @@ import java.io.*;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 
+import jott_interpreter.SyntaxError;
+
 /**
  * Tokenization class containing Jott Tokenizer
  */
 public class JottTokenizer {
-
-  /**
-   * Custom Syntax Error Class
-   * 
-   * made for use by the tokenizer to simplify syntax errors and force exit 
-   * the while loop upon an error
-   */
-  private static class SyntaxError extends Exception {
-    SyntaxError(String str) {
-      super(str);
-    }
-  }
 
   /**
    * Takes in a filename and tokenizes that file into Tokens
