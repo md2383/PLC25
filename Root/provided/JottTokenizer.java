@@ -241,9 +241,7 @@ public class JottTokenizer {
       ioE.printStackTrace();
       System.exit(1);
     } catch(SyntaxError E) {
-      System.err.println("Syntax Error");
-      System.err.println(E.getMessage());
-      System.err.println(filename + ":" + linenum);
+      E.print(filename, linenum);
       return null;
     }
 

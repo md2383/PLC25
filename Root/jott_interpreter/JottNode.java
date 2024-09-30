@@ -8,7 +8,6 @@ import provided.Token;
  */
 public class JottNode {
     
-    private JottNode parent;
     private ArrayList<Token> Tokens;
     private ArrayList<JottNode> children;
 
@@ -17,7 +16,6 @@ public class JottNode {
      * The parent is null, this is the start of the Tree.
      */
     public JottNode() {
-        this.parent = null;
         this.children = new ArrayList<JottNode>();
     }
 
@@ -26,18 +24,8 @@ public class JottNode {
      * 
      * @param parent    The token dictating the resulting parseTree's grammer
      */
-    public JottNode( JottNode parent ) {
-        this.parent = parent;
-        this.children = new ArrayList<JottNode>();
-    }
-
-    // Getters and setters for the parent and children of the node.
-    public JottNode getParent() {
-        return this.parent;
-    }
-
-    public void setParent(JottNode parent) {
-        this.parent = parent;
+    public JottNode( ArrayList<JottNode> children ) {
+        this.children = children;
     }
 
     public ArrayList<JottNode> getChildren() {
