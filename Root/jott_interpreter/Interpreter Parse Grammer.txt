@@ -1,0 +1,111 @@
+############
+# GRAMMAR: #
+############
+
+/// NOTE:
+/// 	{ Grammar Nodes: <  >, Tokens: <( )> }
+/// 	{ ex. < body_stmt >  , ex. <( id )> }
+
+< program > ------------ -> < function_def >⋆ < EOF >
+
+< function_def > ------ -> Def <( id )>[< func_def_params >]:< function_return >{< f_body >}
+< func_def_params > --- -> <( id )>:< type >< func_def_params_t >⋆
+                         | ε
+< func_def_params_t > - -> ,<( id )>:< type >
+
+< body_stmt > --------- -> < if_stmt >
+                         | < while_loop >
+                         | < assignment >
+                         | < func_call >;
+< return_stmt > ------- -> Return < expr >;
+                         | ε
+< body > -------------- -> < body_stmt >⋆ < return_stmt >
+< f_body > ------------ -> < var_dec >⋆ < body >
+
+< if_stmt > ----------- -> If [< expr >]{< body >}< elseif >⋆ < else >
+< else > -------------- -> Else {< body >}
+                         | ε
+< elseif > ------------ -> Elseif [< expr >]{ < body >}
+
+< while_loop > -------- -> While [< expr >]{< body >}
+
+< func_call > --------- -> ::<( id )>[< params >]
+
+< params > ------------ -> < expr >< params_t >⋆
+                         | ε
+< params_t > ---------- -> ,< expr >
+
+< type > -------------- -> Double
+                         | Integer
+                         | String
+                         | Boolean
+< function_return > --- -> < type >
+                         | Void
+< var_dec > ----------- -> < type ><( id )>;
+< assignment > -------- -> <( id )>=< expr >;
+< bool > -------------- -> True
+                         | False
+
+< operand > ----------- -> <( id )>
+                         | <( num )> 
+                         | < func_call > 
+                         | -<( num )>
+< expr > -------------- -> < operand >
+                         | < operand ><( relop )>< operand > 
+                         | < operand ><( mathop )>< operand > 
+                         | <( string_literal )> 
+                         | < bool >
+
+######################
+# PREDECESSOR NODES: #
+######################
+
+/// NOTE:
+/// Some of the predecessors will need to be stubbed because of circular reference(s)
+/// ex. < if_stmt > needs < body >, 
+///     < body > needs < body_stmt >, 
+///     < body_stmt > needs < if_stmt >.
+
+< program >             < function_def >
+< function_def >        < func_def_params >
+< func_def_params >     < type > < func_def_params_t >
+< func_def_params_t >   < type >
+< body_stmt >           < if_stmt > < while_loop > < assignment > < func_call >
+< return_stmt >         < expr >
+< body >                < body_stmt > < return_stmt >
+< f_body >              < var_dec > < body >
+< if_stmt >             < elseif > < else > < expr > < body >
+< else >                < body >
+< elseif >              < expr > < body >
+< while_loop >          < expr > < body >
+< func_call >           < params >
+< params >              < expr > < params_t >
+< params_t >            < expr >
+< type >                
+< function_return >     < type >
+< var_dec >             < type >
+< assignment >          < expr >
+< bool >
+< operand >             < func_call >
+< expr >                < operand > < bool >
+
+#############
+# KEYWORDS: #
+#############
+
+Def         < function_def >
+Return      < return_stmt >
+If          < if_stmt >
+Else        < else >
+Elseif      < elseif >
+While       < while_loop >
+
+Double      < type >
+Integer     < type >
+String      < type >
+Boolean     < type >
+
+Void        < function_return >
+
+True        < bool >
+False       < bool >
