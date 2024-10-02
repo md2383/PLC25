@@ -7,29 +7,61 @@ import jott_interpreter.nodes.*;
 import jott_interpreter.nodes.token_nodes.*;
 import provided.*;
 
+/**
+ * A function call containing an {@code ID} [{@link id_Node}] and the list of 
+ * parameters [{@link params_Node}] being called for the function.
+ */
 public class functionCall_Node extends Jott_Node{
 
+    /** The name of the function being called */
     private id_Node id;
+    /** The parameter object storing the list of parameters being called for the function */
     private params_Node params;
 
+    /**
+     * Private Constructor 
+     * (validation of the node done in {@link #parseFunctionCallNode})
+     * @param ID            an ID node referencing the function
+     * @param Parameters    a parameter node referencing the (list of) 
+     *                      parameters for the function
+     */
     private functionCall_Node(id_Node ID, params_Node Parameters) {
         this.id = ID;
         this.params = Parameters;
     }
 
+    /**
+     * Static parse method returning an {@link functionCall_Node} for the parse tree.
+     * 
+     * @param tokens -  the list of tokens being parsed into a parse tree
+     * @return  A function call node which has been validated in accordance 
+     *          with the parse tree grammar
+     * @throws SyntaxError  {@code Unexpected EOF}: no token to parse
+     * @throws SyntaxError  {@code Token type not FC_HEADER}: token being 
+     *                      parsed is not a {@code TokenType.FC_HEADER}
+     * @throws SyntaxError  {@code Invalid Token}: token being parsed is not 
+     *                      the expected token
+     * @implNote    The token(s) in the input array list of {@code Token} 
+     *              objects will be removed from the list given validation 
+     *              success.
+     * @see {@link Token} 
+     * @see {@link TokenType}
+     */
     public static functionCall_Node parseFunctionCallNode(ArrayList<Token> tokens) throws SyntaxError {
-        if(tokens.size() < 4) { throw new SyntaxError("Unexpected EOF"); }
+        if(tokens.size() < 1) { throw new SyntaxError("Unexpected EOF"); }
         if(tokens.get(0).getTokenType() != TokenType.FC_HEADER) { throw new SyntaxError("Token type not FC_HEADER"); }
         tokens.remove(0);
 
         id_Node tempID = id_Node.parseIdNode(tokens);
 
-        if(tokens.get(0).getTokenType() != TokenType.L_BRACKET) { throw new SyntaxError("Invalid Token"); }
+        if(tokens.size() < 1) { throw new SyntaxError("Unexpected EOF"); }
+        if(tokens.get(0).getTokenType() != TokenType.L_BRACKET) { throw new SyntaxError("Invalid Token: Expected ["); }
         tokens.remove(0);
 
         params_Node tempParameters = params_Node.parseParamsNode(tokens);
         
-        if(tokens.get(0).getTokenType() != TokenType.R_BRACKET) { throw new SyntaxError("Invalid Token"); }
+        if(tokens.size() < 1) { throw new SyntaxError("Unexpected EOF"); }
+        if(tokens.get(0).getTokenType() != TokenType.R_BRACKET) { throw new SyntaxError("Invalid Token: Expected ]"); }
         tokens.remove(0);
 
         return new functionCall_Node(tempID, tempParameters);
