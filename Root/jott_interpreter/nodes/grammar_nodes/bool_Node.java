@@ -1,29 +1,30 @@
-package jott_interpreter.nodes;
+package jott_interpreter.nodes.grammar_nodes;
 
 import java.util.ArrayList;
-import jott_interpreter.JottNode;
+
+import jott_interpreter.nodes.Jott_Node;
 import provided.Token;
 import provided.TokenType;
 
-public class boolNode extends JottNode {
+public class bool_Node extends Jott_Node {
 
     private ArrayList<Token> Tokens;
-    private ArrayList<JottNode> children;
+    private ArrayList<Jott_Node> children;
 
-    public boolNode() {
+    public bool_Node() {
         super();
     }
 
-    public boolNode(ArrayList<Token> tokens) {
+    public bool_Node(ArrayList<Token> tokens) {
         super();
         this.Tokens = tokens;   
     }
 
-    public ArrayList<JottNode> getChildren() {
+    public ArrayList<Jott_Node> getChildren() {
         return this.children;
     }
 
-    public void setChildren(ArrayList<JottNode> children) {
+    public void setChildren(ArrayList<Jott_Node> children) {
         this.children = children;
     }
 

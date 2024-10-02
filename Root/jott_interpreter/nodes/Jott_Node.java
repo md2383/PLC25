@@ -1,14 +1,15 @@
-package jott_interpreter;
+package jott_interpreter.nodes;
 
-import provided.JottTree;
+import provided.*;
 
-public class JottTreeImplementation implements JottTree{
+public abstract class Jott_Node implements JottTree{
+    
+    public Jott_Node() {
+
+    }
 
     @Override
-    public String convertToJott() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'convertToJott'");
-    }
+    abstract public String convertToJott();
 
     @Override
     public boolean validateTree() {
@@ -22,4 +23,8 @@ public class JottTreeImplementation implements JottTree{
         throw new UnsupportedOperationException("Unimplemented method 'execute'");
     }
     
+    @Override
+    public String toString() {
+        return this.convertToJott();
+    }
 }
