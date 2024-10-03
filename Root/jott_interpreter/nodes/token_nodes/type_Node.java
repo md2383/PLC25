@@ -35,7 +35,6 @@ public class type_Node extends Jott_Node {
 
     @Override
     public String convertToJott() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'convertToJott'");
+        return this.type.getToken();
     }
 }
