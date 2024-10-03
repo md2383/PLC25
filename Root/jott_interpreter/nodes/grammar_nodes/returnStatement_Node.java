@@ -10,11 +10,12 @@ import provided.*;
 public class returnStatement_Node extends Jott_Node{
     private final id_Node id;
     private final Token returnToken;
-
+    private final Token semicolonToken;
     // example: Return ''foo''; 3 tokens in total
-    private returnStatement_Node(id_Node ID, Token returnToken) {
+    private returnStatement_Node(id_Node ID, Token returnToken, Token semicolonToken) {
         this.id = ID;
         this.returnToken = returnToken;
+        this.semicolonToken = semicolonToken;
     }
 
     public static expr_Node parseReturnStatementNode(ArrayList<Token> tokens) throws SyntaxError {
@@ -26,7 +27,7 @@ public class returnStatement_Node extends Jott_Node{
 
         if(tokens.size() < 1) { throw new SyntaxError("Unexpected EOF"); }
         if(tokens.get(0).getTokenType() != TokenType.SEMICOLON) { throw new SyntaxError("Invalid Token: Expected ;"); }
-        tokens.remove(0);
+        Token semicolonToken = tokens.remove(0);
 
         return new expr_Node(); // When expr_Node is implemented, return it here and FIX it
     }
