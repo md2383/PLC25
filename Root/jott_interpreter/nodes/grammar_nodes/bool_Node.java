@@ -45,7 +45,7 @@ public class bool_Node extends Jott_Node {
             throw new SyntaxError("Unexpected EOF");
         }
         if (tokens.get(0).getTokenType() != TokenType.ID_KEYWORD) {
-            throw new SyntaxError("Token type not ID/Keyword");
+            throw new SyntaxError("Token type not Valid bool");
         }
         if (!tokens.get(0).getToken().equals("True") && !tokens.get(0).getToken().equals("False")) {
             throw new SyntaxError("Invalid Token: Expected 'True' or 'False'");
