@@ -10,6 +10,11 @@ import provided.*;
 // retrunStatement_Node is a Jott_Node
 
  // example: Return ''foo''; 3 tokens in total
+ /**
+  *  < return_stmt > ------- -> Return < expr >;
+                                | ε
+  *                               
+  */ 
 public class returnStatement_Node extends Jott_Node{
     private final id_Node id;
     private final Token returnToken;
