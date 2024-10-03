@@ -45,6 +45,9 @@ public class type_Node extends Jott_Node {
         if (tokens.get(0).getTokenType() != TokenType.ID_KEYWORD) {
             throw new SyntaxError("Token Type not ID_KEYWORD");
         }
+        if (!Character.isUpperCase(tokens.get(0).getToken().charAt(0))) {
+            throw new SyntaxError("Token is an ID, expected KEYWORD");
+        }
         if (
             !(
                 tokens.get(0).getToken().equals("Double") ||
