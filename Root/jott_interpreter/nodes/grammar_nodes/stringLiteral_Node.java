@@ -8,22 +8,22 @@ import provided.TokenType;
 /**
  * A string literal representation for the parse tree
  */
-public class string_literal_Node extends Jott_Node {
+public class stringLiteral_Node extends Jott_Node {
 
     /** Valid {@code STRING} token reference */
-    private Token string_literal;
+    private Token stringLiteral;
 
     /**
      * Private Constructor 
      * (validation of the node done in {@link #parseStringLiteralNode})
-     * @param string_literal a validated {@code STRING} token reference
+     * @param stringLiteral a validated {@code STRING} token reference
      */
-    public string_literal_Node(Token string_literal) {
-        this.string_literal = string_literal;
+    public stringLiteral_Node(Token stringLiteral) {
+        this.stringLiteral = stringLiteral;
     }
 
     /**
-     * Static parse method returning a {@link string_literal_Node} for the parse tree.
+     * Static parse method returning a {@link stringLiteral_Node} for the parse tree.
      * 
      * @param tokens -  the list of tokens being parsed into a parse tree
      * @return  A string literal node which has been validated in accordance 
@@ -39,7 +39,7 @@ public class string_literal_Node extends Jott_Node {
      * @see {@link Token} 
      * @see {@link TokenType}
      */
-    public static string_literal_Node parseStringLiteralNode(ArrayList<Token> tokens) throws SyntaxError {
+    public static stringLiteral_Node parseStringLiteralNode(ArrayList<Token> tokens) throws SyntaxError {
         if (tokens.size() < 1) {
             throw new SyntaxError("Unexpected EOF");
         }
@@ -49,7 +49,7 @@ public class string_literal_Node extends Jott_Node {
         if (!tokens.get(0).getToken().startsWith("\"") || !tokens.get(0).getToken().endsWith("\"")) {
             throw new SyntaxError("Invalid Token: Expected a string in \" \" ");
         }
-        return new string_literal_Node(tokens.remove(0));
+        return new stringLiteral_Node(tokens.remove(0));
     }
 
     /**
@@ -59,6 +59,6 @@ public class string_literal_Node extends Jott_Node {
      */
     @Override
     public String convertToJott() {
-        return string_literal.getToken();
+        return stringLiteral.getToken();
     }
 }
