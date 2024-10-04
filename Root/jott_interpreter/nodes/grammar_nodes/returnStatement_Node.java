@@ -36,6 +36,11 @@ public class returnStatement_Node extends Jott_Node{
      * @throws SyntaxError  {@code Unexpected EOF}: no token to parse
      * @throws SyntaxError  {@code Invalid Token}: token being parsed is not 
      *                      the expected token
+     * @implNote    The token(s) in the input array list of {@code Token} 
+     *              objects will be removed from the list given validation 
+     *              success.
+     * @see {@link Token} 
+     * @see {@link TokenType}
      */
     public static returnStatement_Node parseReturnStatementNode(ArrayList<Token> tokens) throws SyntaxError {
         // void check, determines if there is an actual return statement
