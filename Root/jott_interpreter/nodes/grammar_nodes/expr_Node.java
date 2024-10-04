@@ -4,19 +4,103 @@ import java.util.ArrayList;
 
 import jott_interpreter.SyntaxError;
 import jott_interpreter.nodes.*;
+import jott_interpreter.nodes.token_nodes.*;
 import provided.*;
 
+/**
+ * <h>
+ *  An expression containing some combination of {@link Jott_Node} 
+ *  confined to the parse grammar.
+ * 
+ * <p>
+ *  < operand >                          |
+ *  < operand ><( relop )>< operand >    |
+ *  < operand ><( mathop )>< operand >   |
+ *  <( string_literal )>                 |
+ *  < bool >
+ * 
+ * <p>
+ *  The logic for determining node type is built into the 
+ *  {@link #parseExprNode} function.
+ */
 public class expr_Node extends Jott_Node{
 
+    /** An array node representation of the expression. (Size 1 or 3) */
+    private Jott_Node[] expr;
+
+    /**
+     * Private Constructor 
+     * (validation of the node done in {@link #parseExprNode})
+     * @param Expression -  array of abstract {@link Jott_Node} nodes decided 
+     *                      by the parse grammar
+     */
+    private expr_Node(Jott_Node[] Expression) {
+        this.expr = Expression;
+    }
+
+    /**
+     * Static parse method returning an {@link expr_Node} for the parse tree.
+     * 
+     * @param tokens -  the list of tokens being parsed into a parse tree
+     * @return  An expression built and validated according to the 
+     *          parse tree grammar
+     * @throws SyntaxError  {@code Unexpected EOF}: no token to parse
+     * @implNote    The token(s) in the input array list of {@code Token} 
+     *              objects will be removed from the list given validation 
+     *              success.
+     * @see {@link Token} 
+     * @see {@link TokenType}
+     */
     public static expr_Node parseExprNode(ArrayList<Token> tokens) throws SyntaxError {
-        // TODO 
-        throw new UnsupportedOperationException("Unimplemented method 'parseExprNode'");
+        if(tokens.size() < 1) { throw new SyntaxError("Unexpected EOF"); }
+
+        Jott_Node[] Expression = new Jott_Node[1];
+
+        // <( string_literal )>
+        if(tokens.get(0).getTokenType() == TokenType.STRING) {
+            Expression[0] = stringLiteral_Node.parseStringLiteralNode(tokens);
+
+        // < bool >
+        } else if(tokens.get(0).getTokenType() == TokenType.ID_KEYWORD &&
+                "TF".contains("" + tokens.get(0).getToken().charAt(0))) {
+            // TODO: Check if any default functions use capital T or F
+            Expression[0] = bool_Node.parseBoolNode(tokens);
+
+        // < operand >
+        } else {
+            Jott_Node temp = operand_Node.parseOperandNode(tokens);
+
+            // Checking for an operation 
+            // < operand ><( mathop | relop )>< operand >
+            if(tokens.size() > 1) {
+                TokenType operationType = tokens.get(0).getTokenType();
+                if(operationType == TokenType.REL_OP || operationType == TokenType.MATH_OP) {
+                    Expression = new Jott_Node[3];
+
+                    Jott_Node operation;
+                    if(operationType == TokenType.REL_OP) {
+                        operation = relop_Node.parseRelopNode(tokens);
+                    } else {
+                        operation = mathop_Node.parseMathopNode(tokens);
+                    }
+                    Expression[1] = operation;
+
+                    // Implicit EOF check
+                    Expression[2] = operand_Node.parseOperandNode(tokens);
+                }
+            }
+            
+            // Expression can be size 1 or 3
+            Expression[0] = temp;
+        }
+        
+        return new expr_Node(Expression);
     }
 
     @Override
     public String convertToJott() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'convertToJott'");
+        String str = "";
+        for(Jott_Node node : expr) { str += node.convertToJott(); }
+        return str;
     }
-    
 }
