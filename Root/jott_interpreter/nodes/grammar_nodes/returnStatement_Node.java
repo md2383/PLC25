@@ -4,51 +4,63 @@ import java.util.ArrayList;
 
 import jott_interpreter.SyntaxError;
 import jott_interpreter.nodes.*;
-import jott_interpreter.nodes.token_nodes.id_Node;
 import provided.*;
 
-// retrunStatement_Node is a Jott_Node
-
- // example: Return ''foo''; 3 tokens in total
- /**
-  *  < return_stmt > ------- -> Return < expr >;
-                                | ε
-  *                               
-  */ 
+/**
+ * <h>
+ *  A return statement. 
+ *  Functions can either return an expression, or void (no return).
+ * 
+ * <p>
+ *  Return < expr >; | ε
+ */
 public class returnStatement_Node extends Jott_Node{
-    private final id_Node id;
-    private final Token returnToken;
-    private final Token semicolonToken;
+    
+    /** The expression being returned */
+    private final expr_Node returnExpr;
     
     /**
-     * Private Constructor for returnStatement_Node
-     * @param ID - a validated {@code id_Node} token reference
-     * @param returnToken - a validated {@code RETURN} token reference
-     * @param semicolonToken - a validated {@code SEMICOLON} token reference
+     * Private Constructor
+     * (validation of the node done in {@link #parseReturnStatementNode})
+     * @param returnExpression
      */
-    private returnStatement_Node(id_Node ID, Token returnToken, Token semicolonToken) {
-        this.id = ID;
-        this.returnToken = returnToken;
-        this.semicolonToken = semicolonToken;
+    private returnStatement_Node(expr_Node returnExpression) {
+        this.returnExpr = returnExpression;
     }
+
     /**
      * Static parse method returning a {@link returnStatement_Node} for the parse tree.
      * @param tokens - the list of tokens being parsed into a parse tree
-     * @return
-     * @throws SyntaxError {@code Unexpected EOF}: no token to parse
+     * @return  A return statement node which has been validated in accordance 
+     *          with the parse tree grammar
+     * @throws SyntaxError  {@code Unexpected EOF}: no token to parse
+     * @throws SyntaxError  {@code Invalid Token}: token being parsed is not 
+     *                      the expected token
+     * @implNote    The token(s) in the input array list of {@code Token} 
+     *              objects will be removed from the list given validation 
+     *              success.
+     * @see {@link Token} 
+     * @see {@link TokenType}
      */
-    public static expr_Node parseReturnStatementNode(ArrayList<Token> tokens) throws SyntaxError {
-        if(tokens.size() < 1) { throw new SyntaxError("Unexpected EOF"); }
-        if(tokens.get(0).getTokenType() != TokenType.ID_KEYWORD) { throw new SyntaxError("Token type not Return"); }
-        Token returnToken = tokens.remove(0);
+    public static returnStatement_Node parseReturnStatementNode(ArrayList<Token> tokens) throws SyntaxError {
+        // void check, determines if there is an actual return statement
+        if(tokens.size() > 0) { 
+            if(tokens.get(0).getTokenType() == TokenType.ID_KEYWORD &&
+                    tokens.get(0).getToken().equals("Return")) {
+                tokens.remove(0);
+                expr_Node expression = expr_Node.parseExprNode(tokens);
+                
+                if(tokens.size() < 1) { throw new SyntaxError("Unexpected EOF"); }
+                if(tokens.get(0).getTokenType() != TokenType.SEMICOLON) { throw new SyntaxError("Invalid Token: Expected ;"); }
+                tokens.remove(0);
 
-        id_Node tempID = id_Node.parseIdNode(tokens);
-
-        if(tokens.size() < 1) { throw new SyntaxError("Unexpected EOF"); }
-        if(tokens.get(0).getTokenType() != TokenType.SEMICOLON) { throw new SyntaxError("Invalid Token: Expected ;"); }
-        Token semicolonToken = tokens.remove(0);
-
-        return new expr_Node(); // When expr_Node is implemented, return it here and FIX it
+                return new returnStatement_Node(expression);
+            }
+        }
+        
+        // Void 
+        // (actual function return type should be checked by the semantic analyzer)
+        return new returnStatement_Node(null);
     }
 
     /**
@@ -57,7 +69,9 @@ public class returnStatement_Node extends Jott_Node{
      */
     @Override
     public String convertToJott() {
-        return "Return " + id.convertToJott() + ";";
+        // checks if the return is void
+        if(returnExpr != null) {
+            return "Return " + returnExpr.convertToJott() + ";";
+        } else { return ""; }
     }
-    
 }
