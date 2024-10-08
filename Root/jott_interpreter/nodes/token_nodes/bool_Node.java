@@ -1,6 +1,7 @@
 package jott_interpreter.nodes.token_nodes;
 
 import java.util.ArrayList;
+
 import jott_interpreter.SyntaxError;
 import jott_interpreter.nodes.Jott_Node;
 import provided.Token;
@@ -11,8 +12,8 @@ import provided.TokenType;
  */
 public class bool_Node extends Jott_Node {
 
-    /** Valid {@code ID_KEYWORD} token reference */
-    private final Token bool;
+    /** Valid {@code boolean} reference from token list */
+    private final boolean bool;
 
     /**
      * Private Constructor 
@@ -20,7 +21,7 @@ public class bool_Node extends Jott_Node {
      * @param boolToken a validated {@code ID_KEYWORD} token reference
      */
     private bool_Node(Token boolToken) {
-        this.bool = boolToken;
+        this.bool = boolToken.getToken().equals("True");
     }
 
     /**
@@ -50,9 +51,6 @@ public class bool_Node extends Jott_Node {
         if (!tokens.get(0).getToken().equals("True") && !tokens.get(0).getToken().equals("False")) {
             throw new SyntaxError("Invalid Token: Expected 'True' or 'False'");
         }
-        if (!Character.isUpperCase(tokens.get(0).getToken().charAt(0))) {
-            throw new SyntaxError("Token is an ID, expected 'True' or 'False'");
-        }
         
         return new bool_Node(tokens.remove(0));
     }
@@ -64,6 +62,6 @@ public class bool_Node extends Jott_Node {
      */
     @Override
     public String convertToJott() {
-        return this.bool.getToken();
+        return this.bool ? "True" : "False";
     }
 }
