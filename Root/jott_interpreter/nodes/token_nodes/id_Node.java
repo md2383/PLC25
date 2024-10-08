@@ -40,7 +40,7 @@ public class id_Node extends Jott_Node {
      * @see {@link Token} 
      * @see {@link TokenType}
      */
-    public static id_Node parseIdNode(ArrayList<Token> tokens) throws SyntaxError {
+    public static id_Node parseIdNode(final ArrayList<Token> tokens) throws SyntaxError {
         if(tokens.size() < 1) { throw new SyntaxError("Unexpected EOF"); }
         if(tokens.get(0).getTokenType() != TokenType.ID_KEYWORD) { throw new SyntaxError("Token type not ID_KEYWORD"); }
         // following might be 'Semantics', not 'Syntax' -> TODO: may need to move this

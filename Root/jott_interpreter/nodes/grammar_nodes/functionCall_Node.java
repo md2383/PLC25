@@ -14,9 +14,9 @@ import provided.*;
 public class functionCall_Node extends Jott_Node{
 
     /** The name of the function being called */
-    private id_Node id;
+    private final id_Node id;
     /** The parameter object storing the list of parameters being called for the function */
-    private params_Node params;
+    private final params_Node params;
 
     /**
      * Private Constructor 
@@ -47,7 +47,7 @@ public class functionCall_Node extends Jott_Node{
      * @see {@link Token} 
      * @see {@link TokenType}
      */
-    public static functionCall_Node parseFunctionCallNode(ArrayList<Token> tokens) throws SyntaxError {
+    public static functionCall_Node parseFunctionCallNode(final ArrayList<Token> tokens) throws SyntaxError {
         if(tokens.size() < 1) { throw new SyntaxError("Unexpected EOF"); }
         if(tokens.get(0).getTokenType() != TokenType.FC_HEADER) { throw new SyntaxError("Token type not FC_HEADER"); }
         tokens.remove(0);

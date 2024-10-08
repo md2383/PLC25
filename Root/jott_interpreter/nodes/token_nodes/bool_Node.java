@@ -41,7 +41,7 @@ public class bool_Node extends Jott_Node {
      * @see {@link Token} 
      * @see {@link TokenType}
      */
-    public static bool_Node parseBoolNode(ArrayList<Token> tokens) throws SyntaxError {
+    public static bool_Node parseBoolNode(final ArrayList<Token> tokens) throws SyntaxError {
         if (tokens.size() < 1) {
             throw new SyntaxError("Unexpected EOF");
         }

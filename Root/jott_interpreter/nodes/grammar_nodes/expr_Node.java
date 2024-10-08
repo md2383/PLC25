@@ -26,7 +26,7 @@ import provided.*;
 public class expr_Node extends Jott_Node{
 
     /** An array node representation of the expression. (Size 1 or 3) */
-    private Jott_Node[] expr;
+    private final Jott_Node[] expr;
 
     /**
      * Private Constructor 
@@ -51,7 +51,7 @@ public class expr_Node extends Jott_Node{
      * @see {@link Token} 
      * @see {@link TokenType}
      */
-    public static expr_Node parseExprNode(ArrayList<Token> tokens) throws SyntaxError {
+    public static expr_Node parseExprNode(final ArrayList<Token> tokens) throws SyntaxError {
         if(tokens.size() < 1) { throw new SyntaxError("Unexpected EOF"); }
 
         Jott_Node[] Expression = new Jott_Node[1];
@@ -100,7 +100,7 @@ public class expr_Node extends Jott_Node{
     @Override
     public String convertToJott() {
         String str = "";
-        for(Jott_Node node : expr) { str += node.convertToJott(); }
-        return str;
+        for(Jott_Node node : expr) { str += node.convertToJott() + " "; }
+        return str.substring(0, str.length() - 1); // removing last space
     }
 }

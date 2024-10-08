@@ -40,7 +40,7 @@ public class mathop_Node extends Jott_Node {
      * @see {@link Token} 
      * @see {@link TokenType}
      */
-    public static mathop_Node parseMathopNode(ArrayList<Token> tokens) throws SyntaxError {
+    public static mathop_Node parseMathopNode(final ArrayList<Token> tokens) throws SyntaxError {
         if(tokens.size() < 1) { throw new SyntaxError("Unexpected EOF"); }
         if(tokens.get(0).getTokenType() != TokenType.MATH_OP) { throw new SyntaxError("Token type not MATH_OP"); }
         if(!tokens.get(0).getToken().equals("+") && !tokens.get(0).getToken().equals("-") && !tokens.get(0).getToken().equals("*") && !tokens.get(0).getToken().equals("/")) { throw new SyntaxError("Invalid Mathop: Expected '+', '-', '*', or '/'"); }
