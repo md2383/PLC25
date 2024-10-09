@@ -62,6 +62,7 @@ public class expr_Node extends Jott_Node{
 
         // < bool >
         } else if(tokens.get(0).getTokenType() == TokenType.ID_KEYWORD &&
+                // checking the token is a boolean
                 "TF".contains("" + tokens.get(0).getToken().charAt(0))) {
             // TODO: Check if any default functions use capital T or F
             Expression[0] = bool_Node.parseBoolNode(tokens);
@@ -99,8 +100,8 @@ public class expr_Node extends Jott_Node{
 
     @Override
     public String convertToJott() {
-        String str = "";
-        for(Jott_Node node : expr) { str += node.convertToJott() + " "; }
-        return str.substring(0, str.length() - 1); // removing last space
+        StringBuilder str = new StringBuilder();
+        for(Jott_Node node : expr) { str.append(" ").append(node.convertToJott()); }
+        return str.substring(1); // removing first space
     }
 }
