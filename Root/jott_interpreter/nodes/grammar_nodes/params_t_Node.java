@@ -25,7 +25,7 @@ public class params_t_Node extends Jott_Node {
 
     @Override
     public String convertToJott() {
-        return ", " + this.expr.convertToJott();
+        return "," + this.expr.convertToJott();
     }
     
 }
