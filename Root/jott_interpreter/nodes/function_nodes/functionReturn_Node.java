@@ -1,21 +1,45 @@
 package jott_interpreter.nodes.function_nodes;
 
 import java.util.ArrayList;
-
 import jott_interpreter.SyntaxError;
 import jott_interpreter.nodes.*;
+import jott_interpreter.nodes.token_nodes.type_Node;
 import provided.*;
 
 public class functionReturn_Node extends Jott_Node{
-    
+    private type_Node type;
+
+    public functionReturn_Node() {
+        this.type = null;
+    }
+
+    public functionReturn_Node(type_Node type) {
+        this.type = type;
+    }
+
     public static functionReturn_Node parseFunctionReturnNode(final ArrayList<Token> tokens) throws SyntaxError {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'parseParamsNode'");
+        if (tokens.size() < 1) {
+            throw new SyntaxError("Unexpected EOF");
+        }
+        if (tokens.get(0).getTokenType() != TokenType.ID_KEYWORD) {
+            throw new SyntaxError("Unexpected token type, expected ID_KEYWORD");
+        }
+        if (!Character.isUpperCase(tokens.get(0).getToken().charAt(0))) {
+            throw new SyntaxError("Token is ID, expected Keyword");
+        }
+        if (tokens.get(0).getToken().equals("Void")) {
+            return new functionReturn_Node();
+        } else {
+            return new functionReturn_Node(type_Node.parseTypeNode(tokens));
+        }
     }
 
     @Override
     public String convertToJott() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'convertToJott'");
+        if (this.type == null) {
+            return "Void";
+        } else {
+            return this.type.convertToJott();
+        }
     }
 }
