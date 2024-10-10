@@ -40,10 +40,10 @@ public class relop_Node extends Jott_Node {
      * @see {@link Token} 
      * @see {@link TokenType}
      */
-    public static relop_Node parseRelopNode(ArrayList<Token> tokens) throws SyntaxError {
+    public static relop_Node parseRelopNode(final ArrayList<Token> tokens) throws SyntaxError {
         if(tokens.size() < 1) { throw new SyntaxError("Unexpected EOF"); }
         if(tokens.get(0).getTokenType() != TokenType.REL_OP) { throw new SyntaxError("Token type not RELOP"); }
-        if(!tokens.get(0).getToken().equals("<") && !tokens.get(0).getToken().equals("<=") && !tokens.get(0).getToken().equals(">") && !tokens.get(0).getToken().equals(">=") && !tokens.get(0).getToken().equals("==") && !tokens.get(0).getToken().equals("!=")) { throw new SyntaxError("Invalid Relop: Expected '<', '<=', '>', '>=', '==', or '!='"); }
+        assert("<=>=!==".contains(tokens.get(0).getToken())); // not a syntax error (would be a problem with our code)
         return new relop_Node(tokens.remove(0));
     }
 

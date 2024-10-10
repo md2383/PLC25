@@ -43,7 +43,6 @@ public class id_Node extends Jott_Node {
     public static id_Node parseIdNode(final ArrayList<Token> tokens) throws SyntaxError {
         if(tokens.size() < 1) { throw new SyntaxError("Unexpected EOF"); }
         if(tokens.get(0).getTokenType() != TokenType.ID_KEYWORD) { throw new SyntaxError("Token type not ID_KEYWORD"); }
-        // following might be 'Semantics', not 'Syntax' -> TODO: may need to move this
         if(Character.isUpperCase(tokens.get(0).getToken().charAt(0))) { throw new SyntaxError("Token is a Keyword, expected an ID"); }
 
         return new id_Node(tokens.remove(0));
@@ -53,5 +52,4 @@ public class id_Node extends Jott_Node {
     public String convertToJott() {
         return this.id.getToken();
     }
-    
 }
