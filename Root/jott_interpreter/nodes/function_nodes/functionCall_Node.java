@@ -1,9 +1,10 @@
-package jott_interpreter.nodes.grammar_nodes;
+package jott_interpreter.nodes.function_nodes;
 
 import java.util.ArrayList;
 
 import jott_interpreter.SyntaxError;
 import jott_interpreter.nodes.*;
+import jott_interpreter.nodes.grammar_nodes.*;
 import jott_interpreter.nodes.token_nodes.*;
 import provided.*;
 

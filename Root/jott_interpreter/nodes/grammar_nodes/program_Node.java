@@ -6,9 +6,9 @@ import jott_interpreter.SyntaxError;
 import jott_interpreter.nodes.*;
 import provided.*;
 
-public class ifStmt_Node extends Jott_Node{
-
-    public static params_Node parseIfStmtNode(final ArrayList<Token> tokens) throws SyntaxError {
+public class program_Node extends Jott_Node{
+    
+    public static program_Node parseProgramNode(final ArrayList<Token> tokens) throws SyntaxError {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'parseParamsNode'");
     }

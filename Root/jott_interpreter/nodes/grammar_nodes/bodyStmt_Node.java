@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import jott_interpreter.SyntaxError;
 import jott_interpreter.nodes.*;
+import jott_interpreter.nodes.function_nodes.*;
 import provided.*;
 
 /**
@@ -74,7 +75,7 @@ public class bodyStmt_Node extends Jott_Node {
 
         // Semicolon check
         if(tokens.size() < 1) { throw new SyntaxError("Unexpected EOF"); }
-        if(tokens.get(0).getTokenType() != TokenType.SEMICOLON) { throw new SyntaxError("Invalid Token: Expected ;"); }
+        if(tokens.get(0).getTokenType() != TokenType.SEMICOLON) { throw new SyntaxError("Invalid Token: Expected \";\""); }
         tokens.remove(0);
 
         return new bodyStmt_Node(tempStmt);

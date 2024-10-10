@@ -1,12 +1,12 @@
 package jott_interpreter.nodes.grammar_nodes;
 
 import java.util.ArrayList;
+
 import jott_interpreter.SyntaxError;
 import jott_interpreter.nodes.*;
-import jott_interpreter.nodes.token_nodes.id_Node;
-import jott_interpreter.nodes.token_nodes.number_Node;
-import provided.Token;
-import provided.TokenType;
+import jott_interpreter.nodes.function_nodes.*;
+import jott_interpreter.nodes.token_nodes.*;
+import provided.*;
 
 public class operand_Node extends Jott_Node{
     private Jott_Node child;
