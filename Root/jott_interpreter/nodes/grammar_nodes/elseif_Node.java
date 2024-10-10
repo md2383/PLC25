@@ -53,11 +53,9 @@ public class elseif_Node extends Jott_Node{
 
         expr_Node expression = expr_Node.parseExprNode(tokens);
         
-        if(tokens.size() < 1) { throw new SyntaxError("Unexpected EOF"); }
+        if(tokens.size() < 2) { throw new SyntaxError("Unexpected EOF"); }
         if(tokens.get(0).getTokenType() != TokenType.R_BRACKET) { throw new SyntaxError("Invalid token: expected ']'"); }
         tokens.remove(0);
-
-        if(tokens.size() < 1) { throw new SyntaxError("Unexpected EOF"); }
         if(tokens.get(0).getTokenType() != TokenType.L_BRACE) { throw new SyntaxError("Invalid token: expected '{'"); }
         tokens.remove(0);
 
