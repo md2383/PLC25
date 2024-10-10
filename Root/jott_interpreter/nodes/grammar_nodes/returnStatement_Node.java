@@ -63,6 +63,10 @@ public class returnStatement_Node extends Jott_Node{
         return new returnStatement_Node(null);
     }
 
+    public boolean isVoid() {
+        return this.returnExpr == null;
+    }
+
     /**
      * Converts the returnStatement_Node to a Jott string
      * @return the Jott string representation of the returnStatement_Node
@@ -70,7 +74,7 @@ public class returnStatement_Node extends Jott_Node{
     @Override
     public String convertToJott() {
         // checks if the return is void
-        return returnExpr == null ?
+        return this.isVoid() ?
             "" : "Return " + returnExpr.convertToJott() + ";";
     }
 }
