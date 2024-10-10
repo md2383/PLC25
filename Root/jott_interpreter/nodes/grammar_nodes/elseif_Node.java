@@ -69,15 +69,14 @@ public class elseif_Node extends Jott_Node{
     }
 
     /**
-     *  Converts the elseif node to a string
-     * @return
-     * The string representation of the elseif node
+     * Converts the elseif node to a string
+     * @return The string representation of the elseif node
      * @implNote    The string representation of the elseif node is the
      *            concatenation of the expression and the body
      *           of the elseif node.
      */
     @Override
     public String convertToJott() {
-        return "Elseif " + this.expression.convertToJott() + " " + this.body.convertToJott();
+        return "Elseif [" + this.expression.convertToJott() + "] {" + this.body.convertToJott() + "}";
     }
 }
