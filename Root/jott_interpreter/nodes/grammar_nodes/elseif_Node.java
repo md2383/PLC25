@@ -6,16 +6,62 @@ import jott_interpreter.SyntaxError;
 import jott_interpreter.nodes.*;
 import provided.*;
 
+/**
+ * A function that represents an elseif node in the parse tree.
+ * parse tree grammar: Elseif < expr > < body >
+ */
 public class elseif_Node extends Jott_Node{
-    
-    public static elseif_Node parseElseifNode(final ArrayList<Token> tokens) throws SyntaxError {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'parseParamsNode'");
+    private expr_Node expression;
+    private body_Node body;
+
+    /**
+     * Private Constructor
+     * (validation of the node done in {@link #parseElseifNode})
+     * @param expression    an expression node
+     * @param body         a body node
+     */
+    public elseif_Node(expr_Node expression, body_Node body) {
+        this.expression = expression;
+        this.body = body;
     }
 
+    /**
+     * Static parse method returning an {@link elseif_Node} for the parse tree.
+     * @param tokens    the list of tokens being parsed into a parse tree
+     * @return        An elseif node which has been validated in accordance
+     * @throws SyntaxError  {@code Unexpected EOF}: no token to parse
+     * @throws SyntaxError  {@code Invalid Token}: token being parsed is not
+     *                     the expected token
+     * @implNote    The token(s) in the input array list of {@code Token}
+     *             objects will be removed from the list given validation
+     *            success.
+     * @see {@link Token}
+     * @see {@link TokenType}
+     */
+    public static elseif_Node parseElseifNode(final ArrayList<Token> tokens) throws SyntaxError {
+       if (tokens.size() < 1) {
+           throw new SyntaxError("Unexpected EOF");
+       }
+       if (tokens.get(0).getTokenType() != TokenType.ID_KEYWORD || !tokens.get(0).getToken().equals("Elseif")) {
+           throw new SyntaxError("Invalid token type, expected \"Elseif\"");
+       }
+        tokens.remove(0);
+        expr_Node expression = expr_Node.parseExprNode(tokens);
+        tokens.remove(0);
+        body_Node body = body_Node.parseBodyNode(tokens);
+        return new elseif_Node(expression, body);
+    }
+
+    /**
+     *  Converts the elseif node to a string
+     * @return
+     * The string representation of the elseif node
+     * @implNote    The string representation of the elseif node is the
+     *            concatenation of the expression and the body
+     *           of the elseif node.
+     */
     @Override
     public String convertToJott() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'convertToJott'");
+        return "Elseif " + this.expression.convertToJott() + " " + this.body.convertToJott();
     }
 }
