@@ -37,7 +37,7 @@ public class number_Node extends Jott_Node {
      * @see {@link Token} 
      * @see {@link TokenType}
      */
-    public static number_Node parseNumberNode(ArrayList<Token> tokens) throws SyntaxError {
+    public static number_Node parseNumberNode(final ArrayList<Token> tokens) throws SyntaxError {
         if(tokens.size() < 1) { throw new SyntaxError("Unexpected EOF"); }
         if(tokens.get(0).getTokenType() != TokenType.NUMBER) { throw new SyntaxError("Token type not NUMBER"); }
 

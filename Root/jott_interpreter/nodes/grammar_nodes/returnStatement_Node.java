@@ -42,7 +42,7 @@ public class returnStatement_Node extends Jott_Node{
      * @see {@link Token} 
      * @see {@link TokenType}
      */
-    public static returnStatement_Node parseReturnStatementNode(ArrayList<Token> tokens) throws SyntaxError {
+    public static returnStatement_Node parseReturnStatementNode(final ArrayList<Token> tokens) throws SyntaxError {
         // void check, determines if there is an actual return statement
         if(tokens.size() > 0) { 
             if(tokens.get(0).getTokenType() == TokenType.ID_KEYWORD &&
@@ -70,8 +70,7 @@ public class returnStatement_Node extends Jott_Node{
     @Override
     public String convertToJott() {
         // checks if the return is void
-        if(returnExpr != null) {
-            return "Return " + returnExpr.convertToJott() + ";";
-        } else { return ""; }
+        return returnExpr == null ?
+            "" : "Return " + returnExpr.convertToJott() + ";";
     }
 }

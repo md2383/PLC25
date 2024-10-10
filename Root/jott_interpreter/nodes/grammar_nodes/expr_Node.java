@@ -26,7 +26,7 @@ import provided.*;
 public class expr_Node extends Jott_Node{
 
     /** An array node representation of the expression. (Size 1 or 3) */
-    private Jott_Node[] expr;
+    private final Jott_Node[] expr;
 
     /**
      * Private Constructor 
@@ -51,7 +51,7 @@ public class expr_Node extends Jott_Node{
      * @see {@link Token} 
      * @see {@link TokenType}
      */
-    public static expr_Node parseExprNode(ArrayList<Token> tokens) throws SyntaxError {
+    public static expr_Node parseExprNode(final ArrayList<Token> tokens) throws SyntaxError {
         if(tokens.size() < 1) { throw new SyntaxError("Unexpected EOF"); }
 
         Jott_Node[] Expression = new Jott_Node[1];
@@ -62,6 +62,7 @@ public class expr_Node extends Jott_Node{
 
         // < bool >
         } else if(tokens.get(0).getTokenType() == TokenType.ID_KEYWORD &&
+                // checking the token is a boolean
                 "TF".contains("" + tokens.get(0).getToken().charAt(0))) {
             // TODO: Check if any default functions use capital T or F
             Expression[0] = bool_Node.parseBoolNode(tokens);
@@ -99,8 +100,8 @@ public class expr_Node extends Jott_Node{
 
     @Override
     public String convertToJott() {
-        String str = "";
-        for(Jott_Node node : expr) { str += node.convertToJott(); }
-        return str;
+        StringBuilder str = new StringBuilder();
+        for(Jott_Node node : expr) { str.append(" ").append(node.convertToJott()); }
+        return str.substring(1); // removing first space
     }
 }

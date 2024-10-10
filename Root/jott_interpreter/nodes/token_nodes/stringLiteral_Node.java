@@ -39,16 +39,17 @@ public class stringLiteral_Node extends Jott_Node {
      * @see {@link Token} 
      * @see {@link TokenType}
      */
-    public static stringLiteral_Node parseStringLiteralNode(ArrayList<Token> tokens) throws SyntaxError {
+    public static stringLiteral_Node parseStringLiteralNode(final ArrayList<Token> tokens) throws SyntaxError {
         if (tokens.size() < 1) {
             throw new SyntaxError("Unexpected EOF");
         }
         if (tokens.get(0).getTokenType() != TokenType.STRING) {
             throw new SyntaxError("Token type not Valid String");
         }
-        if (!tokens.get(0).getToken().startsWith("\"") || !tokens.get(0).getToken().endsWith("\"")) {
-            throw new SyntaxError("Invalid Token: Expected a string in \" \" ");
-        }
+        assert(
+            tokens.get(0).getToken().startsWith("\"") && 
+            tokens.get(0).getToken().endsWith("\"")
+        ); // not a syntax error (would be problem in our code)
         return new stringLiteral_Node(tokens.remove(0));
     }
 
