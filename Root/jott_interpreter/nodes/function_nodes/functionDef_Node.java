@@ -56,49 +56,47 @@ public class functionDef_Node extends Jott_Node {
      * @see {@link TokenType}
      */
     public static functionDef_Node parseFunctionDefNode(final ArrayList<Token> tokens) throws SyntaxError {
-        if (tokens.size() < 6) {
-            throw new SyntaxError("Unexpected EOF");
-        }
-        
+        if (tokens.size() < 1) { throw new SyntaxError("Unexpected EOF"); }
         // Check the type is Id/Keyword and is Def, if not throw an error
-        if (!(tokens.get(0).getTokenType() == TokenType.ID_KEYWORD || tokens.get(0).getToken().equals("Def"))) {
-            throw new SyntaxError("Invalid Function Definition: Missing a Keyword Token");
+        if (!(tokens.get(0).getTokenType() == TokenType.ID_KEYWORD && tokens.get(0).getToken().equals("Def"))) {
+            throw new SyntaxError("Invalid Function Definition: Missing Keyword 'Def'");
         }
-        else {
-            tokens.remove(0); // Removing the Def token from the list (Not storing)
-        }
+        tokens.remove(0); // Removing the Def token from the list (Not storing)
         
         // Saving the ID node
         id_Node id = id_Node.parseIdNode(tokens);
 
         // Check the type is OpenBracket and if not throw an error
-        if (tokens.get(0).getTokenType() != TokenType.L_BRACKET) {throw new SyntaxError("Invalid Function Definition: Missing a '[]' Token");}
+        if (tokens.size() < 1) { throw new SyntaxError("Unexpected EOF"); }
+        if (tokens.get(0).getTokenType() != TokenType.L_BRACKET) {throw new SyntaxError("Invalid Function Definition: Missing a '[' Token");}
         else { tokens.remove(0); } // Removing the OpenBracket token from the list (Not storing)
 
         // Saving the func_def_params node
         funcDefParams_Node func_def_params = funcDefParams_Node.parseFuncDefParamsNode(tokens);
 
         // Check the type is CloseBracket and if not throw an error
+        if (tokens.size() < 2) { throw new SyntaxError("Unexpected EOF"); }
         if (tokens.get(0).getTokenType() != TokenType.R_BRACKET) {throw new SyntaxError("Invalid Function Definition: Missing a ']' Token");}
-        else { tokens.remove(0); } // Removing the CloseBracket token from the list (Not storing)
-        
+        tokens.remove(0); // Removing the CloseBracket token from the list (Not storing)
         // Check the type is Colon and if not throw an error
         if (tokens.get(0).getTokenType() != TokenType.COLON) {throw new SyntaxError("Invalid Function Definition: Missing a ':' Token");}
-        else { tokens.remove(0); } // Removing the Colon token from the list (Not storing)
+        tokens.remove(0); // Removing the Colon token from the list (Not storing)
 
         // Saving the function_return node
         functionReturn_Node function_return = functionReturn_Node.parseFunctionReturnNode(tokens);
 
         // Check the type is OpenBrace and if not throw an error
+        if (tokens.size() < 1) { throw new SyntaxError("Unexpected EOF"); }
         if (tokens.get(0).getTokenType() != TokenType.L_BRACE) {throw new SyntaxError("Invalid Function Definition: Missing a '{' Token");}
-        else {tokens.remove(0);} // Removing the OpenBrace token from
+        else {tokens.remove(0);} // Removing the OpenBrace token
     
         // Saving the f_body node
         funcBody_Node f_body = funcBody_Node.parseFuncBodyNode(tokens);
 
         // Check the type is CloseBrace and if not throw an error
+        if (tokens.size() < 1) { throw new SyntaxError("Unexpected EOF"); }
         if (tokens.get(0).getTokenType() != TokenType.R_BRACE) {throw new SyntaxError("Invalid Function Definition: Missing a '}' Token");}
-        else {tokens.remove(0);} // Removing the CloseBrace token from
+        else {tokens.remove(0);} // Removing the CloseBrace token
         
         return new functionDef_Node(id, func_def_params, function_return, f_body);
     }
@@ -110,14 +108,12 @@ public class functionDef_Node extends Jott_Node {
      */
     @Override
     public String convertToJott() {
-        String jott = "";
-
-        jott += "Def ";
-        jott += id.convertToJott();
-        jott += "[" + func_def_params.convertToJott() + "]";
-        jott += ":" + function_return.convertToJott();
-        jott += "{" + f_body.convertToJott() + "}";
-
-        return jott;
+        StringBuilder jott = new StringBuilder();
+        jott.append( "Def " )
+            .append( convertToJott() )
+            .append( "[" + func_def_params.convertToJott() + "]" )
+            .append( ":" + function_return.convertToJott() )
+            .append( "{" + f_body.convertToJott() + "}" );
+        return jott.toString();
     }
 }

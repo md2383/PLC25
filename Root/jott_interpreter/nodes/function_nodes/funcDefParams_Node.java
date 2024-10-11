@@ -1,10 +1,10 @@
 package jott_interpreter.nodes.function_nodes;
 
 import java.util.ArrayList;
+
 import jott_interpreter.SyntaxError;
 import jott_interpreter.nodes.*;
-import jott_interpreter.nodes.token_nodes.id_Node;
-import jott_interpreter.nodes.token_nodes.type_Node;
+import jott_interpreter.nodes.token_nodes.*;
 import provided.*;
 
 /**
@@ -14,10 +14,10 @@ import provided.*;
  */
 public class funcDefParams_Node extends Jott_Node {
     
-    id_Node id;
+    private final id_Node id;
     // Colon (Doesn't need to be stored just checked if it's there)
-    type_Node type;
-    ArrayList<funcDefParams_t_Node> func_def_params_t;
+    private final type_Node type;
+    private final ArrayList<funcDefParams_t_Node> func_def_params_t;
 
     /**
      * Private Constructor 
@@ -31,6 +31,17 @@ public class funcDefParams_Node extends Jott_Node {
         this.type = type;
         this.func_def_params_t = func_def_params_t;
     }
+
+    /**
+     * Private Constructor 
+     * (validation of the node done in {@link #parseFuncDefParamsNode})
+     * This constructor creates a null list of parameters.
+     */
+    private funcDefParams_Node() {
+        this.id = null;
+        this.type = null;
+        this.func_def_params_t = null;
+    }
     
     /**
      * Static parse method returning an {@link funcDefParams_Node} for the parse tree.
@@ -39,8 +50,8 @@ public class funcDefParams_Node extends Jott_Node {
      * @return  A function definition node which has been validated in accordance 
      *          with the parse tree grammar
      * @throws SyntaxError  {@code Unexpected EOF}: no token to parse
-     * @throws SyntaxError  {@code Invalid Function Definition}: token being 
-     *                      parsed is not a valid function definition
+     * @throws SyntaxError  {@code Invalid Token}: token being 
+     *                      parsed is not a valid token
      * @implNote    The token(s) in the input array list of {@code Token} 
      *              objects will be removed from the list given validation 
      *              success.
@@ -48,32 +59,33 @@ public class funcDefParams_Node extends Jott_Node {
      * @see {@link TokenType}
      */
     public static funcDefParams_Node parseFuncDefParamsNode(final ArrayList<Token> tokens) throws SyntaxError {
-        // Could be empty, if so retrn empty
-        if (tokens.size() == 0) { return null; }
+        if(tokens.get(0).getTokenType() == TokenType.ID_KEYWORD) {
+            // Get the ID
+            id_Node id = id_Node.parseIdNode(tokens);
+            
+            if (tokens.size() < 1){ throw new SyntaxError("Unexpected EOF"); }
+            if (!(tokens.get(0).getTokenType() == TokenType.COLON)) {throw new SyntaxError("Invalid Token: expected ':'");}
+            else { tokens.remove(0); }
+            
+            // Get the type
+            type_Node type = type_Node.parseTypeNode(tokens);
 
-        // Otherwise, check for the minimum size
-        if (tokens.size() < 3){ throw new SyntaxError("Unexpected EOF"); }
-        
-        // Get the ID
-        id_Node id = id_Node.parseIdNode(tokens);
+            // Get the rest of the parameters
+            ArrayList<funcDefParams_t_Node> func_def_params_t = new ArrayList<funcDefParams_t_Node>();
 
-        // Check for colon
-        if (!(tokens.get(0).getTokenType() == TokenType.COLON)) {throw new SyntaxError("Invalid Function Definition");}
-        else { tokens.remove(0); }
-        
-        // Get the type
-        type_Node type = type_Node.parseTypeNode(tokens);
+            if (tokens.size() < 1){ throw new SyntaxError("Unexpected EOF"); }
 
-        // Get the rest of the parameters
-        ArrayList<funcDefParams_t_Node> func_def_params_t = new ArrayList<funcDefParams_t_Node>();
+            // Loop through the rest of the parameters
+            while(tokens.get(0).getTokenType() == TokenType.COMMA) {
+                func_def_params_t.add(funcDefParams_t_Node.parseFuncDefParamsTNode(tokens));
+                if (tokens.size() < 1){ throw new SyntaxError("Unexpected EOF"); }
+            }
 
-        // Loop through the rest of the parameters
-        for (Token t : tokens) {
-            func_def_params_t.add(funcDefParams_t_Node.parseFuncDefParamsTNode(tokens));
+            // Return the new node
+            return new funcDefParams_Node(id, type, func_def_params_t);
         }
 
-        // Return the new node
-        return new funcDefParams_Node(id, type, func_def_params_t);
+        return new funcDefParams_Node(); // no params in func def
     }
 
     /**
@@ -82,14 +94,16 @@ public class funcDefParams_Node extends Jott_Node {
      */
     @Override
     public String convertToJott() {
-        String jott = "";
-        jott += id.convertToJott();
-        jott += ": ";
-        jott += type.convertToJott();
-        for (funcDefParams_t_Node f : func_def_params_t) {
-            jott += ", ";
-            jott += f.convertToJott();
+        if(this.id == null) { return ""; }
+        else {
+            String jott = "";
+            jott += id.convertToJott();
+            jott += ": ";
+            jott += type.convertToJott();
+            for (funcDefParams_t_Node f : func_def_params_t) {
+                jott += f.convertToJott();
+            }
+            return jott;
         }
-        return jott;
     }
 }

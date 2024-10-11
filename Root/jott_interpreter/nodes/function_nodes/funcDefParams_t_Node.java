@@ -44,17 +44,16 @@ public class funcDefParams_t_Node extends Jott_Node {
      * @see {@link TokenType}
      */
     public static funcDefParams_t_Node parseFuncDefParamsTNode(final ArrayList<Token> tokens) throws SyntaxError {
-        if (tokens.size() < 4){ throw new SyntaxError("Unexpected EOF"); }
-        
-        // Check for comma
-        if (!(tokens.get(0).getTokenType() == TokenType.COMMA)) {throw new SyntaxError("Invalid Function Definition");}
-        else { tokens.remove(0); }
+        if (tokens.size() < 1){ throw new SyntaxError("Unexpected EOF"); }
+        assert(tokens.get(0).getTokenType() == TokenType.COMMA);
+        tokens.remove(0); 
         
         id_Node id = id_Node.parseIdNode(tokens);
 
         // Check for colon
-        if (!(tokens.get(0).getTokenType() == TokenType.COLON)) {throw new SyntaxError("Invalid Function Definition");}
-        else { tokens.remove(0); }
+        if (tokens.size() < 1){ throw new SyntaxError("Unexpected EOF"); }
+        if (tokens.get(0).getTokenType() != TokenType.COLON) { throw new SyntaxError("Invalid Token: expected ':'"); }
+        tokens.remove(0);
         
         type_Node type = type_Node.parseTypeNode(tokens);
 
