@@ -63,8 +63,8 @@ public class expr_Node extends Jott_Node{
         // < bool >
         } else if(tokens.get(0).getTokenType() == TokenType.ID_KEYWORD &&
                 // checking the token is a boolean
-                "TF".contains("" + tokens.get(0).getToken().charAt(0))) {
-            // TODO: Check if any default functions use capital T or F
+                ("True".equals(tokens.get(0).getToken()) ||
+                "False".equals(tokens.get(0).getToken())) ) {
             Expression[0] = bool_Node.parseBoolNode(tokens);
 
         // < operand >
