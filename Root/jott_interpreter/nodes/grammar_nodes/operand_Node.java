@@ -49,7 +49,7 @@ public class operand_Node extends Jott_Node{
 
     @Override
     public String convertToJott() {
-        if (this.neg == true) {
+        if (this.neg) {
             return "-" + this.child.convertToJott();
         } else {
             return this.child.convertToJott();

@@ -1,5 +1,7 @@
 package jott_interpreter.nodes.grammar_nodes;
+
 import java.util.ArrayList;
+
 import jott_interpreter.SyntaxError;
 import jott_interpreter.nodes.Jott_Node;
 import jott_interpreter.nodes.token_nodes.*;
@@ -12,8 +14,7 @@ public class varDec_Node extends Jott_Node {
     
     /** Valid {@code type_Node} token reference */
     private final type_Node type;     
-    private final id_Node id;
-    private final Token semicolonToken;      
+    private final id_Node id;    
 
     /**
      * Private Constructor 
@@ -21,10 +22,9 @@ public class varDec_Node extends Jott_Node {
      * @param type a validated {@code type_Node} token reference
      * @param id a validated {@code id_Node} token reference
      */
-    public varDec_Node(type_Node type, id_Node id, Token semicolonToken) {
+    public varDec_Node(type_Node type, id_Node id) {
         this.type = type;
         this.id = id;
-        this.semicolonToken = semicolonToken;
     }
     
     /**
@@ -45,17 +45,15 @@ public class varDec_Node extends Jott_Node {
      * @see {@link TokenType}
      */
     public static varDec_Node parseVarDecNode(ArrayList<Token> tokens) throws SyntaxError {
-        if(tokens.size() < 3) { throw new SyntaxError("Unexpected EOF"); }
         type_Node tempType = type_Node.parseTypeNode(tokens);
-        tokens.remove(0);
         id_Node tempID = id_Node.parseIdNode(tokens);
-        tokens.remove(0);
+
         // check semi colon
-        if (tokens.get(0).getTokenType() != TokenType.SEMICOLON) {
-            throw new SyntaxError("Invalid Token: Expected ;");
-        }
-        Token semicolon = tokens.remove(0);
-        return new varDec_Node(tempType, tempID, semicolon);
+        if(tokens.size() < 1) { throw new SyntaxError("Unexpected EOF"); }
+        if (tokens.get(0).getTokenType() != TokenType.SEMICOLON) { throw new SyntaxError("Invalid Token: Expected ';'"); }
+        tokens.remove(0);
+        
+        return new varDec_Node(tempType, tempID);
     }
 
     /**
@@ -65,7 +63,7 @@ public class varDec_Node extends Jott_Node {
      */
     @Override
     public String convertToJott() {
-        return type.convertToJott() + " " + id.convertToJott() + semicolonToken.getToken();
+        return type.convertToJott() + " " + id.convertToJott() + ";";
     }
     
 }

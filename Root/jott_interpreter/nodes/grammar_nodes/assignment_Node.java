@@ -1,23 +1,22 @@
 package jott_interpreter.nodes.grammar_nodes;
 
 import java.util.ArrayList;
+
 import jott_interpreter.SyntaxError;
 import jott_interpreter.nodes.*;
 import jott_interpreter.nodes.token_nodes.*;
 import provided.*;
 
 /**
- * An assignment node containing an {@code ID} [{@link id_Node}], an assignment 
- * operator [{@link Token}], an expression [{@link expr_Node}], and a semicolon 
- * [{@link Token}] to end the assignment.
+ * An assignment node containing an {@code ID} [{@link id_Node}]
+ * and an expression [{@link expr_Node}]
  */
 public class assignment_Node extends Jott_Node {
     
-    /** Parts of an assignment node */
+    /** id being assigned to */
     private id_Node id;             // ID
-    private Token assign;           // =
+    /** expr assigned to id */
     private expr_Node expr;         // Expression
-    private Token semicolon;        // ;
 
     /**
      * Private Constructor 
@@ -27,11 +26,9 @@ public class assignment_Node extends Jott_Node {
      * @param expr      an expression node referencing the value being assigned
      * @param semicolon a semicolon token to end the assignment
      */
-    private assignment_Node(id_Node id, Token assign, expr_Node expr, Token semicolon) {
+    private assignment_Node(id_Node id, expr_Node expr) {
         this.id = id;
-        this.assign = assign;
         this.expr = expr;
-        this.semicolon = semicolon;
     }
 
     /**
@@ -51,33 +48,25 @@ public class assignment_Node extends Jott_Node {
      * @see {@link Token} 
      * @see {@link TokenType}
      */
-    public static assignment_Node parseAssignmentNode(ArrayList<Token> Tokens) throws SyntaxError {
-
-        // Check for EOF (Anything less than 4 means theres not enough tokens for assignment node)
-        if (Tokens.size() < 4) {
-            throw new SyntaxError("Unexpected EOF");
-        }
-        
+    public static assignment_Node parseAssignmentNode(ArrayList<Token> tokens) throws SyntaxError {
         // Check for ID
-        id_Node tempID = id_Node.parseIdNode(Tokens);
-        Tokens.remove(0);
+        id_Node tempID = id_Node.parseIdNode(tokens);
         
         // Check for assignment operator. If it's not '=' then error
-        Token tempAssign = Tokens.get(0);
-        if (tempAssign.getTokenType() != TokenType.ASSIGN) { throw new SyntaxError("Invalid Token: Expected ="); }
-        Tokens.remove(0);
+        if (tokens.size() < 1) { throw new SyntaxError("Unexpected EOF"); }
+        if (tokens.get(0).getTokenType() != TokenType.ASSIGN) { throw new SyntaxError("Invalid Token: Expected '='"); }
+        tokens.remove(0);
 
         // Check for expression
-        expr_Node tempExpr = expr_Node.parseExprNode(Tokens);
-        Tokens.remove(0);
+        expr_Node tempExpr = expr_Node.parseExprNode(tokens);
 
         // Check for semicolon. If it's not ';' then error
-        Token tempSemicolon = Tokens.get(0);
-        if(tempSemicolon.getTokenType() != TokenType.SEMICOLON) { throw new SyntaxError("Invalid Token: Expected ;"); }
-        Tokens.remove(0);
+        if (tokens.size() < 1) { throw new SyntaxError("Unexpected EOF"); }
+        if(tokens.get(0).getTokenType() != TokenType.SEMICOLON) { throw new SyntaxError("Invalid Token: Expected ';'"); }
+        tokens.remove(0);
 
         // Return the assignment node
-        return new assignment_Node(tempID, tempAssign, tempExpr, tempSemicolon);
+        return new assignment_Node(tempID, tempExpr);
     }
 
     /**
@@ -86,11 +75,11 @@ public class assignment_Node extends Jott_Node {
      */
     @Override
     public String convertToJott() {
-        String result = "";
-        result += id.convertToJott();
-        result += assign.getToken();
-        result += expr.convertToJott();
-        result += semicolon.getToken();
-        return result;
+        StringBuilder result = new StringBuilder();
+        result.append( this.id.convertToJott() )
+              .append( "=" )
+              .append( this.expr.convertToJott() )
+              .append( ";" );
+        return result.toString();
     }
 }

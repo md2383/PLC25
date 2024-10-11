@@ -6,10 +6,6 @@ import provided.*;
  * Abstract head of the Parse Tree
  */
 public abstract class Jott_Node implements JottTree{
-    
-    public Jott_Node() {
-
-    }
 
     @Override
     abstract public String convertToJott();

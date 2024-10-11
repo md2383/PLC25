@@ -6,36 +6,35 @@ import jott_interpreter.nodes.*;
 import provided.*;
 
 public class params_Node extends Jott_Node {
-    private expr_Node firstNode;
-    private ArrayList<params_t_Node> followingNodes;
+    private final expr_Node firstNode;
+    private final ArrayList<params_t_Node> followingNodes;
 
-    public params_Node() {
+    private params_Node() {
         this.firstNode = null;
         this.followingNodes = null;
     }
 
-    public params_Node(expr_Node first) {
+    private params_Node(expr_Node first) {
         this.firstNode = first;
         this.followingNodes = null;
     }
 
-    public params_Node(expr_Node first, ArrayList<params_t_Node> following) {
+    private params_Node(expr_Node first, ArrayList<params_t_Node> following) {
         this.firstNode = first;
         this.followingNodes = following;
     }
 
-    public static params_Node parseParamsNode(ArrayList<Token> tokens) throws SyntaxError {
-        if (tokens.size() < 1) {
-            throw new SyntaxError("Unexpected EOF");
-        }
+    public static params_Node parseParamsNode(final ArrayList<Token> tokens) throws SyntaxError {
+        if (tokens.size() < 1) { throw new SyntaxError("Unexpected EOF"); }
         expr_Node tempExpr;
         ArrayList<params_t_Node> tempArr = new ArrayList<>();
         if (tokens.get(0).getTokenType() != TokenType.R_BRACKET) {
             tempExpr = expr_Node.parseExprNode(tokens);
             while (tokens.get(0).getTokenType() != TokenType.R_BRACKET) {
                 tempArr.add(params_t_Node.parseParamsTNode(tokens));
+                if (tokens.size() < 1) { throw new SyntaxError("Unexpected EOF"); }
             }
-            if (tempArr.size() < 1) {
+            if (tempArr.size() <= 1) {
                 return new params_Node(tempExpr);
             } else {
                 return new params_Node(tempExpr, tempArr);
@@ -50,7 +49,7 @@ public class params_Node extends Jott_Node {
         if (this.firstNode == null) {
             return "";
         } else {
-            if (this.followingNodes.size() < 1) {
+            if (this.followingNodes.size() <= 1) {
                 return this.firstNode.convertToJott();
             } else {
                 String temp = this.firstNode.convertToJott();
@@ -61,5 +60,4 @@ public class params_Node extends Jott_Node {
             }
         }
     }
-    
 }
