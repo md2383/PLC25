@@ -28,6 +28,7 @@ public class functionReturn_Node extends Jott_Node{
             throw new SyntaxError("Token is ID, expected Keyword");
         }
         if (tokens.get(0).getToken().equals("Void")) {
+            tokens.remove(0);
             return new functionReturn_Node();
         } else {
             return new functionReturn_Node(type_Node.parseTypeNode(tokens));
