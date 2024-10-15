@@ -11,7 +11,8 @@ import provided.*;
     * parse tree grammar: Else { < body > }
   */
 public class else_Node extends Jott_Node{
-    private body_Node body;
+
+    private final body_Node body;
 
     /**
      * Private Constructor
@@ -29,19 +30,27 @@ public class else_Node extends Jott_Node{
     * @throws SyntaxError {@code Unexpected EOF}: no token to parse
     */
     public static else_Node parseElseNode(final ArrayList<Token> tokens) throws SyntaxError {
-        if (tokens.size() < 2) { throw new SyntaxError("Unexpected EOF"); }
-        assert(tokens.get(0).getToken().equals("Else")); // not syntax error
-        tokens.remove(0);
-        if(tokens.get(0).getTokenType() != TokenType.L_BRACE) { throw new SyntaxError("Invalid token: expected '{'"); }
-        tokens.remove(0);
+        if (tokens.size() > 2) {
+            if(tokens.get(0).getToken().equals("Else")) {
+                tokens.remove(0);
+                if(tokens.get(0).getTokenType() != TokenType.L_BRACE) { throw new SyntaxError("Invalid token: expected '{'"); }
+                tokens.remove(0);
 
-        body_Node body = body_Node.parseBodyNode(tokens);
+                body_Node body = body_Node.parseBodyNode(tokens);
 
-        if(tokens.size() < 1) { throw new SyntaxError("Unexpected EOF"); }
-        if(tokens.get(0).getTokenType() != TokenType.R_BRACE) { throw new SyntaxError("Invalid token: expected '}'"); }
-        tokens.remove(0);
+                if(tokens.size() < 1) { throw new SyntaxError("Unexpected EOF"); }
+                if(tokens.get(0).getTokenType() != TokenType.R_BRACE) { throw new SyntaxError("Invalid token: expected '}'"); }
+                tokens.remove(0);
 
-        return new else_Node(body);
+                return new else_Node(body);
+            }
+        }
+
+        return new else_Node(null);
+    }
+
+    private boolean isVoid() {
+        return this.body == null;
     }
 
     /**
@@ -49,6 +58,7 @@ public class else_Node extends Jott_Node{
      */
     @Override
     public String convertToJott() {
-        return "Else" + "{" + this.body.convertToJott() + "}";
+        return isVoid() ?
+            "" : "Else" + "{" + this.body.convertToJott() + "}";
     }
 }
