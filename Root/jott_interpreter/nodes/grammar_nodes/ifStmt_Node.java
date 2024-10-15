@@ -6,16 +6,16 @@ import jott_interpreter.SyntaxError;
 import jott_interpreter.nodes.*;
 import provided.*;
 
-
  /**
   * A function that represents an if statement node in the parse tree.
     * parse tree grammar: If [< expr >]{< body >} < elseif >⋆ < else >
   */
 public class ifStmt_Node extends Jott_Node{
+
     private expr_Node expression;
     private body_Node body;
-    private static  elseif_Node elseif;
-    private static  else_Node elseNode;
+    private elseif_Node[] elseifNodes;
+    private else_Node elseNode;
 
     /**
      * Private Constructor
@@ -25,17 +25,17 @@ public class ifStmt_Node extends Jott_Node{
      * @param elseif        an elseif node
      * @param elseNode      an else node
      */
-    public ifStmt_Node(expr_Node expression, body_Node body, elseif_Node elseif, else_Node elseNode){
+    public ifStmt_Node(expr_Node expression, body_Node body, elseif_Node[] elseifNodes, else_Node elseNode){
         this.expression = expression;
         this.body = body;
-        this.elseif = elseif;
+        this.elseifNodes = elseifNodes;
         this.elseNode = elseNode;
     }
 
     /**
      * Static parse method returning an {@link ifStmt_Node} for the parse tree.
      * @param tokens   the list of tokens being parsed into a parse tree
-     * @returnm An if statement node which has been validated in accordance
+     * @return An if statement node which has been validated in accordance
      * @throws SyntaxError {@code Unexpected EOF}: no token to parse
      */
     public static ifStmt_Node parseIfStmtNode(final ArrayList<Token> tokens) throws SyntaxError {
@@ -50,35 +50,27 @@ public class ifStmt_Node extends Jott_Node{
         if(tokens.size() < 2) { throw new SyntaxError("Unexpected EOF"); }
         if(tokens.get(0).getTokenType() != TokenType.R_BRACKET) { throw new SyntaxError("Invalid token: expected ']'"); }
         tokens.remove(0);
-
-        if(tokens.size() < 2) { throw new SyntaxError("Unexpected EOF"); }
         if(tokens.get(0).getTokenType() != TokenType.L_BRACE) { throw new SyntaxError("Invalid token: expected '{'"); }
         tokens.remove(0);
 
         body_Node body = body_Node.parseBodyNode(tokens);
 
-        if(tokens.size() < 2) { throw new SyntaxError("Unexpected EOF"); }
+        if(tokens.size() < 1) { throw new SyntaxError("Unexpected EOF"); }
         if(tokens.get(0).getTokenType() != TokenType.R_BRACE) { throw new SyntaxError("Invalid token: expected '}'"); }
         tokens.remove(0);
 
+        ArrayList<elseif_Node> elseifNodes = new ArrayList<>();
+        else_Node elseNode = null;
 
-        if(tokens.size() < 2) { throw new SyntaxError("Unexpected EOF"); }
-        if(tokens.get(0).getToken().equals("Elseif")) {
-            elseif_Node elseif = elseif_Node.parseElseifNode(tokens);
+        if(tokens.size() < 1) { throw new SyntaxError("Unexpected EOF"); }
+        while(tokens.get(0).getToken().equals("Elseif")) {
+            elseifNodes.add(elseif_Node.parseElseifNode(tokens));
+            if(tokens.size() < 1) { throw new SyntaxError("Unexpected EOF"); }
         }
 
-        if (tokens.size() < 2) { throw new SyntaxError("Unexpected EOF"); }
-        if(tokens.get(0).getToken().equals(".")) {
-            tokens.remove(0);
-        }
+        elseNode = else_Node.parseElseNode(tokens);
 
-        if(tokens.size() < 2) { throw new SyntaxError("Unexpected EOF"); }
-        if(tokens.get(0).getToken().equals("Else")) {
-            else_Node elseNode = else_Node.parseElseNode(tokens);
-        }
-
-        return new ifStmt_Node(expression, body, elseif, elseNode);
-
+        return new ifStmt_Node(expression, body, (elseif_Node[])(elseifNodes.toArray()), elseNode);
     }
 
     /**
@@ -87,6 +79,16 @@ public class ifStmt_Node extends Jott_Node{
      */
     @Override
     public String convertToJott() {
-        return "If" + "[" + this.expression.convertToJott() + "]" + "{" + this.body.convertToJott() + "}" + this.elseif.convertToJott() + "." + this.elseNode.convertToJott();
+        StringBuilder str = new StringBuilder();
+
+        str.append("If[")
+           .append(this.expression.convertToJott())
+           .append("]{")
+           .append(this.body.convertToJott())
+           .append("}");
+        for(elseif_Node elseif : this.elseifNodes) { str.append(elseif); }
+        str.append(this.elseNode.convertToJott());
+        
+        return str.toString();
     }
 }
