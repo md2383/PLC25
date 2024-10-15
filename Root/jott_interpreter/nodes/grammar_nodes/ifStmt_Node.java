@@ -12,10 +12,10 @@ import provided.*;
   */
 public class ifStmt_Node extends Jott_Node{
 
-    private expr_Node expression;
-    private body_Node body;
-    private elseif_Node[] elseifNodes;
-    private else_Node elseNode;
+    private final expr_Node expressionN;
+    private final body_Node bodyN;
+    private final elseif_Node[] elseifN;
+    private final else_Node elseN;
 
     /**
      * Private Constructor
@@ -26,10 +26,10 @@ public class ifStmt_Node extends Jott_Node{
      * @param elseNode      an else node
      */
     public ifStmt_Node(expr_Node expression, body_Node body, elseif_Node[] elseifNodes, else_Node elseNode){
-        this.expression = expression;
-        this.body = body;
-        this.elseifNodes = elseifNodes;
-        this.elseNode = elseNode;
+        this.expressionN = expression;
+        this.bodyN = body;
+        this.elseifN = elseifNodes;
+        this.elseN = elseNode;
     }
 
     /**
@@ -82,12 +82,12 @@ public class ifStmt_Node extends Jott_Node{
         StringBuilder str = new StringBuilder();
 
         str.append("If[")
-           .append(this.expression.convertToJott())
+           .append(this.expressionN.convertToJott())
            .append("]{")
-           .append(this.body.convertToJott())
+           .append(this.bodyN.convertToJott())
            .append("}");
-        for(elseif_Node elseif : this.elseifNodes) { str.append(elseif); }
-        str.append(this.elseNode.convertToJott());
+        for(elseif_Node elseif : this.elseifN) { str.append(elseif); }
+        str.append(this.elseN.convertToJott());
         
         return str.toString();
     }
