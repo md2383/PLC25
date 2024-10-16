@@ -33,7 +33,7 @@ public class funcBody_Node extends Jott_Node{
 
         body_Node body = body_Node.parseBodyNode(tokens);
 
-        return new funcBody_Node((varDec_Node[])(tempVars.toArray()), body);
+        return new funcBody_Node(tempVars.toArray(new varDec_Node[tempVars.size()]), body);
     }
 
     @Override

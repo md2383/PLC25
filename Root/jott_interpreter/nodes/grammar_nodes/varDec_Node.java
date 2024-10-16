@@ -22,7 +22,7 @@ public class varDec_Node extends Jott_Node {
      * @param type a validated {@code type_Node} token reference
      * @param id a validated {@code id_Node} token reference
      */
-    public varDec_Node(type_Node type, id_Node id) {
+    private varDec_Node(type_Node type, id_Node id) {
         this.type = type;
         this.id = id;
     }

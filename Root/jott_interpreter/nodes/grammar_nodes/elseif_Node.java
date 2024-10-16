@@ -11,8 +11,8 @@ import provided.*;
  * parse tree grammar: Elseif < expr > < body >
  */
 public class elseif_Node extends Jott_Node{
-    private expr_Node expression;
-    private body_Node body;
+    private final expr_Node expression;
+    private final body_Node body;
 
     /**
      * Private Constructor
@@ -20,7 +20,7 @@ public class elseif_Node extends Jott_Node{
      * @param expression    an expression node
      * @param body         a body node
      */
-    public elseif_Node(expr_Node expression, body_Node body) {
+    private elseif_Node(expr_Node expression, body_Node body) {
         this.expression = expression;
         this.body = body;
     }

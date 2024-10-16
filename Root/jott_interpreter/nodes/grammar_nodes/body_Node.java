@@ -55,7 +55,7 @@ public class body_Node extends Jott_Node{
             } else { break; }
         }
 
-        return new body_Node((bodyStmt_Node[])(stmt.toArray()), tempReturn);
+        return new body_Node(stmt.toArray(new bodyStmt_Node[stmt.size()]), tempReturn);
     }
 
     @Override

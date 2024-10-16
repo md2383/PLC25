@@ -70,7 +70,12 @@ public class ifStmt_Node extends Jott_Node{
 
         elseNode = else_Node.parseElseNode(tokens);
 
-        return new ifStmt_Node(expression, body, (elseif_Node[])(elseifNodes.toArray()), elseNode);
+        return new ifStmt_Node(
+            expression, 
+            body, 
+            elseifNodes.toArray(new elseif_Node[elseifNodes.size()]), 
+            elseNode
+        );
     }
 
     /**

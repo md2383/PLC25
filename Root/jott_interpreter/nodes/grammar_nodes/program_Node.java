@@ -43,7 +43,7 @@ public class program_Node extends Jott_Node{
         do {
             functions.add(functionDef_Node.parseFunctionDefNode(tokens));
         } while(!tokens.isEmpty());
-        return new program_Node((functionDef_Node[])(functions.toArray()));
+        return new program_Node(functions.toArray(new functionDef_Node[functions.size()]));
     }
 
     @Override
