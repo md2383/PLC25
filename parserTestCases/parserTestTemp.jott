@@ -1,0 +1,1 @@
+Def main[]:Integer{Double x;x=5.0;;Return x;}

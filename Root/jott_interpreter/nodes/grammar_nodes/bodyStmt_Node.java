@@ -60,6 +60,11 @@ public class bodyStmt_Node extends Jott_Node {
         // < func_call >
         if(tokens.get(0).getTokenType() == TokenType.FC_HEADER) {
             tempStmt = functionCall_Node.parseFunctionCallNode(tokens);
+
+            // Semicolon check - just after a func_call
+            if(tokens.size() < 1) { throw new SyntaxError("Unexpected EOF"); }
+            if(tokens.get(0).getTokenType() != TokenType.SEMICOLON) { throw new SyntaxError("Invalid Token: Expected \";\""); }
+            tokens.remove(0);
         } else {
             // < if_stmt >
             if(tokens.get(0).getToken().equals("If")) {
@@ -72,11 +77,6 @@ public class bodyStmt_Node extends Jott_Node {
                 tempStmt = assignment_Node.parseAssignmentNode(tokens);
             }
         }
-
-        // Semicolon check
-        if(tokens.size() < 1) { throw new SyntaxError("Unexpected EOF"); }
-        if(tokens.get(0).getTokenType() != TokenType.SEMICOLON) { throw new SyntaxError("Invalid Token: Expected \";\""); }
-        tokens.remove(0);
 
         return new bodyStmt_Node(tempStmt);
     }

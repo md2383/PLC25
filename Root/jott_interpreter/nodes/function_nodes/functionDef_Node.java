@@ -110,10 +110,10 @@ public class functionDef_Node extends Jott_Node {
     public String convertToJott() {
         StringBuilder jott = new StringBuilder();
         jott.append( "Def " )
-            .append( convertToJott() )
-            .append( "[" + func_def_params.convertToJott() + "]" )
-            .append( ":" + function_return.convertToJott() )
-            .append( "{" + f_body.convertToJott() + "}" );
+            .append( this.id.convertToJott() )
+            .append( "[" + this.func_def_params.convertToJott() + "]" )
+            .append( ":" + this.function_return.convertToJott() )
+            .append( "{" + this.f_body.convertToJott() + "}" );
         return jott.toString();
     }
 }
