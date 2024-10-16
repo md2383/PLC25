@@ -7,13 +7,14 @@ import jott_interpreter.nodes.token_nodes.type_Node;
 import provided.*;
 
 public class functionReturn_Node extends Jott_Node{
-    private type_Node type;
 
-    public functionReturn_Node() {
+    private final type_Node type;
+
+    private functionReturn_Node() {
         this.type = null;
     }
 
-    public functionReturn_Node(type_Node type) {
+    private functionReturn_Node(type_Node type) {
         this.type = type;
     }
 
