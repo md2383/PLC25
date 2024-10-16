@@ -55,6 +55,12 @@ public class body_Node extends Jott_Node{
             } else { break; }
         }
 
+        // empty body check -> void return
+        if(tempReturn == null) {
+            tempReturn = returnStatement_Node.parseReturnStatementNode(tokens);
+            assert tempReturn.isVoid();
+        }
+
         return new body_Node(stmt.toArray(new bodyStmt_Node[stmt.size()]), tempReturn);
     }
 
