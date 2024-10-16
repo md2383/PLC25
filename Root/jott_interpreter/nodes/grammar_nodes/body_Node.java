@@ -48,7 +48,7 @@ public class body_Node extends Jott_Node{
         returnStatement_Node tempReturn = null;
         
         // checks for either a '}' or a return and otherwise parses a body statement
-        while(tokens.get(0).getTokenType() != TokenType.R_BRACKET) {
+        while(tokens.get(0).getTokenType() != TokenType.R_BRACE) {
             if((tempReturn = returnStatement_Node.parseReturnStatementNode(tokens)).isVoid()) {
                 stmt.add(bodyStmt_Node.parseBodyStmtNode(tokens));
                 if(tokens.size() < 1) { throw new SyntaxError("Unexpected EOF"); }

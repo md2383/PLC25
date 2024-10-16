@@ -49,7 +49,7 @@ public class params_Node extends Jott_Node {
         if (this.firstNode == null) {
             return "";
         } else {
-            if (this.followingNodes.size() <= 1) {
+            if (this.followingNodes == null) {
                 return this.firstNode.convertToJott();
             } else {
                 String temp = this.firstNode.convertToJott();

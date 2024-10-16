@@ -23,6 +23,7 @@ public class JottParser {
       try {
         root = program_Node.parseProgramNode(tokens);
       } catch (SyntaxError Error) {
+        // Error.printStackTrace(); // Debugging
         if(tokens.size() != 0) {
           Token errorToken = tokens.get(0);
           Error.print(errorToken.getFilename(), errorToken.getLineNum());

@@ -25,14 +25,16 @@ public class bodyStmt_Node extends Jott_Node {
 
     /** Abstracted {@code Jott_Node} representation of the body statement. */
     private final Jott_Node statement;
+    private final boolean hasSemicolon;
 
     /**
      * Private Constructor 
      * (validation of the node done in {@link #parseBodyStmtNode})
      * @param body_statement - an abstract {@link Jott_Node} decided by the parse grammar
      */
-    private bodyStmt_Node(Jott_Node body_statement) {
+    private bodyStmt_Node(Jott_Node body_statement, boolean containsSemicolon) {
         this.statement = body_statement;
+        this.hasSemicolon = containsSemicolon;
     }
 
     /**
@@ -56,6 +58,7 @@ public class bodyStmt_Node extends Jott_Node {
         // Initial token validation and evaluation
 
         Jott_Node tempStmt;
+        boolean containsSemicolon = false;
 
         // < func_call >
         if(tokens.get(0).getTokenType() == TokenType.FC_HEADER) {
@@ -65,6 +68,7 @@ public class bodyStmt_Node extends Jott_Node {
             if(tokens.size() < 1) { throw new SyntaxError("Unexpected EOF"); }
             if(tokens.get(0).getTokenType() != TokenType.SEMICOLON) { throw new SyntaxError("Invalid Token: Expected \";\""); }
             tokens.remove(0);
+            containsSemicolon = true;
         } else {
             // < if_stmt >
             if(tokens.get(0).getToken().equals("If")) {
@@ -78,12 +82,12 @@ public class bodyStmt_Node extends Jott_Node {
             }
         }
 
-        return new bodyStmt_Node(tempStmt);
+        return new bodyStmt_Node(tempStmt, containsSemicolon);
     }
 
     @Override
     public String convertToJott() {
-        return statement.convertToJott() + ";";
+        return statement.convertToJott() + (this.hasSemicolon ? ";" : "");
     }
     
 }
