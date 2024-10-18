@@ -26,22 +26,21 @@ public class params_Node extends Jott_Node {
 
     public static params_Node parseParamsNode(final ArrayList<Token> tokens) throws SyntaxError {
         if (tokens.size() < 1) { throw new SyntaxError("Unexpected EOF"); }
+
         expr_Node tempExpr;
         ArrayList<params_t_Node> tempArr = new ArrayList<>();
+
         if (tokens.get(0).getTokenType() != TokenType.R_BRACKET) {
             tempExpr = expr_Node.parseExprNode(tokens);
+            if (tokens.size() < 1) { throw new SyntaxError("Unexpected EOF"); }
             while (tokens.get(0).getTokenType() != TokenType.R_BRACKET) {
                 tempArr.add(params_t_Node.parseParamsTNode(tokens));
                 if (tokens.size() < 1) { throw new SyntaxError("Unexpected EOF"); }
             }
-            if (tempArr.size() <= 1) {
-                return new params_Node(tempExpr);
-            } else {
-                return new params_Node(tempExpr, tempArr);
-            }
-        } else {
-            return new params_Node();
-        }
+            
+            if (tempArr.isEmpty()) { return new params_Node(tempExpr); } 
+            else { return new params_Node(tempExpr, tempArr); }
+        } else { return new params_Node(); }
     }
 
     @Override

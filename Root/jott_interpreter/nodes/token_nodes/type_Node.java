@@ -11,14 +11,14 @@ import provided.TokenType;
  */
 public class type_Node extends Jott_Node {
     /** Valid {@code ID_KEYWORD} token reference */
-    private Token type;
+    private final Token type;
 
     /**
      * Private Constructor 
      * (validation of the node done in {@link #parseTypeNode})
      * @param type a validated {@code ID_KEYWORD} token reference
      */
-    public type_Node(Token type) {
+    private type_Node(Token type) {
         this.type = type;
     }
 

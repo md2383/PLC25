@@ -32,9 +32,9 @@ public class bodyStmt_Node extends Jott_Node {
      * (validation of the node done in {@link #parseBodyStmtNode})
      * @param body_statement - an abstract {@link Jott_Node} decided by the parse grammar
      */
-    private bodyStmt_Node(Jott_Node body_statement, boolean containsSemicolon) {
+    private bodyStmt_Node(Jott_Node body_statement, boolean contains_semicolon) {
         this.statement = body_statement;
-        this.hasSemicolon = containsSemicolon;
+        this.hasSemicolon = contains_semicolon;
     }
 
     /**

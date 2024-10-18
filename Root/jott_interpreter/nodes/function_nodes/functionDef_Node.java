@@ -14,14 +14,14 @@ import provided.*;
 public class functionDef_Node extends Jott_Node {
     
     // Def (Doesn't need to be stored just checked if it's there)
-    id_Node id;
+    private final id_Node id;
     // OpenBracket (Doesn't need to be stored just checked if it's there)
-    funcDefParams_Node func_def_params;
+    private final funcDefParams_Node func_def_params;
     // CloseBracket (Doesn't need to be stored just checked if it's there)
     // Colon (Doesn't need to be stored just checked if it's there)
-    functionReturn_Node function_return;
+    private final functionReturn_Node function_return;
     // OpenBrace (Doesn't need to be stored just checked if it's there)
-    funcBody_Node f_body;
+    private final funcBody_Node f_body;
     // CloseBrace (Doesn't need to be stored just checked if it's there)
 
     /**
@@ -69,7 +69,7 @@ public class functionDef_Node extends Jott_Node {
         // Check the type is OpenBracket and if not throw an error
         if (tokens.size() < 1) { throw new SyntaxError("Unexpected EOF"); }
         if (tokens.get(0).getTokenType() != TokenType.L_BRACKET) {throw new SyntaxError("Invalid Function Definition: Missing a '[' Token");}
-        else { tokens.remove(0); } // Removing the OpenBracket token from the list (Not storing)
+        tokens.remove(0); // Removing the OpenBracket token from the list (Not storing)
 
         // Saving the func_def_params node
         funcDefParams_Node func_def_params = funcDefParams_Node.parseFuncDefParamsNode(tokens);
@@ -88,7 +88,7 @@ public class functionDef_Node extends Jott_Node {
         // Check the type is OpenBrace and if not throw an error
         if (tokens.size() < 1) { throw new SyntaxError("Unexpected EOF"); }
         if (tokens.get(0).getTokenType() != TokenType.L_BRACE) {throw new SyntaxError("Invalid Function Definition: Missing a '{' Token");}
-        else {tokens.remove(0);} // Removing the OpenBrace token
+        tokens.remove(0); // Removing the OpenBrace token
     
         // Saving the f_body node
         funcBody_Node f_body = funcBody_Node.parseFuncBodyNode(tokens);
@@ -96,7 +96,7 @@ public class functionDef_Node extends Jott_Node {
         // Check the type is CloseBrace and if not throw an error
         if (tokens.size() < 1) { throw new SyntaxError("Unexpected EOF"); }
         if (tokens.get(0).getTokenType() != TokenType.R_BRACE) {throw new SyntaxError("Invalid Function Definition: Missing a '}' Token");}
-        else {tokens.remove(0);} // Removing the CloseBrace token
+        tokens.remove(0); // Removing the CloseBrace token
         
         return new functionDef_Node(id, func_def_params, function_return, f_body);
     }

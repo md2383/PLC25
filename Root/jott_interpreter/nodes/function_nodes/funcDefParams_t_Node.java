@@ -13,9 +13,9 @@ import provided.*;
 public class funcDefParams_t_Node extends Jott_Node {
     
     // Comma (Doesn't need to be stored just checked if it's there)
-    id_Node id;
+    private final id_Node id;
     // Colon (Doesn't need to be stored just checked if it's there)
-    type_Node type;
+    private final type_Node type;
     
     /**
      * Private Constructor 
