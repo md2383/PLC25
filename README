@@ -12,3 +12,8 @@ Directions on building the project in a Linux environment on the cs machines.
     and to specify the classpath explicitly.
 
     > [ java -cp . testers.JottTokenizerTester ]
+
+4) To run the JottParserTester class, you need to specify the correct package name,
+    and to specify the classpath explicitly.
+
+    > [ java -cp . testers.JottParserTester ]
