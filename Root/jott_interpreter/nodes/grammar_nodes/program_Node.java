@@ -39,7 +39,10 @@ public class program_Node extends Jott_Node{
      * @see {@link TokenType}
      */
     public static program_Node parseProgramNode(final ArrayList<Token> tokens) throws SyntaxError {
+        if(tokens.isEmpty()) { return new program_Node(null); }
+
         ArrayList<functionDef_Node> functions = new ArrayList<>();
+
         do {
             functions.add(functionDef_Node.parseFunctionDefNode(tokens));
         } while(!tokens.isEmpty());
@@ -48,6 +51,7 @@ public class program_Node extends Jott_Node{
 
     @Override
     public String convertToJott() {
+        if(this.func == null) { return ""; } // empty Jott file, technically Semantic error
         StringBuilder str = new StringBuilder();
         for(functionDef_Node function : func) { str.append(function.convertToJott()); }
         return str.toString();
