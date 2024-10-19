@@ -6,7 +6,7 @@ Directions on building the project in a Linux environment on the cs machines.
 2) Compile the Java files. Make sure you include the [ -d . ] option to specify 
     the current directory as the root for the package structure:
 
-    > [ javac -d . Root/provided/*.java Root/jott_interpreter/*.java Root/testers/*.java ]
+    > [ javac -d . Root/provided/*.java Root/jott_interpreter/nodes/*.java Root/jott_interpreter/nodes/token_nodes/*.java Root/jott_interpreter/nodes/grammar_nodes/*.java Root/jott_interpreter/nodes/function_nodes/*.java Root/jott_interpreter/*.java Root/testers/*.java ]
 
 3) To run the JottTokenizerTester class, you need to specify the correct package name,
     and to specify the classpath explicitly.
