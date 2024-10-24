@@ -7,7 +7,11 @@ import provided.*;
  */
 public abstract class Jott_Node implements JottTree{
 
-    
+    final protected int linenum;
+
+    public Jott_Node(int line_number) {
+        this.linenum = line_number;
+    }
 
     @Override
     abstract public String convertToJott();
