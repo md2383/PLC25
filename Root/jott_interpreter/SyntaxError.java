@@ -28,7 +28,7 @@ public class SyntaxError extends Exception {
      * @param line  - the linenumber where the Exception occurred in file
      */
     public void print(String file, int line) {
-      System.err.println("Syntax Error");
+      System.err.println("Syntax Error:");
       System.err.println(this.getMessage());
       System.err.println(file + ":" + line);
     }

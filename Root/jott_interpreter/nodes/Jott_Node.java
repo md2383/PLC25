@@ -7,6 +7,8 @@ import provided.*;
  */
 public abstract class Jott_Node implements JottTree{
 
+    
+
     @Override
     abstract public String convertToJott();
 
