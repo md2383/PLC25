@@ -1,7 +1,6 @@
 package jott_interpreter.nodes.token_nodes;
 
 import java.util.ArrayList;
-
 import jott_interpreter.SyntaxError;
 import jott_interpreter.nodes.*;
 import provided.*;
@@ -51,5 +50,10 @@ public class id_Node extends Jott_Node {
     @Override
     public String convertToJott() {
         return this.id.getToken();
+    }
+
+    @Override
+    public boolean validateTree() {
+        return true;
     }
 }

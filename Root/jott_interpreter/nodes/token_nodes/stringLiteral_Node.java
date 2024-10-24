@@ -62,4 +62,9 @@ public class stringLiteral_Node extends Jott_Node {
     public String convertToJott() {
         return stringLiteral.getToken();
     }
+
+    @Override
+    public boolean validateTree() {
+        return true;
+    }
 }

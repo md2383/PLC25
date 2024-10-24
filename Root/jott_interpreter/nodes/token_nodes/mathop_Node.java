@@ -56,5 +56,8 @@ public class mathop_Node extends Jott_Node {
         return this.mathop.getToken();
     }
     
-    
+    @Override
+    public boolean validateTree() {
+        return true;
+    }
 }
