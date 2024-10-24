@@ -20,6 +20,7 @@ public class relop_Node extends Jott_Node {
      * @param relop a validated {@code REL_OP} token reference
      */
     public relop_Node(Token relop) {
+        super(relop.getLineNum());
         this.relop = relop;
     }
 

@@ -19,6 +19,7 @@ public class mathop_Node extends Jott_Node {
      * @param mathop a validated {@code MATH_OP} token reference
      */
     private mathop_Node(Token mathopToken) {
+        super(mathopToken.getLineNum());
         this.mathop = mathopToken;
     }
 

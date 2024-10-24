@@ -19,6 +19,7 @@ public class id_Node extends Jott_Node {
      * @param idToken a validated {@code ID_KEYWORD} token reference
      */
     private id_Node(Token idToken) {
+        super(idToken.getLineNum());
         this.id = idToken;
     }
 

@@ -19,6 +19,7 @@ public class number_Node extends Jott_Node {
      * @param numberToken - a validated {@code NUMBER} token reference
      */
     private number_Node(Token numberToken) {
+        super(numberToken.getLineNum());
         this.num = numberToken;
     }
 

@@ -20,6 +20,7 @@ public class bool_Node extends Jott_Node {
      * @param boolToken a validated {@code ID_KEYWORD} token reference
      */
     private bool_Node(Token boolToken) {
+        super(boolToken.getLineNum());
         this.bool = boolToken.getToken().equals("True");
     }
 
