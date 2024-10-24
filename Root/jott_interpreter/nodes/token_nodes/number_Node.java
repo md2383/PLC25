@@ -52,4 +52,14 @@ public class number_Node extends Jott_Node {
     public boolean validateTree() {
         return true;
     }
+
+    @Override
+    public String getType() {
+        // Check if number is integer or double
+        if (this.num.getToken().contains(".")) {
+            return "Double";
+        } else {
+            return "Integer";
+        }
+    }
 }

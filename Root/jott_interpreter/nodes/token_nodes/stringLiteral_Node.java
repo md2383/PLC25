@@ -67,4 +67,10 @@ public class stringLiteral_Node extends Jott_Node {
     public boolean validateTree() {
         return true;
     }
+
+    @Override
+    public String getType() {
+        return "String";
+    }
+
 }

@@ -1,7 +1,6 @@
 package jott_interpreter.nodes.grammar_nodes;
 
 import java.util.ArrayList;
-
 import jott_interpreter.SyntaxError;
 import jott_interpreter.nodes.*;
 import jott_interpreter.nodes.token_nodes.*;
@@ -81,5 +80,11 @@ public class assignment_Node extends Jott_Node {
               .append( this.expr.convertToJott() )
               .append( ";" );
         return result.toString();
+    }
+
+    @Override
+    public boolean validateTree() {
+        // Make sure that the id and expression are the same type
+        return id.validateTree() && expr.validateTree() && id;
     }
 }
