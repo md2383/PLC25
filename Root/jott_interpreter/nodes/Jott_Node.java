@@ -19,7 +19,6 @@ public abstract class Jott_Node implements JottTree{
     @Override
     abstract public boolean validateTree();
 
-    @Override
     abstract public String getType();
 
     @Override
