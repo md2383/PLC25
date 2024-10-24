@@ -24,13 +24,12 @@ public abstract class Jott_Node implements JottTree{
     abstract public boolean validateTree();
 
     @Override
-    abstract public String getType();
-
-    @Override
     public void execute() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'execute'");
     }
+
+    abstract public String getType();
     
     @Override
     public String toString() {
