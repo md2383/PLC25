@@ -62,4 +62,9 @@ public class relop_Node extends Jott_Node {
     public boolean validateTree() {
         return true;
     }
+
+    @Override
+    public String getType() {
+        return "Relop";
+    }
 }
