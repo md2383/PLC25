@@ -104,4 +104,17 @@ public class expr_Node extends Jott_Node{
         for(Jott_Node node : expr) { str.append(" ").append(node.convertToJott()); }
         return str.substring(1); // removing first space
     }
+
+    @Override
+    public boolean validateTree() {
+        if (expr.length == 3) {
+            for (int i = 0; i < expr.length; i++) {
+                expr[i].validateTree();
+            }
+            if (expr[0]) // compare type of opperand
+        } else {
+            expr[0].validateTree();
+        }
+        return true;
+    }
 }
