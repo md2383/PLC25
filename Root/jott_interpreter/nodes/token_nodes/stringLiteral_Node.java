@@ -19,6 +19,7 @@ public class stringLiteral_Node extends Jott_Node {
      * @param stringLiteral a validated {@code STRING} token reference
      */
     public stringLiteral_Node(Token stringLiteral) {
+        super(stringLiteral.getLineNum());
         this.stringLiteral = stringLiteral;
     }
 

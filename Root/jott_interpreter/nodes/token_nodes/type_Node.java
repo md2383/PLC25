@@ -19,6 +19,7 @@ public class type_Node extends Jott_Node {
      * @param type a validated {@code ID_KEYWORD} token reference
      */
     private type_Node(Token type) {
+        super(type.getLineNum());
         this.type = type;
     }
 
