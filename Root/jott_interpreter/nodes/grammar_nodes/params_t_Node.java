@@ -24,4 +24,8 @@ public class params_t_Node extends Jott_Node {
         return "," + this.expr.convertToJott();
     }
     
+    @Override
+    public boolean validateTree() {
+        return expr.validateTree();
+    }
 }
