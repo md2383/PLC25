@@ -85,6 +85,6 @@ public class assignment_Node extends Jott_Node {
     @Override
     public boolean validateTree() {
         // Make sure that the id and expression are the same type
-        return id.validateTree() && expr.validateTree() && id;
+        return id.validateTree() && expr.validateTree();
     }
 }
