@@ -65,4 +65,9 @@ public class type_Node extends Jott_Node {
     public String convertToJott() {
         return this.type.getToken();
     }
+
+    @Override
+    public boolean validateTree() {
+        return true;
+    }
 }

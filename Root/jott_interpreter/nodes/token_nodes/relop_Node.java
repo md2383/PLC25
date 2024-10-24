@@ -56,4 +56,9 @@ public class relop_Node extends Jott_Node {
     public String convertToJott() {
         return this.relop.getToken();
     }
+
+    @Override
+    public boolean validateTree() {
+        return true;
+    }
 }
