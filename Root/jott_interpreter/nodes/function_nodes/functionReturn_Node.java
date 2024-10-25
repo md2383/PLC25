@@ -1,6 +1,8 @@
 package jott_interpreter.nodes.function_nodes;
 
 import java.util.ArrayList;
+
+import jott_interpreter.ReturnType;
 import jott_interpreter.SyntaxError;
 import jott_interpreter.nodes.*;
 import jott_interpreter.nodes.token_nodes.type_Node;
@@ -43,5 +45,16 @@ public class functionReturn_Node extends Jott_Node{
         } else {
             return this.type.convertToJott();
         }
+    }
+
+    @Override
+    public boolean validateTree() {
+        return true;
+    }
+
+    @Override
+    public ReturnType getType() {
+        return this.type == null ? 
+            ReturnType.Void : this.type.getType();
     }
 }

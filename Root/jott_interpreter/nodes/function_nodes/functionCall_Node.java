@@ -76,6 +76,6 @@ public class functionCall_Node extends Jott_Node{
 
     @Override
     public ReturnType getType() {
-        return id.getType();
+        return this.id.getType();
     }
 }
