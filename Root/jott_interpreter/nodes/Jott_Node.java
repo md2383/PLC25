@@ -1,5 +1,6 @@
 package jott_interpreter.nodes;
 
+import jott_interpreter.ReturnType;
 import provided.*;
 
 /**
@@ -29,7 +30,9 @@ public abstract class Jott_Node implements JottTree{
         throw new UnsupportedOperationException("Unimplemented method 'execute'");
     }
 
-    abstract public String getType();
+    public ReturnType getType() {
+        return null;
+    }
     
     @Override
     public String toString() {

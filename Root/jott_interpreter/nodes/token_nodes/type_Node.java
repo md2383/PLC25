@@ -1,6 +1,8 @@
 package jott_interpreter.nodes.token_nodes;
 
 import java.util.ArrayList;
+
+import jott_interpreter.ReturnType;
 import jott_interpreter.SyntaxError;
 import jott_interpreter.nodes.Jott_Node;
 import provided.Token;
@@ -11,7 +13,7 @@ import provided.TokenType;
  */
 public class type_Node extends Jott_Node {
     /** Valid {@code ID_KEYWORD} token reference */
-    private final Token type;
+    private final ReturnType type;
 
     /**
      * Private Constructor 
@@ -20,7 +22,25 @@ public class type_Node extends Jott_Node {
      */
     private type_Node(Token type) {
         super(type.getLineNum());
-        this.type = type;
+        switch (type.getToken()) {
+            case "Boolean" :
+                this.type = ReturnType.Boolean;
+                break;
+            case "Double" :
+                this.type = ReturnType.Double;
+                break;
+            case "Integer" :
+                this.type = ReturnType.Integer;
+                break;
+            case "String" :
+                this.type = ReturnType.String;
+                break;
+            default :
+                // This will only be thrown if the type check 
+                // in parseTypeNode is not triggered for some reason
+                assert(false); 
+                this.type = ReturnType.Void;
+        }
     }
 
     /**
@@ -64,7 +84,22 @@ public class type_Node extends Jott_Node {
 
     @Override
     public String convertToJott() {
-        return this.type.getToken();
+        switch(this.type) {
+            case ReturnType.Boolean :
+                return "Boolean";
+            case ReturnType.Double :
+                return "Double";
+            case ReturnType.Integer :
+                return "Integer";
+            case ReturnType.String :
+                return "String";
+            case ReturnType.Void :
+                assert(false); // unreachable: debugging purpose
+                return "Void";
+            default :
+                assert(false); // unreachable: debugging purpose
+                return "";
+        }
     }
 
     @Override
@@ -73,7 +108,7 @@ public class type_Node extends Jott_Node {
     }
 
     @Override
-    public String getType() {
-        return this.type.getToken();
+    public ReturnType getType() {
+        return this.type;
     }
 }
