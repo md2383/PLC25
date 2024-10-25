@@ -59,4 +59,9 @@ public class params_Node extends Jott_Node {
             }
         }
     }
+
+    @Override
+    public boolean validateTree() {
+        
+    }
 }
