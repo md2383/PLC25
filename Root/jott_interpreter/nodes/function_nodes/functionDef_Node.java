@@ -1,6 +1,7 @@
 package jott_interpreter.nodes.function_nodes;
 
 import java.util.ArrayList;
+
 import jott_interpreter.SyntaxError;
 import jott_interpreter.nodes.*;
 import jott_interpreter.nodes.token_nodes.id_Node;
@@ -115,5 +116,15 @@ public class functionDef_Node extends Jott_Node {
             .append( ":" + this.function_return.convertToJott() )
             .append( "{" + this.f_body.convertToJott() + "}" );
         return jott.toString();
+    }
+
+    @Override
+    public boolean validateTree() {
+        // TODO: validate body return type
+        // TODO: validate id not in id HashMap
+        return this.id.validateTree() && 
+               this.func_def_params.validateTree() &&
+               this.function_return.validateTree() &&
+               this.f_body.validateTree();
     }
 }
