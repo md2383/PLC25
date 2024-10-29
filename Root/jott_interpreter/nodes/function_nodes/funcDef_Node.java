@@ -12,7 +12,7 @@ import provided.*;
  * parameters [{@link funcDefParams_Node}], the return type [{@link functionReturn_Node}],
  * and the body [{@link funcBody_Node}] of the function.
  */
-public class functionDef_Node extends Jott_Node {
+public class funcDef_Node extends Jott_Node {
     
     // Def (Doesn't need to be stored just checked if it's there)
     private final id_Node id;
@@ -34,7 +34,7 @@ public class functionDef_Node extends Jott_Node {
      * @param function_return   a functionReturn node referencing the return type
      * @param f_body            a funcBody node referencing the body of the function
      */
-    private functionDef_Node(id_Node id, funcDefParams_Node func_def_params, functionReturn_Node function_return, funcBody_Node f_body) {
+    private funcDef_Node(id_Node id, funcDefParams_Node func_def_params, functionReturn_Node function_return, funcBody_Node f_body) {
         this.id = id;
         this.func_def_params = func_def_params;
         this.function_return = function_return;
@@ -56,7 +56,7 @@ public class functionDef_Node extends Jott_Node {
      * @see {@link Token} 
      * @see {@link TokenType}
      */
-    public static functionDef_Node parseFunctionDefNode(final ArrayList<Token> tokens) throws SyntaxError {
+    public static funcDef_Node parseFunctionDefNode(final ArrayList<Token> tokens) throws SyntaxError {
         if (tokens.size() < 1) { throw new SyntaxError("Unexpected EOF"); }
         // Check the type is Id/Keyword and is Def, if not throw an error
         if (!(tokens.get(0).getTokenType() == TokenType.ID_KEYWORD && tokens.get(0).getToken().equals("Def"))) {
@@ -99,7 +99,7 @@ public class functionDef_Node extends Jott_Node {
         if (tokens.get(0).getTokenType() != TokenType.R_BRACE) {throw new SyntaxError("Invalid Function Definition: Missing a '}' Token");}
         tokens.remove(0); // Removing the CloseBrace token
         
-        return new functionDef_Node(id, func_def_params, function_return, f_body);
+        return new funcDef_Node(id, func_def_params, function_return, f_body);
     }
 
     /**

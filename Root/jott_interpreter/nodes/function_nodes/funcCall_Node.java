@@ -13,7 +13,7 @@ import provided.*;
  * A function call containing an {@code ID} [{@link id_Node}] and the list of 
  * parameters [{@link params_Node}] being called for the function.
  */
-public class functionCall_Node extends Jott_Node{
+public class funcCall_Node extends Jott_Node{
 
     /** The name of the function being called */
     private final id_Node id;
@@ -27,7 +27,7 @@ public class functionCall_Node extends Jott_Node{
      * @param Parameters    a parameter node referencing the (list of) 
      *                      parameters for the function
      */
-    private functionCall_Node(id_Node ID, params_Node Parameters) {
+    private funcCall_Node(id_Node ID, params_Node Parameters) {
         this.id = ID;
         this.params = Parameters;
     }
@@ -49,7 +49,7 @@ public class functionCall_Node extends Jott_Node{
      * @see {@link Token} 
      * @see {@link TokenType}
      */
-    public static functionCall_Node parseFunctionCallNode(final ArrayList<Token> tokens) throws SyntaxError {
+    public static funcCall_Node parseFunctionCallNode(final ArrayList<Token> tokens) throws SyntaxError {
         if(tokens.size() < 1) { throw new SyntaxError("Unexpected EOF"); }
         if(tokens.get(0).getTokenType() != TokenType.FC_HEADER) { throw new SyntaxError("Token type not FC_HEADER"); }
         tokens.remove(0);
@@ -66,7 +66,7 @@ public class functionCall_Node extends Jott_Node{
         if(tokens.get(0).getTokenType() != TokenType.R_BRACKET) { throw new SyntaxError("Invalid Token: Expected ]"); }
         tokens.remove(0);
 
-        return new functionCall_Node(tempID, tempParameters);
+        return new funcCall_Node(tempID, tempParameters);
     }
 
     @Override

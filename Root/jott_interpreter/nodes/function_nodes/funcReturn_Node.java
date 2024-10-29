@@ -8,19 +8,19 @@ import jott_interpreter.nodes.*;
 import jott_interpreter.nodes.token_nodes.type_Node;
 import provided.*;
 
-public class functionReturn_Node extends Jott_Node{
+public class funcReturn_Node extends Jott_Node{
 
     private final type_Node type;
 
-    private functionReturn_Node() {
+    private funcReturn_Node() {
         this.type = null;
     }
 
-    private functionReturn_Node(type_Node type) {
+    private funcReturn_Node(type_Node type) {
         this.type = type;
     }
 
-    public static functionReturn_Node parseFunctionReturnNode(final ArrayList<Token> tokens) throws SyntaxError {
+    public static funcReturn_Node parseFunctionReturnNode(final ArrayList<Token> tokens) throws SyntaxError {
         if (tokens.size() < 1) {
             throw new SyntaxError("Unexpected EOF");
         }
@@ -32,9 +32,9 @@ public class functionReturn_Node extends Jott_Node{
         }
         if (tokens.get(0).getToken().equals("Void")) {
             tokens.remove(0);
-            return new functionReturn_Node();
+            return new funcReturn_Node();
         } else {
-            return new functionReturn_Node(type_Node.parseTypeNode(tokens));
+            return new funcReturn_Node(type_Node.parseTypeNode(tokens));
         }
     }
 
