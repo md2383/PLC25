@@ -8,9 +8,10 @@ import jott_interpreter.nodes.Jott_Node;
 
 // Usage: documentation
 import jott_interpreter.nodes.function_nodes.funcBody_Node;
+import provided.JottTree;
 
 /**
- * <h2>IdMap</h1>
+ * <h1>IdMap</h1>
  * 
  * <p>
  * A map of the defined variables or functions in a given scope within the Jott interpreter.
@@ -90,14 +91,33 @@ public class IdMap {
         this.id_map.put("length", length);
     }
 
+    /**
+     * Retrieves the return type of the function or variable associated with the given identifier.
+     *
+     * @param id the identifier of the function or variable.
+     * @return the {@link ReturnType} of the function or variable, as stored in the id_map.
+     * @throws NullPointerException if the identifier does not exist in the id_map.
+     */
     public ReturnType getReturnType(String id) {
         return id_map.get(id).getType();
     }
 
+    /**
+     * Retrieves the {@link Jott_Node} (function or variable) associated with the given identifier.
+     *
+     * @param id the identifier of the function or variable.
+     * @return the {@link Jott_Node} associated with the id, or null if not found.
+     */
     public Jott_Node getNode(String id) {
         return id_map.get(id);
     }
 
+    /**
+     * Checks if the given identifier exists in the id_map.
+     *
+     * @param id the identifier to check for.
+     * @return true if the identifier exists in the id_map, false otherwise.
+     */
     public boolean contains(String id) {
         return id_map.keySet().contains(id);
     }
@@ -105,7 +125,7 @@ public class IdMap {
     /**
      * A wrapper method for printing a string to the console.
      * 
-     * @param input
+     * @param input - the string to be printed to the console.
      */
     @SuppressWarnings("unused")
     private static void print_wrapper(String input) {
@@ -115,9 +135,9 @@ public class IdMap {
     /**
      * A wrapper method for concatenating 2 Strings.
      * 
-     * @param str1
-     * @param str2
-     * @return str1 + str2
+     * @param str1 - the first string.
+     * @param str2 - the second string.
+     * @return the concatenated result of str1 and str2.
      */
     @SuppressWarnings("unused")
     private static String concat_wrapper(String str1, String str2) {
@@ -127,11 +147,11 @@ public class IdMap {
     /**
      * A wrapper method for retrieving the length of a String.
      * 
-     * @param str1
-     * @return length of str1
+     * @param input - the string whose length is to be retrieved.
+     * @return length of the input
      */
     @SuppressWarnings("unused")
-    private static int length_wrapper(String str1) {
-        return str1.length();
+    private static int length_wrapper(String input) {
+        return input.length();
     }
 }
