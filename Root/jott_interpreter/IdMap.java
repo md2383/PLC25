@@ -4,10 +4,9 @@ import java.lang.reflect.Method;
 import java.util.LinkedHashMap;
 
 import jott_interpreter.nodes.function_nodes.customFunc_Node;
-import provided.JottTree;
+import jott_interpreter.nodes.Jott_Node;
 
 // Usage: documentation
-import jott_interpreter.nodes.Jott_Node;
 import jott_interpreter.nodes.function_nodes.funcBody_Node;
 
 /**
@@ -31,8 +30,8 @@ import jott_interpreter.nodes.function_nodes.funcBody_Node;
  */
 public class IdMap {
 
-    /** A linked hash map assigning an id to an exectuable node in the {@link JottTree} */
-    private final LinkedHashMap<String, JottTree> id_map;
+    /** A linked hash map assigning an id to an executable node in the {@link JottTree} */
+    private final LinkedHashMap<String, Jott_Node> id_map;
 
     /**
      * Constructs a new {@link IdMap} instance with an empty identifier map.
@@ -81,14 +80,26 @@ public class IdMap {
         }
 
         // Assigning the custom functions
-        JottTree print = new customFunc_Node("print", PRINT, ReturnType.Void);
-        JottTree concat = new customFunc_Node("concat", CONCAT, ReturnType.String);
-        JottTree length = new customFunc_Node("length", LENGTH, ReturnType.Integer);
+        Jott_Node print = new customFunc_Node("print", PRINT, ReturnType.Void);
+        Jott_Node concat = new customFunc_Node("concat", CONCAT, ReturnType.String);
+        Jott_Node length = new customFunc_Node("length", LENGTH, ReturnType.Integer);
 
         // Putting the functions into this map
         this.id_map.put("print", print);
         this.id_map.put("concat", concat);
         this.id_map.put("length", length);
+    }
+
+    public ReturnType getReturnType(String id) {
+        return id_map.get(id).getType();
+    }
+
+    public Jott_Node getNode(String id) {
+        return id_map.get(id);
+    }
+
+    public boolean contains(String id) {
+        return id_map.keySet().contains(id);
     }
 
     /**
@@ -102,7 +113,7 @@ public class IdMap {
     }
 
     /**
-     * A wrapper method for cancatenating 2 Strings.
+     * A wrapper method for concatenating 2 Strings.
      * 
      * @param str1
      * @param str2
@@ -114,7 +125,7 @@ public class IdMap {
     }
 
     /**
-     * A wrapper method for retreiving the length of a String.
+     * A wrapper method for retrieving the length of a String.
      * 
      * @param str1
      * @return length of str1

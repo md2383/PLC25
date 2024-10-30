@@ -3,6 +3,7 @@ package jott_interpreter.nodes.grammar_nodes;
 import java.util.ArrayList;
 
 import jott_interpreter.SyntaxError;
+import jott_interpreter.SemanticError;
 import jott_interpreter.nodes.*;
 import jott_interpreter.nodes.function_nodes.*;
 import provided.*;
@@ -61,12 +62,18 @@ public class program_Node extends Jott_Node{
     public boolean validateTree() {
         declared_functions.declareBuiltinFunctions();
 
+        boolean isValid = true;
+
         for(funcDef_Node function : func) {
-            if(!function.validateTree()) { return false; }
+            isValid &= function.validateTree();
         }
 
-        // TODO
+        if(!declared_functions.contains("main")) {
+            new SemanticError("Expected function 'Def main[]:Void' not present")
+                .print(null, declared_functions.getNode("main").linenum);
+            isValid = false;
+        } 
 
-        return true;
+        return isValid;
     }
 }

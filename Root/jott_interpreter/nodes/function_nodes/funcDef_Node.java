@@ -2,6 +2,8 @@ package jott_interpreter.nodes.function_nodes;
 
 import java.util.ArrayList;
 
+import jott_interpreter.ReturnType;
+import jott_interpreter.SemanticError;
 import jott_interpreter.SyntaxError;
 import jott_interpreter.nodes.*;
 import jott_interpreter.nodes.token_nodes.id_Node;
@@ -120,11 +122,28 @@ public class funcDef_Node extends Jott_Node {
 
     @Override
     public boolean validateTree() {
+        boolean isValid = this.id.validateTree() && 
+                          this.func_def_params.validateTree() &&
+                          this.function_return.validateTree() &&
+                          this.f_body.validateTree();
+                          
         // TODO: validate body return type
         // TODO: validate id not in id HashMap
-        return this.id.validateTree() && 
-               this.func_def_params.validateTree() &&
-               this.function_return.validateTree() &&
-               this.f_body.validateTree();
+
+        if(this.id.toString().equals("main")) {
+            if(!func_def_params.toString().equals("")) {
+                new SemanticError("Invalid main definition: main expects no parameters")
+                    .print(null, this.linenum);
+                isValid = false;
+            }
+
+            if(function_return.getType() != ReturnType.Void) {
+                new SemanticError("Invalid main return type: expected 'Void'")
+                    .print(null, this.linenum);
+                isValid = false;
+            }
+        }
+
+        return isValid;
     }
 }
