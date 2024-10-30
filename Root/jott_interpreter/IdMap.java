@@ -1,7 +1,6 @@
 package jott_interpreter;
 
 import java.lang.reflect.Method;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 import jott_interpreter.nodes.function_nodes.customFunc_Node;
@@ -32,7 +31,8 @@ import jott_interpreter.nodes.function_nodes.funcBody_Node;
  */
 public class IdMap {
 
-    private final HashMap<String, JottTree> id_map;
+    /** A linked hash map assigning an id to an exectuable node in the {@link JottTree} */
+    private final LinkedHashMap<String, JottTree> id_map;
 
     /**
      * Constructs a new {@link IdMap} instance with an empty identifier map.
@@ -81,9 +81,9 @@ public class IdMap {
         }
 
         // Assigning the custom functions
-        JottTree print = new customFunc_Node("print", PRINT);
-        JottTree concat = new customFunc_Node("concat", CONCAT);
-        JottTree length = new customFunc_Node("length", LENGTH);
+        JottTree print = new customFunc_Node("print", PRINT, ReturnType.Void);
+        JottTree concat = new customFunc_Node("concat", CONCAT, ReturnType.String);
+        JottTree length = new customFunc_Node("length", LENGTH, ReturnType.Integer);
 
         // Putting the functions into this map
         this.id_map.put("print", print);
