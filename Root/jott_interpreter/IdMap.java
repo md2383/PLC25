@@ -19,7 +19,7 @@ import provided.JottTree;
  * @see {@link jott_interpreter.nodes.Jott_Node}
  * @see {@link jott_interpreter.nodes.function_nodes.funcBody_Node}
  * 
- * @hidden NOTE: havn't entirely decided where to put scopes for functions...
+ * @hidden NOTE: haven't entirely decided where to put scopes for functions...
  */
 public class IdMap {
 
@@ -31,29 +31,35 @@ public class IdMap {
 
     public void declareBuiltinFunctions() {
         assert(id_map.isEmpty());
-        
+
+        Class<?>[] print_params = new Class[1];
+        // Class<?>[] concat_params = new Class[1];
+        // Class<?>[] length_params = new Class[1];
+
+        print_params[0] = String.class;
+
         Method PRINT = null;
         Method CONCAT = null;
         Method LENGTH = null;
 
         try { 
-            PRINT = IdMap.class.getMethod("print_wrapper", String.class);
+            PRINT = IdMap.class.getMethod("print_wrapper", print_params);
             // TODO: CONCAT
             // TODO: LENGTH
         } catch (NoSuchMethodException e) {
             // TODO: handle exception
         }
 
-        // TODO: replace null vals
-        JottTree print = new customFunc_Node(null, PRINT, null);
-        JottTree concat = new customFunc_Node(null, CONCAT, null);
-        JottTree length = new customFunc_Node(null, LENGTH, null);
+        JottTree print = new customFunc_Node("print", PRINT);
+        JottTree concat = new customFunc_Node("concat", CONCAT);
+        JottTree length = new customFunc_Node("length", LENGTH);
 
         id_map.put("print", print);
         id_map.put("concat", concat);
         id_map.put("length", length);
     }
 
+    @SuppressWarnings("unused")
     private static void print_wrapper(String input) {
         System.out.println(input);
     }

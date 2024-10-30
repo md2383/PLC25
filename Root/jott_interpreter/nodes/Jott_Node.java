@@ -1,5 +1,6 @@
 package jott_interpreter.nodes;
 
+import jott_interpreter.IdMap;
 import jott_interpreter.ReturnType;
 import provided.*;
 
@@ -7,6 +8,8 @@ import provided.*;
  * Abstract head of the Parse Tree
  */
 public abstract class Jott_Node implements JottTree{
+
+    final static protected IdMap declared_functions = new IdMap();
 
     final public int linenum;
 

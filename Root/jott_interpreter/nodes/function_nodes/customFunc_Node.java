@@ -7,12 +7,10 @@ import jott_interpreter.nodes.Jott_Node;
 public class customFunc_Node extends Jott_Node{
     private final String ID;
     private final Method METHOD;
-    private final Object[] PARAMS;
 
-    public customFunc_Node(final String id, final Method method, final Object[] params) {
+    public customFunc_Node(final String id, final Method method) {
         this.ID = id;
         this.METHOD = method;
-        this.PARAMS = params;
     }
 
     @Override
