@@ -62,7 +62,7 @@ public class bodyStmt_Node extends Jott_Node {
 
         // < func_call >
         if(tokens.get(0).getTokenType() == TokenType.FC_HEADER) {
-            tempStmt = functionCall_Node.parseFunctionCallNode(tokens);
+            tempStmt = funcCall_Node.parseFunctionCallNode(tokens);
 
             // Semicolon check - just after a func_call
             if(tokens.size() < 1) { throw new SyntaxError("Unexpected EOF"); }

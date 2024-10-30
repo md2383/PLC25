@@ -33,7 +33,7 @@ public class operand_Node extends Jott_Node{
         } else if (tokens.get(0).getTokenType() == TokenType.NUMBER) {
             temp = number_Node.parseNumberNode(tokens);
         } else if (tokens.get(0).getTokenType() == TokenType.FC_HEADER) {
-            temp = functionCall_Node.parseFunctionCallNode(tokens);
+            temp = funcCall_Node.parseFunctionCallNode(tokens);
         } else if (tokens.get(0).getTokenType() == TokenType.MATH_OP) {
             if (tokens.get(0).getToken().equals("-")) {
                 tokens.remove(0);

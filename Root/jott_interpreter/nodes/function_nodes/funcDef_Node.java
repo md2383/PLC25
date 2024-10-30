@@ -20,7 +20,7 @@ public class funcDef_Node extends Jott_Node {
     private final funcDefParams_Node func_def_params;
     // CloseBracket (Doesn't need to be stored just checked if it's there)
     // Colon (Doesn't need to be stored just checked if it's there)
-    private final functionReturn_Node function_return;
+    private final funcReturn_Node function_return;
     // OpenBrace (Doesn't need to be stored just checked if it's there)
     private final funcBody_Node f_body;
     // CloseBrace (Doesn't need to be stored just checked if it's there)
@@ -34,7 +34,7 @@ public class funcDef_Node extends Jott_Node {
      * @param function_return   a functionReturn node referencing the return type
      * @param f_body            a funcBody node referencing the body of the function
      */
-    private funcDef_Node(id_Node id, funcDefParams_Node func_def_params, functionReturn_Node function_return, funcBody_Node f_body) {
+    private funcDef_Node(id_Node id, funcDefParams_Node func_def_params, funcReturn_Node function_return, funcBody_Node f_body) {
         this.id = id;
         this.func_def_params = func_def_params;
         this.function_return = function_return;
@@ -84,7 +84,7 @@ public class funcDef_Node extends Jott_Node {
         tokens.remove(0); // Removing the Colon token from the list (Not storing)
 
         // Saving the function_return node
-        functionReturn_Node function_return = functionReturn_Node.parseFunctionReturnNode(tokens);
+        funcReturn_Node function_return = funcReturn_Node.parseFunctionReturnNode(tokens);
 
         // Check the type is OpenBrace and if not throw an error
         if (tokens.size() < 1) { throw new SyntaxError("Unexpected EOF"); }
