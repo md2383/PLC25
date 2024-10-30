@@ -7,6 +7,10 @@ import java.util.LinkedHashMap;
 import jott_interpreter.nodes.function_nodes.customFunc_Node;
 import provided.JottTree;
 
+// Usage: documentation
+import jott_interpreter.nodes.Jott_Node;
+import jott_interpreter.nodes.function_nodes.funcBody_Node;
+
 /**
  * <h2>IdMap</h1>
  * 
@@ -15,14 +19,14 @@ import provided.JottTree;
  * </p>
  * 
  * <p>
- * This is built directly into the node structure, certain nodes have a scope
- *  ->  The Jott_Node contains a static {@link IdMap} for functions,
+ * This is built directly into the node structure, certain nodes have a scope.
+ *  ->  The {@link Jott_Node} contains a static {@link IdMap} for functions,
  *      each function contains an {@link IdMap} referencing the variables 
  *      declared in the scope.
  * </p>
  * 
- * @see {@link jott_interpreter.nodes.Jott_Node}
- * @see {@link jott_interpreter.nodes.function_nodes.funcBody_Node}
+ * @see {@link Jott_Node}
+ * @see {@link funcBody_Node}
  * 
  * @hidden NOTE: haven't entirely decided where to put scopes for functions...
  */
@@ -47,6 +51,10 @@ public class IdMap {
      * </p>
      * 
      * @throws AssertionError if id_map is not empty.
+     * @implSpec    This method should only be called at the creation 
+     *              of the node-based parse tree.
+     * @implNote    If there are functions already defined in the parse tree,
+     *              this function will throw an {@code AssertionError}
      */
     public void declareBuiltinFunctions() {
         assert(id_map.isEmpty());
@@ -86,20 +94,33 @@ public class IdMap {
     /**
      * A wrapper method for printing a string to the console.
      * 
-     * @param input The string to be printed.
+     * @param input
      */
     @SuppressWarnings("unused")
     private static void print_wrapper(String input) {
         System.out.println(input);
     }
 
+    /**
+     * A wrapper method for cancatenating 2 Strings.
+     * 
+     * @param str1
+     * @param str2
+     * @return str1 + str2
+     */
     @SuppressWarnings("unused")
-    private static void concat_wrapper() {
-        // TODO
+    private static String concat_wrapper(String str1, String str2) {
+        return str1 + str2;
     }
 
+    /**
+     * A wrapper method for retreiving the length of a String.
+     * 
+     * @param str1
+     * @return length of str1
+     */
     @SuppressWarnings("unused")
-    private static void length_wrapper() {
-        // TODO
+    private static int length_wrapper(String str1) {
+        return str1.length();
     }
 }
