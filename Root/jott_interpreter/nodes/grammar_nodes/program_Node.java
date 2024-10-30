@@ -15,14 +15,14 @@ import provided.*;
 public class program_Node extends Jott_Node{
 
     /** An array of valid function nodes */
-    private final functionDef_Node[] func;
+    private final funcDef_Node[] func;
 
     /**
      * Private Constructor 
      * (validation of the node done in {@link #parseProgramNode})
      * @param functions - an array of function nodes
      */
-    private program_Node(functionDef_Node[] functions) {
+    private program_Node(funcDef_Node[] functions) {
         func = functions;
     }
 
@@ -41,19 +41,19 @@ public class program_Node extends Jott_Node{
     public static program_Node parseProgramNode(final ArrayList<Token> tokens) throws SyntaxError {
         if(tokens.isEmpty()) { return new program_Node(null); }
 
-        ArrayList<functionDef_Node> functions = new ArrayList<>();
+        ArrayList<funcDef_Node> functions = new ArrayList<>();
 
         do {
-            functions.add(functionDef_Node.parseFunctionDefNode(tokens));
+            functions.add(funcDef_Node.parseFunctionDefNode(tokens));
         } while(!tokens.isEmpty());
-        return new program_Node(functions.toArray(new functionDef_Node[functions.size()]));
+        return new program_Node(functions.toArray(new funcDef_Node[functions.size()]));
     }
 
     @Override
     public String convertToJott() {
         if(this.func == null) { return ""; } // empty Jott file, technically Semantic error
         StringBuilder str = new StringBuilder();
-        for(functionDef_Node function : func) { str.append(function.convertToJott()); }
+        for(funcDef_Node function : func) { str.append(function.convertToJott()); }
         return str.toString();
     }
 }
