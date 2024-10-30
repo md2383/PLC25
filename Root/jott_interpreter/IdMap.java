@@ -1,5 +1,6 @@
 package jott_interpreter;
 
+import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 
@@ -30,14 +31,30 @@ public class IdMap {
 
     public void declareBuiltinFunctions() {
         assert(id_map.isEmpty());
+        
+        Method PRINT = null;
+        Method CONCAT = null;
+        Method LENGTH = null;
 
-        // TODO
-        JottTree print = new customFunc_Node(null, null, null);
-        JottTree concat = new customFunc_Node(null, null, null);
-        JottTree length = new customFunc_Node(null, null, null);
+        try { 
+            PRINT = IdMap.class.getMethod("print_wrapper", String.class);
+            // TODO: CONCAT
+            // TODO: LENGTH
+        } catch (NoSuchMethodException e) {
+            // TODO: handle exception
+        }
+
+        // TODO: replace null vals
+        JottTree print = new customFunc_Node(null, PRINT, null);
+        JottTree concat = new customFunc_Node(null, CONCAT, null);
+        JottTree length = new customFunc_Node(null, LENGTH, null);
 
         id_map.put("print", print);
         id_map.put("concat", concat);
         id_map.put("length", length);
+    }
+
+    private static void print_wrapper(String input) {
+        System.out.println(input);
     }
 }
