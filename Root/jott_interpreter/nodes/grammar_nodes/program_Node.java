@@ -56,4 +56,17 @@ public class program_Node extends Jott_Node{
         for(funcDef_Node function : func) { str.append(function.convertToJott()); }
         return str.toString();
     }
+
+    @Override
+    public boolean validateTree() {
+        declared_functions.declareBuiltinFunctions();
+
+        for(funcDef_Node function : func) {
+            if(!function.validateTree()) { return false; }
+        }
+
+        // TODO
+
+        return true;
+    }
 }
