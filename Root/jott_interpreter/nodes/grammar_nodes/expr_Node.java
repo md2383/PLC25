@@ -1,6 +1,7 @@
 package jott_interpreter.nodes.grammar_nodes;
 
 import java.util.ArrayList;
+import jott_interpreter.SemanticError;
 import jott_interpreter.SyntaxError;
 import jott_interpreter.nodes.*;
 import jott_interpreter.nodes.token_nodes.*;
@@ -109,12 +110,11 @@ public class expr_Node extends Jott_Node{
         boolean valid = true;
         if (expr.length == 3) {
             for (int i = 0; i < expr.length; i++) {
-                if (!expr[i].validateTree()) {
-                    valid = false;
-                }
+                valid &= expr[i].validateTree();
             }
             if (expr[0].getType() != expr[2].getType()) {
-                return false;
+                new SemanticError("Unmatched type").print(null, linenum);
+                valid = false;
             }
         } else {
             valid = expr[0].validateTree();
