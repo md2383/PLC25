@@ -1,7 +1,6 @@
 package jott_interpreter.nodes.grammar_nodes;
 
 import java.util.ArrayList;
-
 import jott_interpreter.SyntaxError;
 import jott_interpreter.nodes.*;
 import provided.*;
@@ -60,5 +59,10 @@ public class else_Node extends Jott_Node{
     public String convertToJott() {
         return isVoid() ?
             "" : "Else" + "{" + this.body.convertToJott() + "}";
+    }
+
+    @Override
+    public boolean validateTree() {
+        return body.validateTree();
     }
 }
