@@ -14,7 +14,7 @@ public abstract class Jott_Node implements JottTree{
 
     protected final static IdMap declared_functions = new IdMap();
     protected final static HashMap<String, IdMap> function_scope = new LinkedHashMap<>();
-    protected final static String current_function_ID = null;
+    protected static String current_function_ID = null;
 
     final public int linenum;
 

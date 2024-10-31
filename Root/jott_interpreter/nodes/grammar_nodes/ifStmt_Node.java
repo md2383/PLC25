@@ -100,7 +100,7 @@ public class ifStmt_Node extends Jott_Node{
     public boolean validateTree() {
         boolean valid = true;
         for (elseif_Node node : elseifN) {
-            valid &= node.validateTree();
+            valid = valid && node.validateTree();
         }
         return expressionN.validateTree() &&
             bodyN.validateTree() &&

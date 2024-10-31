@@ -85,15 +85,15 @@ public class type_Node extends Jott_Node {
     @Override
     public String convertToJott() {
         switch(this.type) {
-            case ReturnType.Boolean :
+            case Boolean :
                 return "Boolean";
-            case ReturnType.Double :
+            case Double :
                 return "Double";
-            case ReturnType.Integer :
+            case Integer :
                 return "Integer";
-            case ReturnType.String :
+            case String :
                 return "String";
-            case ReturnType.Void :
+            case Void :
                 assert(false); // unreachable: debugging purpose
                 return "Void";
             default :

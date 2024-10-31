@@ -110,7 +110,7 @@ public class expr_Node extends Jott_Node{
         boolean valid = true;
         if (expr.length == 3) {
             for (int i = 0; i < expr.length; i++) {
-                valid &= expr[i].validateTree();
+                valid = valid && expr[i].validateTree();
             }
             if (expr[0].getType() != expr[2].getType()) {
                 new SemanticError("Unmatched type").print(null, this.linenum);
