@@ -49,7 +49,7 @@ public class Jott {
 
         // Evaluate the JottTree
         try {
-            ReturnType result = root.evaluate();
+            root.evaluate();
         } catch (Exception e) {
             System.err.println("Error Evaluating JottTree: " + e.getMessage());
             return;
