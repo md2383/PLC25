@@ -1,7 +1,6 @@
 package jott_interpreter.nodes.grammar_nodes;
 
 import java.util.ArrayList;
-
 import jott_interpreter.SyntaxError;
 import jott_interpreter.nodes.*;
 import provided.*;
@@ -95,5 +94,17 @@ public class ifStmt_Node extends Jott_Node{
         str.append(this.elseN.convertToJott());
         
         return str.toString();
+    }
+
+    @Override
+    public boolean validateTree() {
+        boolean valid = true;
+        for (elseif_Node node : elseifN) {
+            valid &= node.validateTree();
+        }
+        return expressionN.validateTree() &&
+            bodyN.validateTree() &&
+            elseN.validateTree() &&
+            valid;
     }
 }
