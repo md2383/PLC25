@@ -106,16 +106,19 @@ public class expr_Node extends Jott_Node{
 
     @Override
     public boolean validateTree() {
+        boolean valid = true;
         if (expr.length == 3) {
             for (int i = 0; i < expr.length; i++) {
-                expr[i].validateTree();
+                if (!expr[i].validateTree()) {
+                    valid = false;
+                }
             }
             if (expr[0].getType() != expr[2].getType()) {
                 return false;
             }
         } else {
-            expr[0].validateTree();
+            valid = expr[0].validateTree();
         }
-        return true;
+        return valid;
     }
 }
