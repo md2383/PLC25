@@ -1,7 +1,6 @@
 package jott_interpreter.nodes.grammar_nodes;
 
 import java.util.ArrayList;
-
 import jott_interpreter.SyntaxError;
 import jott_interpreter.nodes.*;
 import provided.*;
@@ -69,5 +68,12 @@ public class body_Node extends Jott_Node{
         StringBuilder str = new StringBuilder();
         for(bodyStmt_Node stmt : stmts) { str.append(stmt.convertToJott()); }
         return str.append(returnStmt.convertToJott()).toString();
+    }
+
+    @Override
+    public boolean validateTree() {
+        boolean valid = true;
+        for(bodyStmt_Node stmt : stmts) { valid = valid && stmt.validateTree(); }
+        return valid && returnStmt.validateTree();
     }
 }

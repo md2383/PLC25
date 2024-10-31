@@ -80,6 +80,11 @@ public class returnStatement_Node extends Jott_Node{
     }
 
     @Override
+    public boolean validateTree() {
+        return returnExpr.validateTree();
+    }
+
+    @Override
     public ReturnType getType() {
         return returnExpr.getType();
     }

@@ -43,4 +43,9 @@ public class whileLoop_Node extends Jott_Node{
     public String convertToJott() {
         return "While[" + this.expr.convertToJott() + "]{" + this.body.convertToJott() + "}";
     }
+
+    @Override
+    public boolean validateTree() {
+        return expr.validateTree() && body.validateTree();
+    }
 }
