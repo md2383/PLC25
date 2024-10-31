@@ -62,6 +62,10 @@ public class params_Node extends Jott_Node {
 
     @Override
     public boolean validateTree() {
-        
+        boolean valid = true;
+        for (params_t_Node node : followingNodes) {
+            valid &= node.validateTree();
+        }
+        return firstNode.validateTree() && valid;
     }
 }
