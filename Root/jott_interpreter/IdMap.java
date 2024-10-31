@@ -122,6 +122,10 @@ public class IdMap {
         return id_map.keySet().contains(id);
     }
 
+    public void add(String id, Jott_Node node) {
+        id_map.put(id, node);
+    }
+
     /**
      * A wrapper method for printing a string to the console.
      * 
