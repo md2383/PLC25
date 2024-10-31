@@ -2,6 +2,7 @@ package jott_interpreter.nodes.grammar_nodes;
 
 import java.util.ArrayList;
 
+import jott_interpreter.ReturnType;
 import jott_interpreter.SyntaxError;
 import jott_interpreter.nodes.*;
 import provided.*;
@@ -77,4 +78,17 @@ public class returnStatement_Node extends Jott_Node{
         return this.isVoid() ?
             "" : "Return " + returnExpr.convertToJott() + ";";
     }
+<<<<<<< HEAD
+=======
+
+    @Override
+    public boolean validateTree() {
+        return returnExpr.validateTree();
+    }
+
+    @Override
+    public ReturnType getType() {
+        return returnExpr.getType();
+    }
+>>>>>>> a22250338ca6ff9a91324adf4f5da849b4022227
 }

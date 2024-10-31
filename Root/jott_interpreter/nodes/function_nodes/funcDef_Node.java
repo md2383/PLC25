@@ -122,13 +122,24 @@ public class funcDef_Node extends Jott_Node {
 
     @Override
     public boolean validateTree() {
-        boolean isValid = this.id.validateTree() && 
-                          this.func_def_params.validateTree() &&
-                          this.function_return.validateTree() &&
-                          this.f_body.validateTree();
-                          
-        // TODO: validate body return type
-        // TODO: validate id not in id HashMap
+        boolean isValid = this.id.validateTree() && this.function_return.validateTree();
+
+        if(declared_functions.contains(this.id.toString())) {
+            new SemanticError("Duplicate Function: " + this.id.toString())
+                .print(null, this.linenum);
+            return false; // Ignores rest of checks in case of duplicate function
+        }
+            
+        declared_functions.add(this.id.toString(), this); // TODO: might move to this.func_body
+        current_function_ID = this.id.toString();
+
+        isValid &= this.func_def_params.validateTree() && this.f_body.validateTree();
+        
+        if(f_body.getType() != function_return.getType()) {
+            new SemanticError("Function Returns: " + "" + ", Expected: " + "")
+                .print(null, this.linenum);
+            isValid = false;
+        }
 
         if(this.id.toString().equals("main")) {
             if(!func_def_params.toString().equals("")) {
