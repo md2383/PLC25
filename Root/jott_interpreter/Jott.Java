@@ -1,13 +1,13 @@
 public class Jott {
     
     public static void main(String[] args) {
-<<<<<<< HEAD
+
         // TODO:
         // Tokenize
         // Parse
         // Validate
         // Evalluate
-=======
+
 
         // Get the filename from the command line arguments
         try{
@@ -49,6 +49,6 @@ public class Jott {
             return;
         }
 
->>>>>>> 9d6699255a6caeaf113110ca99a3838a8f57c07b
+
     }
 }
