@@ -1,7 +1,6 @@
 package jott_interpreter.nodes.grammar_nodes;
 
 import java.util.ArrayList;
-
 import jott_interpreter.SyntaxError;
 import jott_interpreter.nodes.*;
 import jott_interpreter.nodes.function_nodes.*;
@@ -88,6 +87,11 @@ public class bodyStmt_Node extends Jott_Node {
     @Override
     public String convertToJott() {
         return statement.convertToJott() + (this.hasSemicolon ? ";" : "");
+    }
+
+    @Override
+    public boolean validateTree() {
+        return statement.validateTree();
     }
     
 }
