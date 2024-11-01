@@ -16,7 +16,8 @@ public abstract class Jott_Node implements JottTree{
     protected final static HashMap<String, IdMap> function_scope = new LinkedHashMap<>();
     protected static String current_function_ID = null;
 
-    final public int linenum;
+    public final int linenum;
+    public final static String filename = null;
 
     public Jott_Node() {
         this.linenum = -1;

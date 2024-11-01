@@ -7,7 +7,6 @@ import jott_interpreter.nodes.function_nodes.customFunc_Node;
 import jott_interpreter.nodes.Jott_Node;
 
 // Usage: documentation
-import jott_interpreter.nodes.function_nodes.funcBody_Node;
 import provided.JottTree;
 
 /**
@@ -19,15 +18,12 @@ import provided.JottTree;
  * 
  * <p>
  * This is built directly into the node structure, certain nodes have a scope.
- *  ->  The {@link Jott_Node} contains a static {@link IdMap} for functions,
- *      each function contains an {@link IdMap} referencing the variables 
- *      declared in the scope.
+ *  ->  The {@link Jott_Node} contains a static {@link IdMap} for functions and
+ *      a non-static {@link IdMap} from a hashmap for scope. Each function 
+ *      contains an {@link IdMap} referencing the variables declared in the scope.
  * </p>
  * 
  * @see {@link Jott_Node}
- * @see {@link funcBody_Node}
- * 
- * @hidden NOTE: haven't entirely decided where to put scopes for functions...
  */
 public class IdMap {
 

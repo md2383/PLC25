@@ -30,13 +30,21 @@ public class funcDef_Node extends Jott_Node {
     /**
      * Private Constructor 
      * (validation of the node done in {@link #parseFunctionDefNode})
+     * @param line_number       the line number of the first token in this node
      * @param id                an ID node referencing the function
      * @param func_def_params   a funcDefParams node referencing the (list of) 
      *                          parameters for the function
      * @param function_return   a functionReturn node referencing the return type
      * @param f_body            a funcBody node referencing the body of the function
      */
-    private funcDef_Node(id_Node id, funcDefParams_Node func_def_params, funcReturn_Node function_return, funcBody_Node f_body) {
+    private funcDef_Node(
+            int line_number,
+            id_Node id, 
+            funcDefParams_Node func_def_params, 
+            funcReturn_Node function_return, 
+            funcBody_Node f_body
+        ) {
+        super(line_number);
         this.id = id;
         this.func_def_params = func_def_params;
         this.function_return = function_return;
@@ -64,6 +72,8 @@ public class funcDef_Node extends Jott_Node {
         if (!(tokens.get(0).getTokenType() == TokenType.ID_KEYWORD && tokens.get(0).getToken().equals("Def"))) {
             throw new SyntaxError("Invalid Function Definition: Missing Keyword 'Def'");
         }
+
+        int line_number = tokens.get(0).getLineNum();
         tokens.remove(0); // Removing the Def token from the list (Not storing)
         
         // Saving the ID node
@@ -101,7 +111,7 @@ public class funcDef_Node extends Jott_Node {
         if (tokens.get(0).getTokenType() != TokenType.R_BRACE) {throw new SyntaxError("Invalid Function Definition: Missing a '}' Token");}
         tokens.remove(0); // Removing the CloseBrace token
         
-        return new funcDef_Node(id, func_def_params, function_return, f_body);
+        return new funcDef_Node(line_number, id, func_def_params, function_return, f_body);
     }
 
     /**
@@ -127,7 +137,7 @@ public class funcDef_Node extends Jott_Node {
         // Duplicate function check
         if(declared_functions.contains(this.id.toString())) {
             new SemanticError("Duplicate Function: " + this.id.toString())
-                .print(null, this.linenum);
+                .print(Jott_Node.filename, super.linenum);
             return false; // Ignores rest of checks in case of duplicate function
         }
             
@@ -140,7 +150,7 @@ public class funcDef_Node extends Jott_Node {
         // Function body return validation
         if(f_body.getType() != function_return.getType()) {
             new SemanticError("Function Returns: " + "" + ", Expected: " + "")
-                .print(null, this.linenum);
+                .print(Jott_Node.filename, super.linenum);
             isValid = false;
         }
 
@@ -149,14 +159,14 @@ public class funcDef_Node extends Jott_Node {
             // Parameter check (main has no params)
             if(!func_def_params.toString().equals("")) {
                 new SemanticError("Invalid main definition: main expects no parameters")
-                    .print(null, this.linenum);
+                    .print(Jott_Node.filename, super.linenum);
                 isValid = false;
             }
 
             // Return check (main must return Void)
             if(function_return.getType() != ReturnType.Void) {
                 new SemanticError("Invalid main return type: expected 'Void'")
-                    .print(null, this.linenum);
+                    .print(Jott_Node.filename, super.linenum);
                 isValid = false;
             }
         }

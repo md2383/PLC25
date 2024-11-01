@@ -70,7 +70,7 @@ public class program_Node extends Jott_Node{
 
         if(!declared_functions.contains("main")) {
             new SemanticError("Expected function 'Def main[]:Void' not present")
-                .print(null, declared_functions.getNode("main").linenum);
+                .print(Jott_Node.filename, 0);
             isValid = false;
         } 
 

@@ -78,8 +78,6 @@ public class returnStatement_Node extends Jott_Node{
         return this.isVoid() ?
             "" : "Return " + returnExpr.convertToJott() + ";";
     }
-<<<<<<< HEAD
-=======
 
     @Override
     public boolean validateTree() {
@@ -90,5 +88,4 @@ public class returnStatement_Node extends Jott_Node{
     public ReturnType getType() {
         return returnExpr.getType();
     }
->>>>>>> a22250338ca6ff9a91324adf4f5da849b4022227
 }

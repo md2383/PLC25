@@ -113,7 +113,7 @@ public class expr_Node extends Jott_Node{
                 valid &= expr[i].validateTree();
             }
             if (expr[0].getType() != expr[2].getType()) {
-                new SemanticError("Unmatched type").print(null, linenum);
+                new SemanticError("Unmatched type").print(Jott_Node.filename, super.linenum);
                 valid = false;
             }
         } else {
