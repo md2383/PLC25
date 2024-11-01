@@ -34,11 +34,21 @@ public class IdMap {
     /** A linked hash map assigning an id to an executable node in the {@link JottTree} */
     private final LinkedHashMap<String, Jott_Node> id_map;
 
+    /** 
+     * <p> A linked hash map referencing just the dynamic variables in {@link #id_map} </p>
+     * <p> 
+     * This map is used for function parameters, and would be used for 
+     * global dynamic variables, if those were present in the language. 
+     * </p>
+     */
+    private final LinkedHashMap<String, Jott_Node> dynamic_var_map;
+
     /**
      * Constructs a new {@link IdMap} instance with an empty identifier map.
      */
     public IdMap() {
         id_map = new LinkedHashMap<>();
+        dynamic_var_map = new LinkedHashMap<>();
     }
 
     /**
@@ -93,7 +103,6 @@ public class IdMap {
 
     /**
      * Retrieves the return type of the function or variable associated with the given identifier.
-     *
      * @param id the identifier of the function or variable.
      * @return the {@link ReturnType} of the function or variable, as stored in the id_map.
      * @throws NullPointerException if the identifier does not exist in the id_map.
@@ -104,7 +113,6 @@ public class IdMap {
 
     /**
      * Retrieves the {@link Jott_Node} (function or variable) associated with the given identifier.
-     *
      * @param id the identifier of the function or variable.
      * @return the {@link Jott_Node} associated with the id, or null if not found.
      */
@@ -114,7 +122,6 @@ public class IdMap {
 
     /**
      * Checks if the given identifier exists in the id_map.
-     *
      * @param id the identifier to check for.
      * @return true if the identifier exists in the id_map, false otherwise.
      */
@@ -122,8 +129,23 @@ public class IdMap {
         return id_map.keySet().contains(id);
     }
 
+    /**
+     * Adds a node reference to an id in the id_map.
+     * @param id the identifier of the function or variable.
+     * @param node the {@link Jott_Node} referenced to the id
+     */
     public void add(String id, Jott_Node node) {
         id_map.put(id, node);
+    }
+
+    /**
+     * Adds a dynamic (undefined) variable to the id_map.
+     * @param id the identifier of the variable.
+     * @param node a reference to the parameter (or global variable) declaration.
+     */
+    public void addDynamicVar(String id, Jott_Node node) {
+        id_map.put(id, null);
+        dynamic_var_map.put(id, node);
     }
 
     /**
