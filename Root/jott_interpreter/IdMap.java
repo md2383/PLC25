@@ -53,10 +53,10 @@ public class IdMap {
      * <p>
      * This method initializes the built-in functions that the interpreter can use, such as
      * print, concat, and length. It uses Java Reflection to create method references for 
-     * these functions and adds them to the id_map.
+     * these functions and adds them to the {@link #id_map}.
      * </p>
      * 
-     * @throws AssertionError if id_map is not empty.
+     * @throws AssertionError if {@link #id_map} is not empty.
      * @implSpec    This method should only be called at the creation 
      *              of the node-based parse tree.
      * @implNote    If there are functions already defined in the parse tree,
@@ -100,8 +100,8 @@ public class IdMap {
     /**
      * Retrieves the return type of the function or variable associated with the given identifier.
      * @param id the identifier of the function or variable.
-     * @return the {@link ReturnType} of the function or variable, as stored in the id_map.
-     * @throws NullPointerException if the identifier does not exist in the id_map.
+     * @return the {@link ReturnType} of the function or variable, as stored in the {@link #id_map}.
+     * @throws NullPointerException if the identifier does not exist in the {@link #id_map}.
      */
     public ReturnType getReturnType(String id) {
         return id_map.get(id).getType();
@@ -117,16 +117,25 @@ public class IdMap {
     }
 
     /**
-     * Checks if the given identifier exists in the id_map.
+     * Checks if the given identifier exists in the {@link #id_map}.
      * @param id the identifier to check for.
-     * @return true if the identifier exists in the id_map, false otherwise.
+     * @return true if the identifier exists in the {@link #id_map}, false otherwise.
      */
     public boolean contains(String id) {
         return id_map.keySet().contains(id);
     }
 
     /**
-     * Adds a node reference to an id in the id_map.
+     * Checks if the given identifier is a dynamic reference variable.
+     * @param id the identifier to check for.
+     * @return true if the identifier is dynamic, false otherwise.
+     */
+    public boolean isDynamic(String id) {
+        return dynamic_var_map.keySet().contains(id);
+    }
+
+    /**
+     * Adds a node reference to an id in the {@link #id_map}.
      * @param id the identifier of the function or variable.
      * @param node the {@link Jott_Node} referenced to the id
      */
@@ -135,7 +144,7 @@ public class IdMap {
     }
 
     /**
-     * Adds a dynamic (undefined) variable to the id_map.
+     * Adds a dynamic (undefined) variable to the {@link #id_map}.
      * @param id the identifier of the variable.
      * @param node a reference to the parameter (or global variable) declaration.
      */
