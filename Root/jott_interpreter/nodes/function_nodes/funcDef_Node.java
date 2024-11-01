@@ -161,6 +161,9 @@ public class funcDef_Node extends Jott_Node {
             }
         }
 
+        // Forced curr func reset safegaurd
+        current_function_ID = null;
+
         return isValid;
     }
 }
