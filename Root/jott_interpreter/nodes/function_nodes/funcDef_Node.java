@@ -124,30 +124,36 @@ public class funcDef_Node extends Jott_Node {
     public boolean validateTree() {
         boolean isValid = this.id.validateTree() && this.function_return.validateTree();
 
+        // Duplicate function check
         if(declared_functions.contains(this.id.toString())) {
             new SemanticError("Duplicate Function: " + this.id.toString())
                 .print(null, this.linenum);
             return false; // Ignores rest of checks in case of duplicate function
         }
             
+        // Adding this function to function id map
         declared_functions.add(this.id.toString(), this); // TODO: might move to this.func_body
         current_function_ID = this.id.toString();
 
         isValid &= this.func_def_params.validateTree() && this.f_body.validateTree();
         
+        // Function body return validation
         if(f_body.getType() != function_return.getType()) {
             new SemanticError("Function Returns: " + "" + ", Expected: " + "")
                 .print(null, this.linenum);
             isValid = false;
         }
 
+        // Main function checks
         if(this.id.toString().equals("main")) {
+            // Parameter check (main has no params)
             if(!func_def_params.toString().equals("")) {
                 new SemanticError("Invalid main definition: main expects no parameters")
                     .print(null, this.linenum);
                 isValid = false;
             }
 
+            // Return check (main must return Void)
             if(function_return.getType() != ReturnType.Void) {
                 new SemanticError("Invalid main return type: expected 'Void'")
                     .print(null, this.linenum);
