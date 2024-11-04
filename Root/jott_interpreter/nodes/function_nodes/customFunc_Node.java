@@ -1,7 +1,5 @@
 package jott_interpreter.nodes.function_nodes;
 
-import java.lang.reflect.Method;
-
 import jott_interpreter.ReturnType;
 import jott_interpreter.nodes.Jott_Node;
 
@@ -20,10 +18,6 @@ public class customFunc_Node extends Jott_Node{
     
     /** The identifier for this function */
     private final String ID;
-    /** The method reflection reference for this function's implementation */
-    private final Method METHOD;
-    /** The return type of the function */
-    private final ReturnType RETURN_TYPE;
 
     /**
      * Constructs a new {@link customFunc_Node} with the specified identifier,
@@ -33,15 +27,12 @@ public class customFunc_Node extends Jott_Node{
      * @param method The method reference for the function's implementation
      * @param return_type The return type of the function
      */
-    public customFunc_Node(final String id, final Method method, final ReturnType return_type) {
+    public customFunc_Node(final String id) {
         this.ID = id;
-        this.METHOD = method;
-        this.RETURN_TYPE = return_type;
     }
 
     @Override
     public String convertToJott() {
-        // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'convertToJott'");
     }
 
@@ -52,6 +43,16 @@ public class customFunc_Node extends Jott_Node{
 
     @Override
     public ReturnType getType() {
-        return RETURN_TYPE;
+        switch (this.ID) {
+            case "print" :
+                return ReturnType.Void;
+            case "concat" :
+                return ReturnType.String;
+            case "length" :
+                return ReturnType.Integer;
+            default:
+                assert(false); // function must be defined in switch case
+                return ReturnType.Void;
+        }
     }
 }

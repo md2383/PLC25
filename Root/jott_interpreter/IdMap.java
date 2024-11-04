@@ -1,6 +1,5 @@
 package jott_interpreter;
 
-import java.lang.reflect.Method;
 import java.util.LinkedHashMap;
 
 import jott_interpreter.nodes.function_nodes.customFunc_Node;
@@ -52,8 +51,7 @@ public class IdMap {
      * 
      * <p>
      * This method initializes the built-in functions that the interpreter can use, such as
-     * print, concat, and length. It uses Java Reflection to create method references for 
-     * these functions and adds them to the {@link #id_map}.
+     * print, concat, and length. 
      * </p>
      * 
      * @throws AssertionError if {@link #id_map} is not empty.
@@ -65,31 +63,10 @@ public class IdMap {
     public void declareBuiltinFunctions() {
         assert(id_map.isEmpty());
 
-        // Method Reflection parameter declarations
-        Class<?>[] print_params = new Class[1];
-        // Class<?>[] concat_params = new Class[1];
-        // Class<?>[] length_params = new Class[1];
-
-        print_params[0] = String.class;
-
-        // Method Reflection Instantiation
-        Method PRINT = null;
-        Method CONCAT = null;
-        Method LENGTH = null;
-
-        // Method Reflection Definitions
-        try { 
-            PRINT = IdMap.class.getMethod("print_wrapper", print_params);
-            // TODO: CONCAT
-            // TODO: LENGTH
-        } catch (NoSuchMethodException e) {
-            // TODO: handle exception
-        }
-
-        // Assigning the custom functions
-        Jott_Node print = new customFunc_Node("print", PRINT, ReturnType.Void);
-        Jott_Node concat = new customFunc_Node("concat", CONCAT, ReturnType.String);
-        Jott_Node length = new customFunc_Node("length", LENGTH, ReturnType.Integer);
+        // Assigning the custom functions per an id
+        Jott_Node print = new customFunc_Node("print");
+        Jott_Node concat = new customFunc_Node("concat");
+        Jott_Node length = new customFunc_Node("length");
 
         // Putting the functions into this map
         this.id_map.put("print", print);
@@ -151,38 +128,5 @@ public class IdMap {
     public void addDynamicVar(String id, Jott_Node node) {
         id_map.put(id, null);
         dynamic_var_map.put(id, node);
-    }
-
-    /**
-     * A wrapper method for printing a string to the console.
-     * 
-     * @param input - the string to be printed to the console.
-     */
-    @SuppressWarnings("unused")
-    private static void print_wrapper(String input) {
-        System.out.println(input);
-    }
-
-    /**
-     * A wrapper method for concatenating 2 Strings.
-     * 
-     * @param str1 - the first string.
-     * @param str2 - the second string.
-     * @return the concatenated result of str1 and str2.
-     */
-    @SuppressWarnings("unused")
-    private static String concat_wrapper(String str1, String str2) {
-        return str1 + str2;
-    }
-
-    /**
-     * A wrapper method for retrieving the length of a String.
-     * 
-     * @param input - the string whose length is to be retrieved.
-     * @return length of the input
-     */
-    @SuppressWarnings("unused")
-    private static int length_wrapper(String input) {
-        return input.length();
     }
 }
