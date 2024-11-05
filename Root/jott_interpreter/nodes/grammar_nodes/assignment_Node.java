@@ -1,6 +1,9 @@
 package jott_interpreter.nodes.grammar_nodes;
 
 import java.util.ArrayList;
+
+import jott_interpreter.ReturnType;
+import jott_interpreter.SemanticError;
 import jott_interpreter.SyntaxError;
 import jott_interpreter.nodes.*;
 import jott_interpreter.nodes.token_nodes.*;
@@ -84,7 +87,22 @@ public class assignment_Node extends Jott_Node {
 
     @Override
     public boolean validateTree() {
-        // Make sure that the id and expression are the same type
-        return id.validateTree() && expr.validateTree();
+        boolean isValid = id.validateTree() && expr.validateTree();
+
+        // Id must be defined in scope
+        if(!Jott_Node.function_scope.get(current_function_ID).contains(this.id.toString())) {
+            new SemanticError("Variable id: {" + this.id.toString() + "} not declared.")
+                .print(Jott_Node.filename, super.linenum);
+            isValid = false;
+        } else {
+            // Expression type must match id type
+            if(id.getType() != expr.getType()) {
+                new SemanticError("Expression type does not match id type for id: " + this.id.toString())
+                    .print(Jott_Node.filename, super.linenum);
+                isValid = false;
+            }
+        }
+
+        return isValid;
     }
 }
