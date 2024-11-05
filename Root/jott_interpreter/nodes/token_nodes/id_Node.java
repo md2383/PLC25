@@ -3,6 +3,7 @@ package jott_interpreter.nodes.token_nodes;
 import java.util.ArrayList;
 
 import jott_interpreter.ReturnType;
+import jott_interpreter.SemanticError;
 import jott_interpreter.SyntaxError;
 import jott_interpreter.nodes.*;
 import provided.*;
@@ -62,7 +63,14 @@ public class id_Node extends Jott_Node {
 
     @Override
     public ReturnType getType() {
-        // TODO: find type in hashmap
-        return null;
+        // if id is a function, return function ReturnType
+        if(Jott_Node.declared_functions.contains(this.toString())) {
+            return Jott_Node.declared_functions.getReturnType(this.toString());
+        // if id is a variable reference, return variable type
+        } else {
+            assert(current_function_ID != null);
+            return Jott_Node.function_scope.get(current_function_ID)
+                    .getReturnType(this.toString());
+        }
     }
 }
