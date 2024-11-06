@@ -2,6 +2,8 @@ package jott_interpreter.nodes.function_nodes;
 
 import java.util.ArrayList;
 
+import jott_interpreter.ReturnType;
+import jott_interpreter.SemanticError;
 import jott_interpreter.SyntaxError;
 import jott_interpreter.nodes.*;
 import jott_interpreter.nodes.grammar_nodes.body_Node;
@@ -42,5 +44,23 @@ public class funcBody_Node extends Jott_Node{
         for(varDec_Node var : this.vars) { str.append(var.convertToJott()); }
         str.append(body.convertToJott());
         return str.toString();
+    }
+
+    @Override
+    public boolean validateTree() {
+        boolean isValid = true;
+
+        for (varDec_Node varDec : vars) {
+            isValid &= varDec.validateTree();
+        }
+
+        isValid &= this.body.validateTree();
+
+        return isValid;
+    }
+
+    @Override
+    public ReturnType getType() {
+        return this.body.getType();
     }
 }
