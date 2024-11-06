@@ -1,6 +1,9 @@
 package jott_interpreter.nodes.function_nodes;
 
 import java.util.ArrayList;
+
+import jott_interpreter.ReturnType;
+import jott_interpreter.SemanticError;
 import jott_interpreter.SyntaxError;
 import jott_interpreter.nodes.*;
 import jott_interpreter.nodes.token_nodes.id_Node;
@@ -67,5 +70,35 @@ public class funcDefParams_t_Node extends Jott_Node {
     @Override
     public String convertToJott() {
         return ", " + id.convertToJott() + ":" + type.convertToJott();
+    }
+    
+    @Override
+    public boolean validateTree() {
+        boolean isValid = this.type.validateTree() && this.id.validateTree();
+
+        // TODO: may not be needed, checks if variable id already used by function
+        if(Jott_Node.declared_functions.contains(this.id.toString())) {
+            new SemanticError("Variable id: {" + this.id.toString() + "} already a defined function")
+                .print(Jott_Node.filename, super.linenum);
+            isValid = false;
+        }
+
+        // checking if variable already declared in function scope
+        if(Jott_Node.function_scope.get(current_function_ID).contains(this.id.toString())) {
+            new SemanticError("Function already contains variable id: " + this.id.toString())
+                .print(Jott_Node.filename, super.linenum);
+            isValid = false;
+        } else {
+            // Adding variable to current function scope
+            Jott_Node.function_scope.get(current_function_ID)
+                .addDynamicVar(this.id.toString(), this);
+        }
+
+        return isValid;
+    }
+
+    @Override
+    public ReturnType getType() {
+        return this.type.getType();
     }
 }
