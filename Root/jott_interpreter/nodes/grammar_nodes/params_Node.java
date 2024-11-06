@@ -1,6 +1,8 @@
 package jott_interpreter.nodes.grammar_nodes;
 
 import java.util.ArrayList;
+
+import jott_interpreter.SemanticError;
 import jott_interpreter.SyntaxError;
 import jott_interpreter.nodes.*;
 import provided.*;
@@ -62,10 +64,33 @@ public class params_Node extends Jott_Node {
 
     @Override
     public boolean validateTree() {
-        boolean valid = true;
-        for (params_t_Node node : followingNodes) {
-            valid &= node.validateTree();
+        boolean valid = firstNode.validateTree();
+
+        // list of declared params needed for the function
+        Jott_Node[] orderedParamNodes = Jott_Node.function_scope
+                .get(current_function_ID).getOrderedDynamicNodes();
+        
+        if(orderedParamNodes.length != followingNodes.size() + 1) {
+            new SemanticError("Invalid number of paramaters, expected: " + orderedParamNodes.length)
+                .print(Jott_Node.filename, super.linenum);
+            valid = false;
+        } else {
+            if(firstNode.getType() != orderedParamNodes[0].getType()) {
+                new SemanticError("Invalid Parameter type, expected: " + "") // TODO
+                    .print(Jott_Node.filename, super.linenum);
+                valid = false;
+            }
+    
+            for (int i = 0; i < followingNodes.size(); i++) {
+                valid &= followingNodes.get(i).validateTree();
+                if(followingNodes.get(i).getType() != orderedParamNodes[i].getType()) {
+                    new SemanticError("Invalid Parameter type, expected: " + "") // TODO
+                        .print(Jott_Node.filename, super.linenum);
+                    valid = false;
+                }
+            }
         }
-        return firstNode.validateTree() && valid;
+
+        return valid;
     }
 }

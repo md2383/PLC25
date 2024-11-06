@@ -1,5 +1,6 @@
 package jott_interpreter;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
 import jott_interpreter.nodes.function_nodes.customFunc_Node;
@@ -42,8 +43,8 @@ public class IdMap {
      * Constructs a new {@link IdMap} instance with an empty identifier map.
      */
     public IdMap() {
-        id_map = new LinkedHashMap<>();
-        dynamic_var_map = new LinkedHashMap<>();
+        this.id_map = new LinkedHashMap<>();
+        this.dynamic_var_map = new LinkedHashMap<>();
     }
 
     /**
@@ -61,7 +62,7 @@ public class IdMap {
      *              this function will throw an {@code AssertionError}
      */
     public void declareBuiltinFunctions() {
-        assert(id_map.isEmpty());
+        assert(this.id_map.isEmpty());
 
         // Assigning the custom functions per an id
         Jott_Node print = new customFunc_Node("print");
@@ -81,7 +82,7 @@ public class IdMap {
      * @throws NullPointerException if the identifier does not exist in the {@link #id_map}.
      */
     public ReturnType getReturnType(String id) {
-        return id_map.get(id).getType();
+        return this.id_map.get(id).getType();
     }
 
     /**
@@ -90,7 +91,7 @@ public class IdMap {
      * @return the {@link Jott_Node} associated with the id, or null if not found.
      */
     public Jott_Node getNode(String id) {
-        return id_map.get(id);
+        return this.id_map.get(id);
     }
 
     /**
@@ -99,7 +100,7 @@ public class IdMap {
      * @return true if the identifier exists in the {@link #id_map}, false otherwise.
      */
     public boolean contains(String id) {
-        return id_map.keySet().contains(id);
+        return this.id_map.keySet().contains(id);
     }
 
     /**
@@ -108,7 +109,7 @@ public class IdMap {
      * @return true if the identifier is dynamic, false otherwise.
      */
     public boolean isDynamic(String id) {
-        return dynamic_var_map.keySet().contains(id);
+        return this.dynamic_var_map.keySet().contains(id);
     }
 
     /**
@@ -117,7 +118,7 @@ public class IdMap {
      * @param node the {@link Jott_Node} referenced to the id
      */
     public void add(String id, Jott_Node node) {
-        id_map.put(id, node);
+        this.id_map.put(id, node);
     }
 
     /**
@@ -126,7 +127,17 @@ public class IdMap {
      * @param node a reference to the parameter (or global variable) declaration.
      */
     public void addDynamicVar(String id, Jott_Node node) {
-        id_map.put(id, null);
-        dynamic_var_map.put(id, node);
+        this.id_map.put(id, null);
+        this.dynamic_var_map.put(id, node);
+    }
+
+    /**
+     * Gets the node references to all the declared dynamic variables in order
+     * @return the array of ordered {@link Jott_Node} variable declarations
+     */
+    public Jott_Node[] getOrderedDynamicNodes() {
+        ArrayList<Jott_Node> orderedNodes = new ArrayList<>();
+        this.dynamic_var_map.forEach((String id, Jott_Node node) -> orderedNodes.add(node));
+        return orderedNodes.toArray(new Jott_Node[orderedNodes.size()]);
     }
 }

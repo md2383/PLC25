@@ -1,6 +1,9 @@
 package jott_interpreter.nodes.grammar_nodes;
 
 import java.util.ArrayList;
+
+import jott_interpreter.ReturnType;
+import jott_interpreter.SemanticError;
 import jott_interpreter.SyntaxError;
 import jott_interpreter.nodes.*;
 import provided.*;
@@ -15,6 +18,8 @@ public class ifStmt_Node extends Jott_Node{
     private final body_Node bodyN;
     private final elseif_Node[] elseifN;
     private final else_Node elseN;
+
+    private ReturnType returnType = ReturnType.Void;
 
     /**
      * Private Constructor
@@ -98,13 +103,45 @@ public class ifStmt_Node extends Jott_Node{
 
     @Override
     public boolean validateTree() {
-        boolean valid = true;
-        for (elseif_Node node : elseifN) {
-            valid = valid && node.validateTree();
+        boolean valid = this.expressionN.validateTree();
+
+        boolean returnVoid;         // true if any node in the chain returns VOID
+        boolean returnCheck = true; // true if all nodes in the chain either match the head, or return VOID
+        ReturnType IfNodeReturn;
+
+        // If node head
+        valid &= this.bodyN.validateTree();
+        IfNodeReturn = this.bodyN.getType();
+        returnVoid = IfNodeReturn == ReturnType.Void;
+
+        // ElseIf nodes
+        for (elseif_Node elseIf : this.elseifN) {
+            valid &= elseIf.validateTree();
+
+            ReturnType elseIfReturn = elseIf.getType();
+            returnVoid  |=  elseIfReturn == ReturnType.Void;
+            returnCheck &=  (elseIfReturn == IfNodeReturn) ||
+                            (elseIfReturn == ReturnType.Void);
         }
-        return expressionN.validateTree() &&
-            bodyN.validateTree() &&
-            elseN.validateTree() &&
-            valid;
+
+        // Else node
+        valid &= this.elseN.validateTree();
+        
+        ReturnType elseReturn = elseN.getType();
+        returnVoid  |=  elseReturn == ReturnType.Void;
+        returnCheck &=  (elseReturn == IfNodeReturn) ||
+                        (elseReturn == ReturnType.Void);
+        
+        if(returnVoid) { assert(this.returnType == ReturnType.Void); } 
+        else { this.returnType = IfNodeReturn; }
+
+        // Check all nodes in chain return the same type
+        if(!returnCheck) {
+            new SemanticError("Invalid if-else chain return type")
+                .print(Jott_Node.filename, super.linenum);
+            valid = false;
+        }
+
+        return valid;
     }
 }

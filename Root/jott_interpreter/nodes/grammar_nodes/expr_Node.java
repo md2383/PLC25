@@ -1,6 +1,8 @@
 package jott_interpreter.nodes.grammar_nodes;
 
 import java.util.ArrayList;
+
+import jott_interpreter.ReturnType;
 import jott_interpreter.SemanticError;
 import jott_interpreter.SyntaxError;
 import jott_interpreter.nodes.*;
@@ -120,5 +122,11 @@ public class expr_Node extends Jott_Node{
             valid = expr[0].validateTree();
         }
         return valid;
+    }
+    
+    @Override
+    public ReturnType getType() {
+        // Expression type validiated in validateTree()
+        return expr[0].getType();
     }
 }
