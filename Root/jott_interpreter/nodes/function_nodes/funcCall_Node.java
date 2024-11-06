@@ -3,6 +3,7 @@ package jott_interpreter.nodes.function_nodes;
 import java.util.ArrayList;
 
 import jott_interpreter.ReturnType;
+import jott_interpreter.SemanticError;
 import jott_interpreter.SyntaxError;
 import jott_interpreter.nodes.*;
 import jott_interpreter.nodes.grammar_nodes.*;
@@ -72,6 +73,24 @@ public class funcCall_Node extends Jott_Node{
     @Override
     public String convertToJott() {
         return "::" + this.id.convertToJott() + "[" + this.params.convertToJott() + "]";
+    }
+
+    @Override
+    public boolean validateTree() {
+        boolean isValid = this.id.validateTree();
+
+        // Checking if function has been defined/declared
+        if(Jott_Node.declared_functions.contains(this.id.toString())) {
+            current_function_ID = this.id.toString();
+            isValid = params.validateTree();
+        // Else: function hasn't been defined/declared
+        } else {
+            new SemanticError("Function id: {" + this.id.toString() + "} is not defined/declared")
+                .print(Jott_Node.filename, super.linenum);
+            isValid = false;
+        }
+
+        return isValid;
     }
 
     @Override
