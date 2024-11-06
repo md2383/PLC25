@@ -3,7 +3,6 @@ package jott_interpreter.nodes.function_nodes;
 import java.util.ArrayList;
 
 import jott_interpreter.ReturnType;
-import jott_interpreter.SemanticError;
 import jott_interpreter.SyntaxError;
 import jott_interpreter.nodes.*;
 import jott_interpreter.nodes.grammar_nodes.body_Node;
