@@ -73,4 +73,9 @@ public class elseif_Node extends Jott_Node{
     public String convertToJott() {
         return "Elseif [" + this.expression.convertToJott() + "] {" + this.body.convertToJott() + "}";
     }
+
+    @Override
+    public boolean validateTree() {
+        return expression.validateTree() && body.validateTree();
+    }
 }
