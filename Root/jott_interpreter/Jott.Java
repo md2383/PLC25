@@ -13,7 +13,7 @@ public class Jott {
         try{
             String filename = args[0];
         } catch (Exception e) {
-            System.err.println("Error finding file: " + e.getMessage());
+            System.err.println("Error getting filename: " + e.getMessage());
             return;
         }
 
