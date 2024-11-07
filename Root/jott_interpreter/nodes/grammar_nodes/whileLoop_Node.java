@@ -46,6 +46,7 @@ public class whileLoop_Node extends Jott_Node{
 
     @Override
     public boolean validateTree() {
+        // TODO: validate expression returns a boolean
         return this.expr.validateTree() && this.body.validateTree();
     }
 }
