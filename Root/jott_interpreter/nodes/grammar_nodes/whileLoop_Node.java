@@ -1,7 +1,9 @@
 package jott_interpreter.nodes.grammar_nodes;
 
 import java.util.ArrayList;
+
 import jott_interpreter.ReturnType;
+import jott_interpreter.SemanticError;
 import jott_interpreter.SyntaxError;
 import jott_interpreter.nodes.*;
 import provided.*;
@@ -47,7 +49,14 @@ public class whileLoop_Node extends Jott_Node{
 
     @Override
     public boolean validateTree() {
-        // TODO: validate expression returns a boolean
-        return this.expr.validateTree() && this.body.validateTree() && (this.expr.getType() == ReturnType.Boolean);
+        boolean valid = this.expr.validateTree();
+        
+        if(this.expr.getType() != ReturnType.Boolean) {
+            new SemanticError("Expression in while statement not of type: boolean")
+                .print(Jott_Node.filename, super.linenum);
+            valid = false;
+        }
+
+        return valid && this.body.validateTree();
     }
 }
