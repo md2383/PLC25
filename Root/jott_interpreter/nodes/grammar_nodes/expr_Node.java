@@ -114,6 +114,7 @@ public class expr_Node extends Jott_Node{
             for (int i = 0; i < expr.length; i++) {
                 valid &= expr[i].validateTree();
             }
+            // TODO: this needs to validate doubles/ints against mathop and relop nodes
             if (expr[0].getType() != expr[2].getType()) {
                 new SemanticError("Unmatched type").print(Jott_Node.filename, super.linenum);
                 valid = false;
