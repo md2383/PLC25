@@ -7,11 +7,13 @@ public class Jott {
         // Parse
         // Validate
         // Evalluate
-
+        String filename;
+        ArrayList<Token> tokens;
+        JottTree root;
 
         // Get the filename from the command line arguments
         try{
-            String filename = args[0];
+            filename = args[0];
         } catch (Exception e) {
             System.err.println("Error getting filename: " + e.getMessage());
             return;
@@ -19,7 +21,7 @@ public class Jott {
 
         // Tokenize the file
         try{
-            ArrayList<Token> tokens = Interpreter.tokenize(filename);
+            tokens = Interpreter.tokenize(filename);
         } catch (Exception e) {
             System.err.println("Error Tokenizing File: " + e.getMessage());
             return;
@@ -27,7 +29,7 @@ public class Jott {
 
         // Parse the tokens into a root node of the JottTree
         try{
-            JottTree root = JottParser.parse(tokens);
+            root = JottParser.parse(tokens);
         } catch (Exception e) {
             System.err.println("Error Parsing Tokens: " + e.getMessage());
             return;
