@@ -12,9 +12,9 @@ public class Jott {
         // Parse
         // Validate
         // Evalluate
-        String filename;
-        ArrayList<Token> tokens;
-        JottTree root;
+        String filename = "";
+        ArrayList<Token> tokens = new ArrayList<Token>();
+        JottTree root = null;
 
         // Get the filename from the command line arguments
         try{
