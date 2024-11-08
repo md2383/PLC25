@@ -1,6 +1,7 @@
 package jott_interpreter.nodes.grammar_nodes;
 
 import java.util.ArrayList;
+import jott_interpreter.ReturnType;
 import jott_interpreter.SyntaxError;
 import jott_interpreter.nodes.*;
 import provided.*;
@@ -47,6 +48,6 @@ public class whileLoop_Node extends Jott_Node{
     @Override
     public boolean validateTree() {
         // TODO: validate expression returns a boolean
-        return this.expr.validateTree() && this.body.validateTree();
+        return this.expr.validateTree() && this.body.validateTree() && (this.expr.getType() == ReturnType.Boolean);
     }
 }
