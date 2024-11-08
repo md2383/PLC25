@@ -1,7 +1,10 @@
 package jott_interpreter;
 
 import java.util.ArrayList;
-import provided.*;
+
+import provided.JottParser;
+import provided.JottTree;
+import provided.Token;
 
 public class Jott {
     
