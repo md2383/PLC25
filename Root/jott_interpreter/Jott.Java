@@ -1,3 +1,8 @@
+package jott_interpreter;
+
+import java.util.ArrayList;
+import provided.*;
+
 public class Jott {
     
     public static void main(String[] args) {
@@ -7,9 +12,9 @@ public class Jott {
         // Parse
         // Validate
         // Evalluate
-        String filename;
-        ArrayList<Token> tokens;
-        JottTree root;
+        String filename = "";
+        ArrayList<Token> tokens = new ArrayList<Token>();
+        JottTree root = null;
 
         // Get the filename from the command line arguments
         try{
