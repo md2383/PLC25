@@ -105,6 +105,12 @@ public class ifStmt_Node extends Jott_Node{
     public boolean validateTree() {
         boolean valid = this.expressionN.validateTree();
 
+        if(this.expressionN.getType() != ReturnType.Boolean) {
+            new SemanticError("Expression in if statement not of type: boolean")
+                .print(Jott_Node.filename, super.linenum);
+            valid = false;
+        }
+
         boolean returnVoid;         // true if any node in the chain returns VOID
         boolean returnCheck = true; // true if all nodes in the chain either match the head, or return VOID
         ReturnType IfNodeReturn;
@@ -120,8 +126,12 @@ public class ifStmt_Node extends Jott_Node{
 
             ReturnType elseIfReturn = elseIf.getType();
             returnVoid  |=  elseIfReturn == ReturnType.Void;
-            returnCheck &=  (elseIfReturn == IfNodeReturn) ||
-                            (elseIfReturn == ReturnType.Void);
+            if((IfNodeReturn == ReturnType.Void) && (elseIfReturn != ReturnType.Void)) {
+                IfNodeReturn = elseIfReturn;
+            } else {
+                returnCheck &=  (elseIfReturn == IfNodeReturn) ||
+                                (elseIfReturn == ReturnType.Void);
+            }
         }
 
         // Else node
@@ -129,8 +139,12 @@ public class ifStmt_Node extends Jott_Node{
         
         ReturnType elseReturn = elseN.getType();
         returnVoid  |=  elseReturn == ReturnType.Void;
-        returnCheck &=  (elseReturn == IfNodeReturn) ||
-                        (elseReturn == ReturnType.Void);
+        if((IfNodeReturn == ReturnType.Void) && (elseReturn != ReturnType.Void)) {
+            IfNodeReturn = elseReturn;
+        } else {
+            returnCheck &=  (elseReturn == IfNodeReturn) ||
+                            (elseReturn == ReturnType.Void);
+        }
         
         if(returnVoid) { assert(this.returnType == ReturnType.Void); } 
         else { this.returnType = IfNodeReturn; }
@@ -143,5 +157,10 @@ public class ifStmt_Node extends Jott_Node{
         }
 
         return valid;
+    }
+
+    @Override
+    public ReturnType getType() {
+        return returnType;
     }
 }
