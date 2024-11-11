@@ -89,7 +89,7 @@ public class assignment_Node extends Jott_Node {
         boolean isValid = id.validateTree() && expr.validateTree();
 
         // Id must be defined in scope
-        if(!Jott_Node.function_scope.get(current_function_ID).contains(this.id.toString())) {
+        if(!Jott_Node.function_scope.get(current_function_ID.peek()).contains(this.id.toString())) {
             new SemanticError("Variable id: {" + this.id.toString() + "} not declared.")
                 .print(Jott_Node.filename, super.linenum);
             isValid = false;

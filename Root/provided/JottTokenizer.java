@@ -5,6 +5,7 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 
 import jott_interpreter.SyntaxError;
+import jott_interpreter.nodes.Jott_Node;
 
 /**
  * Tokenization class containing Jott Tokenizer
@@ -30,6 +31,7 @@ public class JottTokenizer {
     final ArrayList<Token> tokens = new ArrayList<>();
 
     int linenum = 1;
+    Jott_Node.filename = filename;
 
     // Input Stream Wrapper
     try (BufferedReader reader = new BufferedReader(new InputStreamReader(

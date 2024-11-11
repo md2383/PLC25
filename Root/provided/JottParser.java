@@ -3,6 +3,7 @@ package provided;
 import java.util.ArrayList;
 
 import jott_interpreter.SyntaxError;
+import jott_interpreter.nodes.Jott_Node;
 import jott_interpreter.nodes.grammar_nodes.program_Node;
 
 /**
@@ -28,7 +29,7 @@ public class JottParser {
           Token errorToken = tokens.get(0);
           Error.print(errorToken.getFilename(), errorToken.getLineNum());
         } else {
-          Error.print("", 0);
+          Error.print(Jott_Node.filename, 0);
         }
         return null;
       }

@@ -68,7 +68,7 @@ public class id_Node extends Jott_Node {
         // if id is a variable reference, return variable type
         } else {
             assert(current_function_ID != null);
-            return Jott_Node.function_scope.get(current_function_ID)
+            return Jott_Node.function_scope.get(current_function_ID.peek())
                     .getReturnType(this.toString());
         }
     }

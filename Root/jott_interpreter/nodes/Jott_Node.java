@@ -2,6 +2,7 @@ package jott_interpreter.nodes;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.Stack;
 
 import jott_interpreter.IdMap;
 import jott_interpreter.ReturnType;
@@ -14,10 +15,10 @@ public abstract class Jott_Node implements JottTree{
 
     protected final static IdMap declared_functions = new IdMap();
     protected final static HashMap<String, IdMap> function_scope = new LinkedHashMap<>();
-    protected static String current_function_ID = null;
+    protected final static Stack<String> current_function_ID = new Stack<>();
 
     public final int linenum;
-    public final static String filename = null;
+    public static String filename = null;
 
     public Jott_Node() {
         this.linenum = -1;

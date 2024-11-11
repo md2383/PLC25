@@ -81,7 +81,7 @@ public class funcCall_Node extends Jott_Node{
 
         // Checking if function has been defined/declared
         if(Jott_Node.declared_functions.contains(this.id.toString())) {
-            current_function_ID = this.id.toString();
+            Jott_Node.current_function_ID.push(this.id.toString());
             isValid = params.validateTree();
         // Else: function hasn't been defined/declared
         } else {
@@ -89,6 +89,9 @@ public class funcCall_Node extends Jott_Node{
                 .print(Jott_Node.filename, super.linenum);
             isValid = false;
         }
+
+        // Forced curr func pop off the call stack
+        Jott_Node.current_function_ID.pop();
 
         return isValid;
     }

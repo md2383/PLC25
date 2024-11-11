@@ -2,6 +2,7 @@ package jott_interpreter.nodes.function_nodes;
 
 import java.util.ArrayList;
 
+import jott_interpreter.IdMap;
 import jott_interpreter.ReturnType;
 import jott_interpreter.SemanticError;
 import jott_interpreter.SyntaxError;
@@ -142,8 +143,9 @@ public class funcDef_Node extends Jott_Node {
         }
             
         // Adding this function to function id map
-        declared_functions.add(this.id.toString(), this); // TODO: might move to this.func_body
-        current_function_ID = this.id.toString();
+        Jott_Node.declared_functions.add(this.id.toString(), this); // TODO: might move to this.func_body
+        Jott_Node.current_function_ID.push(this.id.toString());
+        Jott_Node.function_scope.put(current_function_ID.peek(), new IdMap());
 
         isValid &= this.func_def_params.validateTree() && this.f_body.validateTree();
         
@@ -171,8 +173,8 @@ public class funcDef_Node extends Jott_Node {
             }
         }
 
-        // Forced curr func reset safegaurd
-        current_function_ID = null;
+        // Forced curr func pop off the call stack
+        Jott_Node.current_function_ID.pop();
 
         return isValid;
     }

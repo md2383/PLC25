@@ -60,7 +60,7 @@ public class program_Node extends Jott_Node{
 
     @Override
     public boolean validateTree() {
-        declared_functions.declareBuiltinFunctions();
+        Jott_Node.declared_functions.declareBuiltinFunctions();
 
         boolean isValid = true;
 

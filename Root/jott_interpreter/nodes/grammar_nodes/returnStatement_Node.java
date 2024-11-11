@@ -81,11 +81,11 @@ public class returnStatement_Node extends Jott_Node{
 
     @Override
     public boolean validateTree() {
-        return returnExpr.validateTree();
+        return this.isVoid() ? true : returnExpr.validateTree();
     }
 
     @Override
     public ReturnType getType() {
-        return returnExpr.getType();
+        return this.isVoid() ? ReturnType.Void : returnExpr.getType();
     }
 }

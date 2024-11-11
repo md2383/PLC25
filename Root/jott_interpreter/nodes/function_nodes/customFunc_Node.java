@@ -1,5 +1,6 @@
 package jott_interpreter.nodes.function_nodes;
 
+import jott_interpreter.IdMap;
 import jott_interpreter.ReturnType;
 import jott_interpreter.nodes.Jott_Node;
 
@@ -29,6 +30,19 @@ public class customFunc_Node extends Jott_Node{
      */
     public customFunc_Node(final String id) {
         this.ID = id;
+        // Adding custom parameters to the scope for each custom function
+        IdMap params = new IdMap();
+        switch (this.ID) {
+            case "concat" :
+                params.addDynamicVar("input_b", new customParam_Node(ReturnType.String));
+            case "print" :
+            case "length" :
+                params.addDynamicVar("input_a", new customParam_Node(ReturnType.String));
+                break;
+            default:
+                assert(false); // function must be defined in switch case
+        }
+        Jott_Node.function_scope.put(this.ID, params);
     }
 
     @Override

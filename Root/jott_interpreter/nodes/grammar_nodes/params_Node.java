@@ -68,25 +68,33 @@ public class params_Node extends Jott_Node {
 
         // list of declared params needed for the function
         Jott_Node[] orderedParamNodes = Jott_Node.function_scope
-                .get(current_function_ID).getOrderedDynamicNodes();
+                .get(current_function_ID.peek()).getOrderedDynamicNodes();
         
-        if(orderedParamNodes.length != followingNodes.size() + 1) {
-            new SemanticError("Invalid number of paramaters, expected: " + orderedParamNodes.length)
-                .print(Jott_Node.filename, super.linenum);
-            valid = false;
-        } else {
-            if(firstNode.getType() != orderedParamNodes[0].getType()) {
-                new SemanticError("Invalid Parameter type, expected: " + "") // TODO
+        if(followingNodes == null) {
+            if(orderedParamNodes.length != 0) {
+                new SemanticError("Invalid number of paramaters, expected: " + orderedParamNodes.length)
                     .print(Jott_Node.filename, super.linenum);
                 valid = false;
             }
-    
-            for (int i = 0; i < followingNodes.size(); i++) {
-                valid &= followingNodes.get(i).validateTree();
-                if(followingNodes.get(i).getType() != orderedParamNodes[i].getType()) {
+        } else {
+            if(orderedParamNodes.length != followingNodes.size() + 1) {
+                new SemanticError("Invalid number of paramaters, expected: " + orderedParamNodes.length)
+                    .print(Jott_Node.filename, super.linenum);
+                valid = false;
+            } else {
+                if(firstNode.getType() != orderedParamNodes[0].getType()) {
                     new SemanticError("Invalid Parameter type, expected: " + "") // TODO
                         .print(Jott_Node.filename, super.linenum);
                     valid = false;
+                }
+        
+                for (int i = 0; i < followingNodes.size(); i++) {
+                    valid &= followingNodes.get(i).validateTree();
+                    if(followingNodes.get(i).getType() != orderedParamNodes[i].getType()) {
+                        new SemanticError("Invalid Parameter type, expected: " + "") // TODO
+                            .print(Jott_Node.filename, super.linenum);
+                        valid = false;
+                    }
                 }
             }
         }
