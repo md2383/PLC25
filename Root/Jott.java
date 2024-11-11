@@ -13,6 +13,11 @@ public class Jott {
         JottTree root = null;
         boolean valid_semantics = false;
 
+        if(args.length != 1) {
+            System.err.println("Main function in Jott.java requires a filename argument.");
+            System.exit(1);
+        }
+
         /** Get the filename from the command line arguments */
         filename = args[0];
 
