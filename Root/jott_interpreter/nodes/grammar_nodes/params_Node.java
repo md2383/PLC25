@@ -11,17 +11,20 @@ public class params_Node extends Jott_Node {
     private final expr_Node firstNode;
     private final ArrayList<params_t_Node> followingNodes;
 
-    private params_Node() {
+    private params_Node(int line_number) {
+        super(line_number);
         this.firstNode = null;
         this.followingNodes = null;
     }
 
-    private params_Node(expr_Node first) {
+    private params_Node(int line_number, expr_Node first) {
+        super(line_number);
         this.firstNode = first;
         this.followingNodes = null;
     }
 
-    private params_Node(expr_Node first, ArrayList<params_t_Node> following) {
+    private params_Node(int line_number, expr_Node first, ArrayList<params_t_Node> following) {
+        super(line_number);
         this.firstNode = first;
         this.followingNodes = following;
     }
@@ -29,6 +32,7 @@ public class params_Node extends Jott_Node {
     public static params_Node parseParamsNode(final ArrayList<Token> tokens) throws SyntaxError {
         if (tokens.size() < 1) { throw new SyntaxError("Unexpected EOF"); }
 
+        int lineNum = tokens.get(0).getLineNum();
         expr_Node tempExpr;
         ArrayList<params_t_Node> tempArr = new ArrayList<>();
 
@@ -40,9 +44,9 @@ public class params_Node extends Jott_Node {
                 if (tokens.size() < 1) { throw new SyntaxError("Unexpected EOF"); }
             }
             
-            if (tempArr.isEmpty()) { return new params_Node(tempExpr); } 
-            else { return new params_Node(tempExpr, tempArr); }
-        } else { return new params_Node(); }
+            if (tempArr.isEmpty()) { return new params_Node(lineNum, tempExpr); } 
+            else { return new params_Node(lineNum, tempExpr, tempArr); }
+        } else { return new params_Node(lineNum); }
     }
 
     @Override
@@ -64,21 +68,32 @@ public class params_Node extends Jott_Node {
 
     @Override
     public boolean validateTree() {
-        boolean valid = firstNode.validateTree();
-
         // list of declared params needed for the function
         Jott_Node[] orderedParamNodes = Jott_Node.function_scope
                 .get(current_function_ID.peek()).getOrderedDynamicNodes();
         
-        if(followingNodes == null) {
+        // Empty paramater check
+        if(this.firstNode == null) {
             if(orderedParamNodes.length != 0) {
+                new SemanticError("Invalid number of paramaters, expected: " + orderedParamNodes.length)
+                    .print(Jott_Node.filename, super.linenum);
+                return false;
+            } else {
+                return true;
+            }
+        }
+
+        boolean valid = firstNode.validateTree();
+        
+        if(followingNodes == null) {
+            if(orderedParamNodes.length != 1) {
                 new SemanticError("Invalid number of paramaters, expected: " + orderedParamNodes.length)
                     .print(Jott_Node.filename, super.linenum);
                 valid = false;
             }
         } else {
             if(orderedParamNodes.length != followingNodes.size() + 1) {
-                new SemanticError("Invalid number of paramaters, expected: " + orderedParamNodes.length)
+                new SemanticError("Invalid number of paramaters, expected: " + orderedParamNodes.length + 1)
                     .print(Jott_Node.filename, super.linenum);
                 valid = false;
             } else {
@@ -89,8 +104,8 @@ public class params_Node extends Jott_Node {
                 }
         
                 for (int i = 0; i < followingNodes.size(); i++) {
-                    valid &= followingNodes.get(i).validateTree();
-                    if(followingNodes.get(i).getType() != orderedParamNodes[i].getType()) {
+                    valid &= followingNodes.get(i+1).validateTree();
+                    if(followingNodes.get(i+1).getType() != orderedParamNodes[i].getType()) {
                         new SemanticError("Invalid Parameter type, expected: " + "") // TODO
                             .print(Jott_Node.filename, super.linenum);
                         valid = false;
