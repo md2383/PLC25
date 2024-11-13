@@ -31,6 +31,8 @@ public class customFunc_Node extends Jott_Node{
     public customFunc_Node(final String id) {
         this.ID = id;
         // Adding custom parameters to the scope for each custom function
+        // The id for each paramater is meaningless, and simply for differentiating between
+        // custom functions with more than 1 input paramater
         IdMap params = new IdMap();
         switch (this.ID) {
             case "concat" :
