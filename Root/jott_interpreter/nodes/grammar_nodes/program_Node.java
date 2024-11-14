@@ -43,6 +43,11 @@ public class program_Node extends Jott_Node{
     public static program_Node parseProgramNode(final ArrayList<Token> tokens) throws SyntaxError {
         if(tokens.isEmpty()) { return new program_Node(null, 0); }
 
+        //! initializes the static elements of Jott_Node
+        //  all of these are program-specific objects,
+        //  and are used on a program-by-program basis
+        Jott_Node.init();
+
         int lineNum = tokens.get(0).getLineNum();
         ArrayList<funcDef_Node> functions = new ArrayList<>();
 
