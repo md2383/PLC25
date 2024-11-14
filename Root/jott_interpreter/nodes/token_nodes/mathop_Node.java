@@ -66,7 +66,8 @@ public class mathop_Node extends Jott_Node {
 
     @Override
     public ReturnType getType() {
-        // TODO: this is used by expr_Node, and the logic may need to be re-evaluated
-        return ReturnType.Double;
+        // using ReturnType.Integer as stand in for number, 
+        // double/int logic pushed to expr_node
+        return ReturnType.Integer; 
     }
 }

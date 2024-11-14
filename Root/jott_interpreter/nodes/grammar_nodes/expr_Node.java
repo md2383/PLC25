@@ -134,8 +134,16 @@ public class expr_Node extends Jott_Node{
 
     @Override
     public ReturnType getType() {
+        // Rel-ops are booleans working against ints, 
+        // and math-ops have to be integers or doubles.
         if(this.expr.length == 3) {
-            return this.expr[1].getType();
+            if(this.expr[1].getType() == ReturnType.Integer) {
+                if(
+                    (this.expr[0].getType() == ReturnType.Integer) && 
+                    (this.expr[2].getType() == ReturnType.Integer)
+                ) { return ReturnType.Integer; } 
+                else { return ReturnType.Double; }
+            } else { return ReturnType.Boolean; }
         } else {
             return this.expr[0].getType();
         }
