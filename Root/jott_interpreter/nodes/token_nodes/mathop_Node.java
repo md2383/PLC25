@@ -1,6 +1,8 @@
 package jott_interpreter.nodes.token_nodes;
 
 import java.util.ArrayList;
+
+import jott_interpreter.ReturnType;
 import jott_interpreter.SyntaxError;
 import jott_interpreter.nodes.Jott_Node;
 import provided.*;
@@ -60,5 +62,11 @@ public class mathop_Node extends Jott_Node {
     @Override
     public boolean validateTree() {
         return true;
+    }
+
+    @Override
+    public ReturnType getType() {
+        // TODO: this is used by expr_Node, and the logic may need to be re-evaluated
+        return ReturnType.Double;
     }
 }

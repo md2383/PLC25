@@ -104,30 +104,40 @@ public class expr_Node extends Jott_Node{
     @Override
     public String convertToJott() {
         StringBuilder str = new StringBuilder();
-        for(Jott_Node node : expr) { str.append(" ").append(node.convertToJott()); }
+        for(Jott_Node node : this.expr) { str.append(" ").append(node.convertToJott()); }
         return str.substring(1); // removing first space
     }
 
     @Override
     public boolean validateTree() {
         boolean valid = true;
-        if (expr.length == 3) {
-            for (int i = 0; i < expr.length; i++) {
-                valid &= expr[i].validateTree();
+        if (this.expr.length == 3) {
+            for (int i = 0; i < this.expr.length; i++) {
+                valid &= this.expr[i].validateTree();
             }
-            // TODO: this needs to validate doubles/ints against mathop and relop nodes
-            if (expr[0].getType() != expr[2].getType()) {
-                new SemanticError("Unmatched type").print(Jott_Node.filename, super.linenum);
+            // Math-ops and Rel-ops can only support Ints or Doubles. 
+            // Syntax only checks for operands.
+            if(this.expr[0].getType() != ReturnType.Integer || this.expr[0].getType() != ReturnType.Double) {
+                new SemanticError("Invalid types in this.expression: must be double our int.")
+                    .print(Jott_Node.filename, super.linenum);
+                valid = false;
+            } else if (this.expr[0].getType() != this.expr[2].getType()) {
+                new SemanticError("Unmatched types in this.expression")
+                    .print(Jott_Node.filename, super.linenum);
                 valid = false;
             }
         } else {
-            valid = expr[0].validateTree();
+            valid = this.expr[0].validateTree();
         }
         return valid;
     }
 
     @Override
     public ReturnType getType() {
-        return expr[0].getType();
+        if(this.expr.length == 3) {
+            return this.expr[1].getType();
+        } else {
+            return this.expr[0].getType();
+        }
     }
 }

@@ -109,29 +109,30 @@ public class ifStmt_Node extends Jott_Node{
         return str.toString();
     }
 
-    @Override
-    public boolean validateTree() {
-        boolean valid = this.expressionN.validateTree();
-
-        if(this.expressionN.getType() != ReturnType.Boolean) {
-            new SemanticError("Expression in if statement not of type: boolean")
-                .print(Jott_Node.filename, super.linenum);
-            valid = false;
-        }
-
+    /**
+     * This function is checking whether the if-else chain has a complete return:
+     * <p>
+     * If all options for the chain have a valid return type (that isn't void),
+     * then the chain is considered complete, and can be considered a valid 
+     * return statement.
+     * </p>
+     * @return  A boolean confirming all paths in the if-else chain either return void, 
+     *          or some type which matches against the return of every non-void path.
+     * @hidden  NOTE:   The return for any path can be void, this only validates the 
+     *                  return against non-void elements of the chain.
+     * @implNote This should pretty much only be used by the validateTree method
+     */
+    private boolean checkReturn() {
         boolean returnVoid;         // true if any node in the chain returns VOID
         boolean returnCheck = true; // true if all nodes in the chain either match the head, or return VOID
-        ReturnType IfNodeReturn;
+        ReturnType IfNodeReturn;    // overrides the global returnType variable *if* the return chain is complete
 
-        // If node head
-        valid &= this.bodyN.validateTree();
+        //* If node head
         IfNodeReturn = this.bodyN.getType();
         returnVoid = IfNodeReturn == ReturnType.Void;
 
-        // ElseIf nodes
+        //* ElseIf nodes
         for (elseif_Node elseIf : this.elseifN) {
-            valid &= elseIf.validateTree();
-
             ReturnType elseIfReturn = elseIf.getType();
             returnVoid  |=  elseIfReturn == ReturnType.Void;
             if((IfNodeReturn == ReturnType.Void) && (elseIfReturn != ReturnType.Void)) {
@@ -142,9 +143,7 @@ public class ifStmt_Node extends Jott_Node{
             }
         }
 
-        // Else node
-        valid &= this.elseN.validateTree();
-        
+        //* Else node
         ReturnType elseReturn = elseN.getType();
         returnVoid  |=  elseReturn == ReturnType.Void;
         if((IfNodeReturn == ReturnType.Void) && (elseReturn != ReturnType.Void)) {
@@ -154,11 +153,31 @@ public class ifStmt_Node extends Jott_Node{
                             (elseReturn == ReturnType.Void);
         }
         
+        // Global return type override when all paths in the chain are non-void
         if(returnVoid) { assert(this.returnType == ReturnType.Void); } 
         else { this.returnType = IfNodeReturn; }
 
-        // Check all nodes in chain return the same type
-        if(!returnCheck) {
+        return returnCheck;
+    }
+
+    @Override
+    public boolean validateTree() {
+        boolean valid = this.expressionN.validateTree();
+
+        // Expression must return a boolean
+        if(this.expressionN.getType() != ReturnType.Boolean) {
+            new SemanticError("Expression in if statement not of type: boolean")
+                .print(Jott_Node.filename, super.linenum);
+            valid = false;
+        }
+
+        // Validating paths
+        valid &= this.bodyN.validateTree();
+        for (elseif_Node elseIf : this.elseifN) { valid &= elseIf.validateTree(); }
+        valid &= this.elseN.validateTree();
+
+        // Validates all nodes in the if-else chain return the same type, or ReturnType.VOID
+        if(!checkReturn()) {
             new SemanticError("Invalid if-else chain return type")
                 .print(Jott_Node.filename, super.linenum);
             valid = false;

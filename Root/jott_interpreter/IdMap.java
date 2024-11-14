@@ -137,7 +137,11 @@ public class IdMap {
      */
     public Jott_Node[] getOrderedDynamicNodes() {
         ArrayList<Jott_Node> orderedNodes = new ArrayList<>();
-        this.dynamic_var_map.forEach((String id, Jott_Node node) -> orderedNodes.add(node));
+        this.dynamic_var_map.forEach(
+            (@SuppressWarnings("unused") String id, Jott_Node node) -> { 
+                orderedNodes.add(node); 
+            }
+        );
         return orderedNodes.toArray(new Jott_Node[orderedNodes.size()]);
     }
 }

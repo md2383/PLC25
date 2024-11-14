@@ -2,6 +2,7 @@ package jott_interpreter.nodes.token_nodes;
 
 import java.util.ArrayList;
 
+import jott_interpreter.ReturnType;
 import jott_interpreter.SyntaxError;
 import jott_interpreter.nodes.Jott_Node;
 import provided.Token;
@@ -62,5 +63,10 @@ public class relop_Node extends Jott_Node {
     @Override
     public boolean validateTree() {
         return true;
+    }
+
+    @Override
+    public ReturnType getType() {
+        return ReturnType.Boolean;
     }
 }
