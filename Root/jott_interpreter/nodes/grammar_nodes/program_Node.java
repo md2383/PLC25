@@ -48,6 +48,7 @@ public class program_Node extends Jott_Node{
         //  and are used on a program-by-program basis
         Jott_Node.init();
 
+        Jott_Node.filename = tokens.get(0).getFilename();
         int lineNum = tokens.get(0).getLineNum();
         ArrayList<funcDef_Node> functions = new ArrayList<>();
 

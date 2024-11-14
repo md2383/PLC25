@@ -51,6 +51,8 @@ public class whileLoop_Node extends Jott_Node{
     @Override
     public boolean validateTree() {
         boolean valid = this.expr.validateTree();
+
+        if(!valid) { return false; } // forced early function exit
         
         if(this.expr.getType() != ReturnType.Boolean) {
             new SemanticError("Expression in while statement not of type: boolean")

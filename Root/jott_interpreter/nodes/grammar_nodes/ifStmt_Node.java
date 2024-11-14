@@ -176,6 +176,8 @@ public class ifStmt_Node extends Jott_Node{
         for (elseif_Node elseIf : this.elseifN) { valid &= elseIf.validateTree(); }
         valid &= this.elseN.validateTree();
 
+        if(!valid) { return false; } // forced early function exit
+
         // Validates all nodes in the if-else chain return the same type, or ReturnType.VOID
         if(!checkReturn()) {
             new SemanticError("Invalid if-else chain return type")

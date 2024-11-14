@@ -147,13 +147,17 @@ public class funcDef_Node extends Jott_Node {
         Jott_Node.current_function_ID.push(this.id.toString());
         Jott_Node.function_scope.put(current_function_ID.peek(), new IdMap());
 
-        isValid &= this.func_def_params.validateTree() && this.f_body.validateTree();
-        
-        // Function body return validation
-        if(f_body.getType() != function_return.getType()) {
-            new SemanticError("Function Returns: " + "" + ", Expected: " + "")
-                .print(Jott_Node.filename, super.linenum);
-            isValid = false;
+        isValid &= this.func_def_params.validateTree();
+
+        // Checking for valid parameters before validating body (in case of undefined parameters)
+        if(isValid) { 
+            isValid &= this.f_body.validateTree();
+            // Function body return validation
+            if(f_body.getType() != function_return.getType()) {
+                new SemanticError("Function Returns: " + "" + ", Expected: " + "")
+                    .print(Jott_Node.filename, super.linenum);
+                isValid = false;
+            }
         }
 
         // Main function checks
@@ -173,7 +177,7 @@ public class funcDef_Node extends Jott_Node {
             }
         }
 
-        // Forced curr func pop off the call stack
+        // Forced current func pop off the call stack
         Jott_Node.current_function_ID.pop();
 
         return isValid;

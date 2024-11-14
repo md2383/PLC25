@@ -72,10 +72,10 @@ public class params_Node extends Jott_Node {
         Jott_Node[] orderedParamNodes = Jott_Node.function_scope
                 .get(current_function_ID.peek()).getOrderedDynamicNodes();
         
-        // Empty paramater check
+        // Empty parameter check
         if(this.firstNode == null) {
             if(orderedParamNodes.length != 0) {
-                new SemanticError("Invalid number of paramaters, expected: " + orderedParamNodes.length)
+                new SemanticError("Invalid number of parameters, expected: " + orderedParamNodes.length)
                     .print(Jott_Node.filename, super.linenum);
                 return false;
             } else {
@@ -87,16 +87,18 @@ public class params_Node extends Jott_Node {
         
         if(followingNodes == null) {
             if(orderedParamNodes.length != 1) {
-                new SemanticError("Invalid number of paramaters, expected: " + orderedParamNodes.length)
+                new SemanticError("Invalid number of parameters, expected: " + orderedParamNodes.length)
                     .print(Jott_Node.filename, super.linenum);
                 valid = false;
             }
         } else {
             if(orderedParamNodes.length != followingNodes.size() + 1) {
-                new SemanticError("Invalid number of paramaters, expected: " + orderedParamNodes.length + 1)
+                new SemanticError("Invalid number of parameters, expected: " + orderedParamNodes.length + 1)
                     .print(Jott_Node.filename, super.linenum);
                 valid = false;
             } else {
+                if(!valid) { return false; } // forced early function exit
+
                 if(firstNode.getType() != orderedParamNodes[0].getType()) {
                     new SemanticError("Invalid Parameter type, expected: " + "") // TODO
                         .print(Jott_Node.filename, super.linenum);

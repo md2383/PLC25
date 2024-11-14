@@ -80,6 +80,8 @@ public class elseif_Node extends Jott_Node{
     @Override
     public boolean validateTree() {
         boolean valid = this.expression.validateTree();
+
+        if(!valid) { return false; } // forced early function exit
         
         if(this.expression.getType() != ReturnType.Boolean) {
             new SemanticError("Expression in elseif statement not of type: boolean")

@@ -96,13 +96,15 @@ public class assignment_Node extends Jott_Node {
             new SemanticError("Variable id: {" + this.id.toString() + "} not declared.")
                 .print(Jott_Node.filename, super.linenum);
             isValid = false;
-        } else {
-            // Expression type must match id type
-            if(id.getType() != expr.getType()) {
-                new SemanticError("Expression type does not match id type for id: " + this.id.toString())
-                    .print(Jott_Node.filename, super.linenum);
-                isValid = false;
-            }
+        } 
+
+        if(!isValid) { return false; } // forced early function exit (undefined id or expression)
+
+        // Expression type must match id type
+        if(id.getType() != expr.getType()) {
+            new SemanticError("Expression type does not match id type for id: " + this.id.toString())
+                .print(Jott_Node.filename, super.linenum);
+            isValid = false;
         }
 
         return isValid;

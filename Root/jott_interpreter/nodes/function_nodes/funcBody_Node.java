@@ -53,7 +53,7 @@ public class funcBody_Node extends Jott_Node{
             isValid &= varDec.validateTree();
         }
 
-        isValid &= this.body.validateTree();
+        if(isValid) { isValid &= this.body.validateTree(); }
 
         return isValid;
     }

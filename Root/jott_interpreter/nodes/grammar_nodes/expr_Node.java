@@ -112,9 +112,8 @@ public class expr_Node extends Jott_Node{
     public boolean validateTree() {
         boolean valid = true;
         if (this.expr.length == 3) {
-            for (int i = 0; i < this.expr.length; i++) {
-                valid &= this.expr[i].validateTree();
-            }
+            for (Jott_Node node : this.expr) { valid &= node.validateTree(); }
+            if(!valid) { return false; } // forced early function exit
             // Math-ops and Rel-ops can only support Ints or Doubles. 
             // Syntax only checks for operands.
             if(this.expr[0].getType() != ReturnType.Integer || this.expr[0].getType() != ReturnType.Double) {

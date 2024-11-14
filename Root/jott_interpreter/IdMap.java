@@ -82,7 +82,11 @@ public class IdMap {
      * @throws NullPointerException if the identifier does not exist in the {@link #id_map}.
      */
     public ReturnType getReturnType(String id) {
-        return this.id_map.get(id).getType();
+        if(this.id_map.get(id) == null) {
+            return this.dynamic_var_map.get(id).getType();
+        } else {
+            return this.id_map.get(id).getType();
+        }
     }
 
     /**
