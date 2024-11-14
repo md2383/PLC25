@@ -26,7 +26,8 @@ public class funcDefParams_t_Node extends Jott_Node {
      * @param id    an ID node referencing the parameter
      * @param type  a type node referencing the type of the parameter
      */
-    private funcDefParams_t_Node(id_Node id, type_Node type) {
+    private funcDefParams_t_Node(id_Node id, type_Node type, int line_number) {
+        super(line_number);
         this.id = id;
         this.type = type;
     }
@@ -49,7 +50,7 @@ public class funcDefParams_t_Node extends Jott_Node {
     public static funcDefParams_t_Node parseFuncDefParamsTNode(final ArrayList<Token> tokens) throws SyntaxError {
         if (tokens.size() < 1){ throw new SyntaxError("Unexpected EOF"); }
         assert(tokens.get(0).getTokenType() == TokenType.COMMA);
-        tokens.remove(0); 
+        int lineNum = tokens.remove(0).getLineNum(); 
         
         id_Node id = id_Node.parseIdNode(tokens);
 
@@ -60,7 +61,7 @@ public class funcDefParams_t_Node extends Jott_Node {
         
         type_Node type = type_Node.parseTypeNode(tokens);
 
-        return new funcDefParams_t_Node(id, type);
+        return new funcDefParams_t_Node(id, type, lineNum);
     }
 
     /**

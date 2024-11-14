@@ -29,7 +29,14 @@ public class ifStmt_Node extends Jott_Node{
      * @param elseif        an elseif node
      * @param elseNode      an else node
      */
-    public ifStmt_Node(expr_Node expression, body_Node body, elseif_Node[] elseifNodes, else_Node elseNode){
+    public ifStmt_Node(
+            expr_Node expression, 
+            body_Node body, 
+            elseif_Node[] elseifNodes, 
+            else_Node elseNode, 
+            int line_number
+        ) {
+        super(line_number);
         this.expressionN = expression;
         this.bodyN = body;
         this.elseifN = elseifNodes;
@@ -45,7 +52,7 @@ public class ifStmt_Node extends Jott_Node{
     public static ifStmt_Node parseIfStmtNode(final ArrayList<Token> tokens) throws SyntaxError {
         if (tokens.size() < 2) { throw new SyntaxError("Unexpected EOF"); }
         assert(tokens.get(0).getToken().equals("If")); // not syntax error
-        tokens.remove(0);
+        int lineNum = tokens.remove(0).getLineNum();
         if(tokens.get(0).getTokenType() != TokenType.L_BRACKET) { throw new SyntaxError("Invalid token: expected '['"); }
         tokens.remove(0);
 
@@ -78,7 +85,8 @@ public class ifStmt_Node extends Jott_Node{
             expression, 
             body, 
             elseifNodes.toArray(new elseif_Node[elseifNodes.size()]), 
-            elseNode
+            elseNode,
+            lineNum
         );
     }
 

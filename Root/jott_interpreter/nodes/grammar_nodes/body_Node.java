@@ -24,7 +24,12 @@ public class body_Node extends Jott_Node{
      * @param statements        - an array of body statement nodes
      * @param returnStatement   - the return statement for the body
      */
-    private body_Node(bodyStmt_Node[] statements, returnStatement_Node returnStatement) {
+    private body_Node(
+            bodyStmt_Node[] statements, 
+            returnStatement_Node returnStatement, 
+            int line_number
+        ) {
+        super(line_number);
         this.stmts = statements;
         this.returnStmt = returnStatement;
     }
@@ -45,6 +50,7 @@ public class body_Node extends Jott_Node{
     public static body_Node parseBodyNode(final ArrayList<Token> tokens) throws SyntaxError {
         if(tokens.size() < 1) { throw new SyntaxError("Unexpected EOF"); }
 
+        int lineNum = tokens.get(0).getLineNum();
         ArrayList<bodyStmt_Node> stmt = new ArrayList<>();
         returnStatement_Node tempReturn = null;
         
@@ -62,7 +68,7 @@ public class body_Node extends Jott_Node{
             assert tempReturn.isVoid();
         }
 
-        return new body_Node(stmt.toArray(new bodyStmt_Node[stmt.size()]), tempReturn);
+        return new body_Node(stmt.toArray(new bodyStmt_Node[stmt.size()]), tempReturn, lineNum);
     }
 
     @Override

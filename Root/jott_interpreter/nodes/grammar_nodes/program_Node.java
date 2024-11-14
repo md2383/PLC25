@@ -23,7 +23,8 @@ public class program_Node extends Jott_Node{
      * (validation of the node done in {@link #parseProgramNode})
      * @param functions - an array of function nodes
      */
-    private program_Node(funcDef_Node[] functions) {
+    private program_Node(funcDef_Node[] functions, int line_number) {
+        super(line_number);
         func = functions;
     }
 
@@ -40,14 +41,15 @@ public class program_Node extends Jott_Node{
      * @see {@link TokenType}
      */
     public static program_Node parseProgramNode(final ArrayList<Token> tokens) throws SyntaxError {
-        if(tokens.isEmpty()) { return new program_Node(null); }
+        if(tokens.isEmpty()) { return new program_Node(null, 0); }
 
+        int lineNum = tokens.get(0).getLineNum();
         ArrayList<funcDef_Node> functions = new ArrayList<>();
 
         do {
             functions.add(funcDef_Node.parseFunctionDefNode(tokens));
         } while(!tokens.isEmpty());
-        return new program_Node(functions.toArray(new funcDef_Node[functions.size()]));
+        return new program_Node(functions.toArray(new funcDef_Node[functions.size()]), lineNum);
     }
 
     @Override

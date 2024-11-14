@@ -143,7 +143,7 @@ public class funcDef_Node extends Jott_Node {
         }
             
         // Adding this function to function id map
-        Jott_Node.declared_functions.add(this.id.toString(), this); // TODO: might move to this.func_body
+        Jott_Node.declared_functions.add(this.id.toString(), this);
         Jott_Node.current_function_ID.push(this.id.toString());
         Jott_Node.function_scope.put(current_function_ID.peek(), new IdMap());
 

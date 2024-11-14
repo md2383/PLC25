@@ -65,7 +65,8 @@ public class else_Node extends Jott_Node{
 
     @Override
     public boolean validateTree(){
-        return this.body.validateTree();
+        if(this.isVoid()) { return true; }
+        else { return this.body.validateTree(); }
     }
 
     @Override

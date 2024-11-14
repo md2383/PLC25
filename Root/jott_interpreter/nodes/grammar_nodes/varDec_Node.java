@@ -24,7 +24,8 @@ public class varDec_Node extends Jott_Node {
      * @param type a validated {@code type_Node} token reference
      * @param id a validated {@code id_Node} token reference
      */
-    private varDec_Node(type_Node type, id_Node id) {
+    private varDec_Node(type_Node type, id_Node id, int line_number) {
+        super(line_number);
         this.type = type;
         this.id = id;
     }
@@ -47,6 +48,7 @@ public class varDec_Node extends Jott_Node {
      * @see {@link TokenType}
      */
     public static varDec_Node parseVarDecNode(ArrayList<Token> tokens) throws SyntaxError {
+        int lineNum = tokens.get(0).getLineNum();
         type_Node tempType = type_Node.parseTypeNode(tokens);
         id_Node tempID = id_Node.parseIdNode(tokens);
 
@@ -55,7 +57,7 @@ public class varDec_Node extends Jott_Node {
         if (tokens.get(0).getTokenType() != TokenType.SEMICOLON) { throw new SyntaxError("Invalid Token: Expected ';'"); }
         tokens.remove(0);
         
-        return new varDec_Node(tempType, tempID);
+        return new varDec_Node(tempType, tempID, lineNum);
     }
 
     /**

@@ -35,7 +35,8 @@ public class expr_Node extends Jott_Node{
      * @param Expression -  array of abstract {@link Jott_Node} nodes decided 
      *                      by the parse grammar
      */
-    private expr_Node(Jott_Node[] Expression) {
+    private expr_Node(Jott_Node[] Expression, int line_number) {
+        super(line_number);
         this.expr = Expression;
     }
 
@@ -55,6 +56,7 @@ public class expr_Node extends Jott_Node{
     public static expr_Node parseExprNode(final ArrayList<Token> tokens) throws SyntaxError {
         if(tokens.size() < 1) { throw new SyntaxError("Unexpected EOF"); }
 
+        int lineNum = tokens.get(0).getLineNum();
         Jott_Node[] Expression = new Jott_Node[1];
 
         // <( string_literal )>
@@ -96,7 +98,7 @@ public class expr_Node extends Jott_Node{
             Expression[0] = temp;
         }
         
-        return new expr_Node(Expression);
+        return new expr_Node(Expression, lineNum);
     }
 
     @Override

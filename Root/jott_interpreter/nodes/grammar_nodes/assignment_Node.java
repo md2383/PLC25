@@ -27,7 +27,8 @@ public class assignment_Node extends Jott_Node {
      * @param expr      an expression node referencing the value being assigned
      * @param semicolon a semicolon token to end the assignment
      */
-    private assignment_Node(id_Node id, expr_Node expr) {
+    private assignment_Node(id_Node id, expr_Node expr, int line_number) {
+        super(line_number);
         this.id = id;
         this.expr = expr;
     }
@@ -50,6 +51,8 @@ public class assignment_Node extends Jott_Node {
      * @see {@link TokenType}
      */
     public static assignment_Node parseAssignmentNode(ArrayList<Token> tokens) throws SyntaxError {
+        int lineNum = tokens.get(0).getLineNum();
+
         // Check for ID
         id_Node tempID = id_Node.parseIdNode(tokens);
         
@@ -67,7 +70,7 @@ public class assignment_Node extends Jott_Node {
         tokens.remove(0);
 
         // Return the assignment node
-        return new assignment_Node(tempID, tempExpr);
+        return new assignment_Node(tempID, tempExpr, lineNum);
     }
 
     /**

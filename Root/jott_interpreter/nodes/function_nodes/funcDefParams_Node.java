@@ -28,7 +28,13 @@ public class funcDefParams_Node extends Jott_Node {
      * @param type              a type node referencing the return type
      * @param func_def_params_t a list of funcDefParams_t nodes referencing the parameters for the function
      */
-    private funcDefParams_Node(id_Node id, type_Node type, ArrayList<funcDefParams_t_Node> func_def_params_t) {
+    private funcDefParams_Node(
+            id_Node id, 
+            type_Node type, 
+            ArrayList<funcDefParams_t_Node> func_def_params_t, 
+            int line_number) 
+    {
+        super(line_number);
         this.id = id;
         this.type = type;
         this.func_def_params_t = func_def_params_t;
@@ -63,6 +69,8 @@ public class funcDefParams_Node extends Jott_Node {
     public static funcDefParams_Node parseFuncDefParamsNode(final ArrayList<Token> tokens) throws SyntaxError {
         if (tokens.size() < 1){ throw new SyntaxError("Unexpected EOF"); }
         if(tokens.get(0).getTokenType() == TokenType.ID_KEYWORD) {
+            int lineNum = tokens.get(0).getLineNum();
+
             // Get the ID
             id_Node id = id_Node.parseIdNode(tokens);
             
@@ -85,7 +93,7 @@ public class funcDefParams_Node extends Jott_Node {
             }
 
             // Return the new node
-            return new funcDefParams_Node(id, type, func_def_params_t);
+            return new funcDefParams_Node(id, type, func_def_params_t, lineNum);
         }
 
         return new funcDefParams_Node(); // no params in func def
@@ -121,7 +129,7 @@ public class funcDefParams_Node extends Jott_Node {
 
         // TODO: may not be needed, checks if variable id already used by function
         if(Jott_Node.declared_functions.contains(this.id.toString())) {
-            new SemanticError("Variable id: {" + this.id.toString() + "} already a defined function")
+            new SemanticError("Variable id: { " + this.id.toString() + " } already a defined function")
                 .print(Jott_Node.filename, super.linenum);
             isValid = false;
         }

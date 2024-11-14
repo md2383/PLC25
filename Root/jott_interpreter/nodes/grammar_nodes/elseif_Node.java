@@ -22,7 +22,8 @@ public class elseif_Node extends Jott_Node{
      * @param expression    an expression node
      * @param body         a body node
      */
-    private elseif_Node(expr_Node expression, body_Node body) {
+    private elseif_Node(expr_Node expression, body_Node body, int line_number) {
+        super(line_number);
         this.expression = expression;
         this.body = body;
     }
@@ -43,7 +44,7 @@ public class elseif_Node extends Jott_Node{
     public static elseif_Node parseElseifNode(final ArrayList<Token> tokens) throws SyntaxError {
         if (tokens.size() < 2) { throw new SyntaxError("Unexpected EOF"); }
         assert(tokens.get(0).getToken().equals("Elseif")); // not syntax error
-        tokens.remove(0);
+        int lineNum = tokens.remove(0).getLineNum();
         if(tokens.get(0).getTokenType() != TokenType.L_BRACKET) { throw new SyntaxError("Invalid token: expected '['"); }
         tokens.remove(0);
 
@@ -61,7 +62,7 @@ public class elseif_Node extends Jott_Node{
         if(tokens.get(0).getTokenType() != TokenType.R_BRACE) { throw new SyntaxError("Invalid token: expected '}'"); }
         tokens.remove(0);
 
-        return new elseif_Node(expression, body);
+        return new elseif_Node(expression, body, lineNum);
     }
 
     /**
