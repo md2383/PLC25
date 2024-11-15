@@ -1,11 +1,19 @@
 #this will fail phase 3: division by 0
 
+Def zero[]:Double{
+    Return 0.00;
+}
+
 Def main[]:Void{
     Integer x;
     Double y;
+    Integer z; z = 0;
 
     x = 1 / 0;
     y = 1.0 / 0.0;
+    # I don't think the validate needs to check dynamic returns
+    x = 1 / z;
+    y = 1.0 / ::zero[]; 
 
     ::print[x];
     ::print[y];

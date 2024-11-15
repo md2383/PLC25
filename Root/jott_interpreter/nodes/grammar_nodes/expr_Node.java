@@ -124,14 +124,20 @@ public class expr_Node extends Jott_Node{
                 new SemanticError("Unmatched types in expression")
                     .print(Jott_Node.filename, super.linenum);
                 valid = false;
-            } else if(this.expr[1].getType() == ReturnType.Integer) {
-                if(
-                    (this.expr[1].toString().equals("/")) &&
-                    (Double.parseDouble(this.expr[2].toString()) == 0.0)
+            } else if(
+                (this.expr[1].getType() == ReturnType.Integer) &&
+                (this.expr[1].toString().equals("/"))
+            ) {
+                // expr[2] needs to be a number, variables or function calls are dynamic
+                if(this.expr[2].toString().chars().allMatch( 
+                        (c) -> (Character.isDigit(c)) || (c == '-') || (c == '.')
+                    )
                 ) {
-                    new SemanticError("Division by zero")
-                        .print(Jott_Node.filename, super.linenum);
-                    valid = false;
+                    if(Double.parseDouble(this.expr[2].toString()) == 0.0) {
+                        new SemanticError("Division by zero")
+                            .print(Jott_Node.filename, super.linenum);
+                        valid = false;
+                    }
                 }
             }
         } else {
