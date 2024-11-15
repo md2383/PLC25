@@ -121,7 +121,8 @@ public class funcDefParams_Node extends Jott_Node {
     @Override
     public boolean validateTree() {
         if(this.id == null) {
-            assert((this.type == null) && (this.func_def_params_t == null));
+            // Id should only be null if the entire parameter is null
+            assert ((this.type == null) && (this.func_def_params_t == null));
             return true;
         }
 

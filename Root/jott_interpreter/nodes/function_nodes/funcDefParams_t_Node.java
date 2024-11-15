@@ -49,7 +49,8 @@ public class funcDefParams_t_Node extends Jott_Node {
      */
     public static funcDefParams_t_Node parseFuncDefParamsTNode(final ArrayList<Token> tokens) throws SyntaxError {
         if (tokens.size() < 1){ throw new SyntaxError("Unexpected EOF"); }
-        assert(tokens.get(0).getTokenType() == TokenType.COMMA);
+        // params_t should only be parsed when a param is followed by a comma
+        assert (tokens.get(0).getTokenType() == TokenType.COMMA); 
         int lineNum = tokens.remove(0).getLineNum(); 
         
         id_Node id = id_Node.parseIdNode(tokens);

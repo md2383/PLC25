@@ -43,7 +43,7 @@ public class elseif_Node extends Jott_Node{
      */
     public static elseif_Node parseElseifNode(final ArrayList<Token> tokens) throws SyntaxError {
         if (tokens.size() < 2) { throw new SyntaxError("Unexpected EOF"); }
-        assert(tokens.get(0).getToken().equals("Elseif")); // not syntax error
+        assert (tokens.get(0).getToken().equals("Elseif")); // not syntax error
         int lineNum = tokens.remove(0).getLineNum();
         if(tokens.get(0).getTokenType() != TokenType.L_BRACKET) { throw new SyntaxError("Invalid token: expected '['"); }
         tokens.remove(0);

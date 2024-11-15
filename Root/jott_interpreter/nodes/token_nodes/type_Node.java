@@ -38,7 +38,7 @@ public class type_Node extends Jott_Node {
             default :
                 // This will only be thrown if the type check 
                 // in parseTypeNode is not triggered for some reason
-                assert(false); 
+                assert (false); // unreachable: debugging purpose
                 this.type = ReturnType.Void;
         }
     }
@@ -94,10 +94,10 @@ public class type_Node extends Jott_Node {
             case String :
                 return "String";
             case Void :
-                assert(false); // unreachable: debugging purpose
+                assert (false); // unreachable: debugging purpose
                 return "Void";
             default :
-                assert(false); // unreachable: debugging purpose
+                assert (false); // unreachable: debugging purpose
                 return "";
         }
     }

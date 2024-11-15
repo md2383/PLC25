@@ -46,7 +46,7 @@ public class relop_Node extends Jott_Node {
     public static relop_Node parseRelopNode(final ArrayList<Token> tokens) throws SyntaxError {
         if(tokens.size() < 1) { throw new SyntaxError("Unexpected EOF"); }
         if(tokens.get(0).getTokenType() != TokenType.REL_OP) { throw new SyntaxError("Token type not RELOP"); }
-        assert("<=>=!==".contains(tokens.get(0).getToken())); // not a syntax error (would be a problem with our code)
+        assert ("<=>=!==".contains(tokens.get(0).getToken())); // not a syntax error (would be a problem with our code)
         return new relop_Node(tokens.remove(0));
     }
 

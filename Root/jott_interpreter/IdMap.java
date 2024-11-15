@@ -62,7 +62,7 @@ public class IdMap {
      *              this function will throw an {@code AssertionError}
      */
     public void declareBuiltinFunctions() {
-        assert(this.id_map.isEmpty());
+        assert (this.id_map.isEmpty()); // Should only be called at the start of a program
 
         // Assigning the custom functions per an id
         Jott_Node print = new customFunc_Node("print");

@@ -42,7 +42,7 @@ public class customFunc_Node extends Jott_Node{
                 params.addDynamicVar("input_a", new customParam_Node(ReturnType.String));
                 break;
             default:
-                assert(false); // function must be defined in switch case
+                assert (false); // function must be defined in switch case
         }
         Jott_Node.function_scope.put(this.ID, params);
     }
@@ -67,7 +67,7 @@ public class customFunc_Node extends Jott_Node{
             case "length" :
                 return ReturnType.Integer;
             default:
-                assert(false); // function must be defined in switch case
+                assert (false); // function must be defined in switch case
                 return ReturnType.Void;
         }
     }

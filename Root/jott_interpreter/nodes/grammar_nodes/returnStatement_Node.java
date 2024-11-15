@@ -69,7 +69,7 @@ public class returnStatement_Node extends Jott_Node{
     }
 
     public void SetExpression(Jott_Node validReturnExpr) {
-        assert(validReturnExpr.getType() != ReturnType.Void);
+        assert (validReturnExpr.getType() != ReturnType.Void); // function should only be called with a non-void expression
         this.returnExpr = validReturnExpr;
     }
 
