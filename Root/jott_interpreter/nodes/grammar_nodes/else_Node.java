@@ -71,6 +71,7 @@ public class else_Node extends Jott_Node{
 
     @Override
     public ReturnType getType() {
-        return this.body.getType();
+        if(this.isVoid()) { return ReturnType.Void; } 
+        else { return this.body.getType(); }
     }
 }

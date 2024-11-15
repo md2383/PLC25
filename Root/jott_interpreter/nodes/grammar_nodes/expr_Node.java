@@ -116,7 +116,7 @@ public class expr_Node extends Jott_Node{
             if(!valid) { return false; } // forced early function exit
             // Math-ops and Rel-ops can only support Ints or Doubles. 
             // Syntax only checks for operands.
-            if(this.expr[0].getType() != ReturnType.Integer || this.expr[0].getType() != ReturnType.Double) {
+            if(this.expr[0].getType() != ReturnType.Integer && this.expr[0].getType() != ReturnType.Double) {
                 new SemanticError("Invalid types in this.expression: must be double our int.")
                     .print(Jott_Node.filename, super.linenum);
                 valid = false;
