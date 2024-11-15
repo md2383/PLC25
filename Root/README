@@ -1,30 +1,46 @@
-Directions on building the project in a Linux environment on the cs machines.
+Directions on building the project in a Linux environment for the cs machines.
 
 
 1) Navigate to the Root directory: cd $/(path)/(to)/(Root)
+    All the following should be run from the root (the same directory this README is in)
 
 2) Compile the Java files. Make sure you include the [ -d . ] option to specify 
     the current directory as the root for the package structure:
 
-    > [ javac -d . Jott.java provided/*.java jott_interpreter/nodes/*.java jott_interpreter/nodes/token_nodes/*.java jott_interpreter/nodes/grammar_nodes/*.java jott_interpreter/nodes/function_nodes/*.java jott_interpreter/*.java Root/testers/*.java ]
+    > [ javac -d . "(find src -name "*.java")" ]
 
 3) To run the program, you must do one of the following:
 
-PHASE 1:
+    PHASE 1:
     To run the JottTokenizerTester class; you need to specify the correct
     package name, and to specify the classpath explicitly.
 
-    > [ java -cp . testers.JottTokenizerTester ]
+    > [ java testers.JottTokenizerTester ]
 
-PHASE 2:
+    PHASE 2:
     To run the JottParserTester class; you need to specify the correct 
     package name, and to specify the classpath explicitly.
 
-    > [ java -cp . testers.JottParserTester ]
+    > [ java testers.JottParserTester ]
 
-PHASE 3:
+    PHASE 3:
     To run the main method; the program must have a Jott file input as a command line argument.
 
     > [ java Jott input.jott ]
 
     Where input.jott is any generic jott file ( assumed to be on the same file level as Jott.java )
+
+
+
+NOTE:   If you are debugging/testing, make sure you enable assertions. 
+        Debugging/Testing also requires the exterior test case packages.
+        This should ONLY be used for testing, and not on the final version for each phase.
+        The correct tag/vmArg is: -ea
+
+        PHASE 1:
+        > [ java -ea -cp . testers.JottTokenizerTester ]
+        PHASE 2:
+        > [ java -ea -cp . testers.JottParserTester ]
+        PHASE 3:
+        > [ java -ea JottValidTester ]
+        > [ java -ea Jott input.jott ]
