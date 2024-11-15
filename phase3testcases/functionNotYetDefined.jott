@@ -1,0 +1,12 @@
+#this will fail phase 3: function bar used in foo before defined
+
+Def foo[]:Void{
+    Integer y; y = 5;
+    ::bar[y];
+}
+
+Def bar[x:Integer]:Void{
+    ::print[x];
+}
+
+Def main[]:Void{ }
