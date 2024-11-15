@@ -1,7 +1,6 @@
 package jott_interpreter.nodes.function_nodes;
 
 import java.util.ArrayList;
-
 import jott_interpreter.IdMap;
 import jott_interpreter.ReturnType;
 import jott_interpreter.SemanticError;
@@ -154,7 +153,7 @@ public class funcDef_Node extends Jott_Node {
             isValid &= this.f_body.validateTree();
             // Function body return validation
             if(f_body.getType() != function_return.getType()) {
-                new SemanticError("Function Returns: " + "" + ", Expected: " + "")
+                new SemanticError("Function Returns: '" + f_body.getType() + "', Expected: " + "'"+function_return.getType()+"'")
                     .print(Jott_Node.filename, super.linenum);
                 isValid = false;
             }
