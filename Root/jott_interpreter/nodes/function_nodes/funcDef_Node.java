@@ -163,14 +163,14 @@ public class funcDef_Node extends Jott_Node {
         if(this.id.toString().equals("main")) {
             // Parameter check (main has no params)
             if(!func_def_params.toString().equals("")) {
-                new SemanticError("Invalid main definition: main expects no parameters")
+                new SemanticError("Invalid {main} definition: main expects no parameters")
                     .print(Jott_Node.filename, super.linenum);
                 isValid = false;
             }
 
             // Return check (main must return Void)
             if(function_return.getType() != ReturnType.Void) {
-                new SemanticError("Invalid main return type: expected 'Void'")
+                new SemanticError("Invalid {main} return type: '" + function_return.getType() + "', expected: 'Void'")
                     .print(Jott_Node.filename, super.linenum);
                 isValid = false;
             }

@@ -102,7 +102,7 @@ public class assignment_Node extends Jott_Node {
 
         // Expression type must match id type
         if(id.getType() != expr.getType()) {
-            new SemanticError("Expression type does not match id type for id: " + this.id.toString())
+            new SemanticError("Expression return does not match id type for assignment: " + this.id.toString())
                 .print(Jott_Node.filename, super.linenum);
             isValid = false;
         }
