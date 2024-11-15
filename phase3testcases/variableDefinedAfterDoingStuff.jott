@@ -1,0 +1,9 @@
+# This should fail phase 3
+
+Def main[]:Void{
+    Integer x;
+    x = 1;
+    ::print [x];
+    Double y;
+    ::print [y];
+}

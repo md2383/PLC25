@@ -1,0 +1,7 @@
+# this should fail phase 3
+
+Def main[]:Void{
+    Integer x;
+    x = 5;
+    ::print[ x + 3.2 ];
+}
