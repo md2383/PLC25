@@ -1,6 +1,8 @@
-
+package testers;
 
 import java.io.File;
+
+import main.Jott;
 
 public class JottValidTester {
     public static void main(String[] args) {
