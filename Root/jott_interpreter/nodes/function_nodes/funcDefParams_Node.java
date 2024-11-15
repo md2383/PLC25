@@ -127,13 +127,6 @@ public class funcDefParams_Node extends Jott_Node {
 
         boolean isValid = this.type.validateTree() && this.id.validateTree();
 
-        // TODO: may not be needed, checks if variable id already used by function
-        if(Jott_Node.declared_functions.contains(this.id.toString())) {
-            new SemanticError("Variable id: { " + this.id.toString() + " } already a defined function")
-                .print(Jott_Node.filename, super.linenum);
-            isValid = false;
-        }
-
         // checking if variable already declared in function scope
         if(Jott_Node.function_scope.get(current_function_ID.peek()).contains(this.id.toString())) {
             new SemanticError("Function already contains variable id: " + this.id.toString())

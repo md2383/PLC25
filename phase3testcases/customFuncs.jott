@@ -1,0 +1,24 @@
+#this will pass phase 3
+
+Def main[]:Void{
+    Integer x; Integer y;
+    Double z;
+    Boolean bool;
+    String str;
+    
+    x = 5; y = 10;
+	::print[x];
+    ::print[x + y];
+
+    bool = x >= y;
+    ::print[bool];
+
+    z = 1.5;
+    If[bool]{
+        ::print[z];
+    }
+
+    str = ::concat[y, z];
+    ::print[str];
+    ::print[::length[str]];
+}
