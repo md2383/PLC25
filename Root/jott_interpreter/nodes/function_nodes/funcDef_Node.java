@@ -181,4 +181,9 @@ public class funcDef_Node extends Jott_Node {
 
         return isValid;
     }
+
+    @Override
+    public ReturnType getType() {
+        return this.function_return.getType();
+    }
 }

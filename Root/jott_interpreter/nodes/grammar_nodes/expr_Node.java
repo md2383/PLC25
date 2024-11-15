@@ -117,11 +117,11 @@ public class expr_Node extends Jott_Node{
             // Math-ops and Rel-ops can only support Ints or Doubles. 
             // Syntax only checks for operands.
             if(this.expr[0].getType() != ReturnType.Integer && this.expr[0].getType() != ReturnType.Double) {
-                new SemanticError("Invalid types in this.expression: must be double our int.")
+                new SemanticError("Invalid types in expression: must be double our int.")
                     .print(Jott_Node.filename, super.linenum);
                 valid = false;
             } else if (this.expr[0].getType() != this.expr[2].getType()) {
-                new SemanticError("Unmatched types in this.expression")
+                new SemanticError("Unmatched types in expression")
                     .print(Jott_Node.filename, super.linenum);
                 valid = false;
             }
