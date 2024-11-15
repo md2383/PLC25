@@ -1,0 +1,17 @@
+#this will pass phase 2 but fail phase 3 for duplicate function definitions
+
+Def foo[z:Integer]:Integer{
+    ::print[z];
+	Return 3;
+}
+
+Def foo[y:Double]:Double{
+    ::print[y];
+	Return 3;
+}
+
+Def main[]:Void{
+    Integer x;
+    x = ::foo[5];
+	::print[x];
+}

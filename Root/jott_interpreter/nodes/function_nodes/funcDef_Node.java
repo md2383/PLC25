@@ -136,7 +136,7 @@ public class funcDef_Node extends Jott_Node {
 
         // Duplicate function check
         if(declared_functions.contains(this.id.toString())) {
-            new SemanticError("Duplicate Function: " + this.id.toString())
+            new SemanticError("Duplicate Function: {" + this.id.toString() + "}")
                 .print(Jott_Node.filename, super.linenum);
             return false; // Ignores rest of checks in case of duplicate function
         }
