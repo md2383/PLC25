@@ -2,7 +2,8 @@ Directions on building the project in a Linux environment for the cs machines.
 
 
 1. Compile the Java files. Make sure you include the [ -d Root ] tag to specify 
-    the Root directory as the root for the package structure:
+    the Root directory as the root for the package structure, or the package 
+    structure will be implemented in the current directory:
 
     > [ javac -d Root $(find Root -name "*.java") ]
 
@@ -11,17 +12,17 @@ Directions on building the project in a Linux environment for the cs machines.
   - ### PHASE 1: ###
     To run the JottTokenizerTester class; you need to specify the correct package name.
 
-    > [ java testers.JottTokenizerTester ]
+    > [ java -cp Root testers.JottTokenizerTester ]
 
   - ### PHASE 2: ###
     To run the JottParserTester class; you need to specify the correct package name.
 
-    > [ java testers.JottParserTester ]
+    > [ java -cp Root testers.JottParserTester ]
 
   - ### PHASE 3: ###
     To run the main method; the program must have a Jott file input as a command line argument.
 
-    > [ java main.Jott input.jott ]
+    > [ java -cp Root main.Jott input.jott ]
 
     Where input.jott is any generic jott file ( assumed to be on the same file level as Jott.java )
     
@@ -30,7 +31,7 @@ Directions on building the project in a Linux environment for the cs machines.
     the JottValidTester class will run through every file in the "phase3testcases" file, and 
     output any syntax/semantic errors.
 
-    > [ java testers.JottValidTester ]
+    > [ java -cp Root testers.JottValidTester ]
 
 
 
@@ -41,9 +42,9 @@ DEV NOTE: ---
     The correct tag/vmArg is: -ea
 
         PHASE 1:
-        > [ java -ea testers.JottTokenizerTester ]
+        > [ java -ea -cp Root testers.JottTokenizerTester ]
         PHASE 2:
-        > [ java -ea testers.JottParserTester ]
+        > [ java -ea -cp Root testers.JottParserTester ]
         PHASE 3:
-        > [ java -ea tester.JottValidTester ]
-        > [ java -ea main.Jott [input.jott] ]
+        > [ java -ea -cp Root tester.JottValidTester ]
+        > [ java -ea -cp Root main.Jott [input.jott] ]
