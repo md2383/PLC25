@@ -1,0 +1,7 @@
+#this will fail phase 3: variable being used without being initialized
+#IMPORTANT: both lines should produce an error
+
+Def main[]:Void{
+    x = 5.0;
+    ::print[x];
+}
