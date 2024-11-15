@@ -24,7 +24,8 @@ Directions on building the project in a Linux environment for the cs machines.
 
     > [ java -cp Root main.Jott input.jott ]
 
-    Where input.jott is any generic jott file ( assumed to be on the same file level as Jott.java )
+    Where input.jott is any generic jott file 
+    ( assumed to be the full path from the current directory )
     
     There is also a tester class for use with the "phase3testcases" file if applicable. 
     As long as everything is compiled from the folder containing "Root" and "phase3testcases",
