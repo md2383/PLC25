@@ -1,0 +1,41 @@
+#this will pass phase 3
+
+Def foo[x:String]:String{
+    String str; 
+    Boolean bool;
+    str = x;
+    bool = True;
+
+    # nested If with valid return
+    If[False]{
+        If[bool] {
+            Return str;
+        } Else {
+            Return x;
+        }
+    } Elseif[::length[str] > 6] {
+        Return "Elseif 2";
+    } Elseif[bool] {
+        Return "Elseif 1";
+    } Else {
+        Return "Else";
+    }
+}
+
+Def main[]:Void{
+    Integer i; Integer j;
+    String string; 
+    i = 10;
+    string = ::foo["STRING"];
+    
+    # nested while
+    While[::length[string] < i] {
+        i = i - 1;
+        j = i;
+        While[j > 6] {
+            ::print[j - 1];
+        }
+    }
+
+    ::print[::foo[string]];
+}
