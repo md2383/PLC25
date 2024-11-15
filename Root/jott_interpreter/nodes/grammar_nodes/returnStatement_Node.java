@@ -18,7 +18,7 @@ import provided.*;
 public class returnStatement_Node extends Jott_Node{
     
     /** The expression being returned */
-    private final expr_Node returnExpr;
+    private Jott_Node returnExpr;
     
     /**
      * Private Constructor
@@ -66,6 +66,11 @@ public class returnStatement_Node extends Jott_Node{
 
     public boolean isVoid() {
         return this.returnExpr == null;
+    }
+
+    public void SetExpression(Jott_Node validReturnExpr) {
+        assert(validReturnExpr.getType() != ReturnType.Void);
+        this.returnExpr = validReturnExpr;
     }
 
     /**

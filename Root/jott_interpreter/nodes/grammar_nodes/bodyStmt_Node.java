@@ -1,6 +1,8 @@
 package jott_interpreter.nodes.grammar_nodes;
 
 import java.util.ArrayList;
+
+import jott_interpreter.ReturnType;
 import jott_interpreter.SyntaxError;
 import jott_interpreter.nodes.*;
 import jott_interpreter.nodes.function_nodes.*;
@@ -25,15 +27,21 @@ public class bodyStmt_Node extends Jott_Node {
     /** Abstracted {@code Jott_Node} representation of the body statement. */
     private final Jott_Node statement;
     private final boolean hasSemicolon;
+    private final boolean isIfStmt;
 
     /**
      * Private Constructor 
      * (validation of the node done in {@link #parseBodyStmtNode})
      * @param body_statement - an abstract {@link Jott_Node} decided by the parse grammar
      */
-    private bodyStmt_Node(Jott_Node body_statement, boolean contains_semicolon) {
+    private bodyStmt_Node(
+        Jott_Node body_statement, 
+        boolean contains_semicolon, 
+        boolean if_statement
+    ) {
         this.statement = body_statement;
         this.hasSemicolon = contains_semicolon;
+        this.isIfStmt = if_statement;
     }
 
     /**
@@ -58,6 +66,7 @@ public class bodyStmt_Node extends Jott_Node {
 
         Jott_Node tempStmt;
         boolean containsSemicolon = false;
+        boolean ifStmt = false;
 
         // < func_call >
         if(tokens.get(0).getTokenType() == TokenType.FC_HEADER) {
@@ -71,6 +80,7 @@ public class bodyStmt_Node extends Jott_Node {
         } else {
             // < if_stmt >
             if(tokens.get(0).getToken().equals("If")) {
+                ifStmt = true;
                 tempStmt = ifStmt_Node.parseIfStmtNode(tokens);
             // < while_loop >
             } else if(tokens.get(0).getToken().equals("While")) {
@@ -81,7 +91,7 @@ public class bodyStmt_Node extends Jott_Node {
             }
         }
 
-        return new bodyStmt_Node(tempStmt, containsSemicolon);
+        return new bodyStmt_Node(tempStmt, containsSemicolon, ifStmt);
     }
 
     @Override
@@ -94,4 +104,9 @@ public class bodyStmt_Node extends Jott_Node {
         return statement.validateTree();
     }
     
+    @Override
+    public ReturnType getType() {
+        if(this.isIfStmt) { return statement.getType(); }
+        else { return ReturnType.Void; }
+    }
 }

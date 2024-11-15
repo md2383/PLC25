@@ -3,6 +3,7 @@ package jott_interpreter.nodes.grammar_nodes;
 import java.util.ArrayList;
 
 import jott_interpreter.ReturnType;
+import jott_interpreter.SemanticError;
 import jott_interpreter.SyntaxError;
 import jott_interpreter.nodes.*;
 import provided.*;
@@ -81,9 +82,25 @@ public class body_Node extends Jott_Node{
     @Override
     public boolean validateTree() {
         boolean valid = true;
+        boolean early_exit = false;
 
-        for (bodyStmt_Node bodyStmt : stmts) {
+        for (bodyStmt_Node bodyStmt : this.stmts) {
+            if(early_exit) {
+                new SemanticError("Body with unreachable code")
+                    .print(Jott_Node.filename, super.linenum);
+                valid = false;
+            }
             valid &= bodyStmt.validateTree();
+            if(bodyStmt.getType() != ReturnType.Void) {
+                if(returnStmt.isVoid()) {
+                    returnStmt.SetExpression(bodyStmt);
+                    early_exit = true;
+                } else {
+                    new SemanticError("Body with unreachable return statement")
+                        .print(Jott_Node.filename, super.linenum);
+                    valid = false;
+                }
+            }
         }
 
         valid &= returnStmt.validateTree();
