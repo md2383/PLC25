@@ -69,7 +69,7 @@ public class id_Node extends Jott_Node {
         } else {
             assert(current_function_ID != null);
             return Jott_Node.function_scope.get(current_function_ID.peek())
-                    .getReturnType(this.toString());
+                .getReturnType(this.toString());
         }
     }
 }

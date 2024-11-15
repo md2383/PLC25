@@ -85,7 +85,7 @@ public class funcCall_Node extends Jott_Node{
             Jott_Node.current_function_ID.push(this.id.toString());
             isValid = params.validateTree();
             // Forced current func pop off the call stack
-            Jott_Node.current_function_ID.pop();
+            // Jott_Node.current_function_ID.pop();
         // Else: function hasn't been defined/declared
         } else {
             new SemanticError("Function id: {" + this.id.toString() + "} is not defined/declared")
