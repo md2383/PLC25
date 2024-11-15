@@ -130,14 +130,12 @@ public class expr_Node extends Jott_Node{
             ) {
                 // expr[2] needs to be a number, variables or function calls are dynamic
                 if(this.expr[2].toString().chars().allMatch( 
-                        (c) -> (Character.isDigit(c)) || (c == '-') || (c == '.')
+                        (c) -> ((c == '-') || (c == '.') || (c == '0'))
                     )
                 ) {
-                    if(Double.parseDouble(this.expr[2].toString()) == 0.0) {
-                        new SemanticError("Division by zero")
-                            .print(Jott_Node.filename, super.linenum);
-                        valid = false;
-                    }
+                    new SemanticError("Division by zero")
+                        .print(Jott_Node.filename, super.linenum);
+                    valid = false;
                 }
             }
         } else {
