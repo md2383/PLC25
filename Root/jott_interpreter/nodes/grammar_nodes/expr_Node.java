@@ -124,6 +124,15 @@ public class expr_Node extends Jott_Node{
                 new SemanticError("Unmatched types in expression")
                     .print(Jott_Node.filename, super.linenum);
                 valid = false;
+            } else if(this.expr[1].getType() == ReturnType.Integer) {
+                if(
+                    (this.expr[1].toString().equals("/")) &&
+                    (Double.parseDouble(this.expr[2].toString()) == 0.0)
+                ) {
+                    new SemanticError("Division by zero")
+                        .print(Jott_Node.filename, super.linenum);
+                    valid = false;
+                }
             }
         } else {
             valid = this.expr[0].validateTree();
