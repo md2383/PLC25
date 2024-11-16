@@ -1,4 +1,4 @@
-#this will pass phase 3
+#this will fail phase 3: ONLY [::print()] CAN TYPECAST TO STRING
 
 Def main[]:Void{
     Integer x; Integer y;

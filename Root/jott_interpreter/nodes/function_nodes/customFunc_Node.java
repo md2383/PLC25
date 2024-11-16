@@ -49,7 +49,7 @@ public class customFunc_Node extends Jott_Node{
 
     @Override
     public String convertToJott() {
-        throw new UnsupportedOperationException("Unimplemented method 'convertToJott'");
+        return ID;
     }
 
     @Override

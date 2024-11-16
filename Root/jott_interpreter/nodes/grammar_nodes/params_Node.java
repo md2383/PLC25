@@ -2,7 +2,6 @@ package jott_interpreter.nodes.grammar_nodes;
 
 import java.util.ArrayList;
 
-import jott_interpreter.ReturnType;
 import jott_interpreter.SemanticError;
 import jott_interpreter.SyntaxError;
 import jott_interpreter.nodes.*;
@@ -69,9 +68,10 @@ public class params_Node extends Jott_Node {
 
     @Override
     public boolean validateTree() {
+        String function_id = Jott_Node.current_function_ID.pop();
         // list of declared params needed for the function
         Jott_Node[] orderedParamNodes = Jott_Node.function_scope
-            .get(Jott_Node.current_function_ID.pop()).getOrderedDynamicNodes();
+            .get(function_id).getOrderedDynamicNodes();
         // moved pop() from function call node to allow variables from previous scope into params
 
         // Empty parameter check
@@ -99,8 +99,8 @@ public class params_Node extends Jott_Node {
 
         if (!valid) { return false; } // forced early function exit
 
-        // Any value can by typecast to a string
-        if(orderedParamNodes[0].getType() != ReturnType.String) {
+        // Only the print function can typecast it's input parameter
+        if(!function_id.equals("print")) {
             if (firstNode.getType() != orderedParamNodes[0].getType()) {
                 new SemanticError(
                     "Invalid Parameter type: " + 
@@ -115,8 +115,8 @@ public class params_Node extends Jott_Node {
         if (followingNodes != null) {
             for (int i = 0; i < followingNodes.size(); i++) {
                 valid &= followingNodes.get(i).validateTree();
-                // Any value can by typecast to a string
-                if(orderedParamNodes[i+1].getType() != ReturnType.String) {
+                // Only the print function can typecast it's input parameter
+                if(!function_id.equals("print")) {
                     if (followingNodes.get(i).getType() != orderedParamNodes[i+1].getType()) {
                         new SemanticError(
                             "Invalid Parameter type: " + 

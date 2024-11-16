@@ -1,6 +1,7 @@
 package jott_interpreter;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 import jott_interpreter.nodes.function_nodes.customFunc_Node;
@@ -39,12 +40,16 @@ public class IdMap {
      */
     private final LinkedHashMap<String, Jott_Node> dynamic_var_map;
 
+    /** A hash map referencing whether an id has been defined or not */
+    private final HashMap<String, Boolean> defined_vars;
+
     /**
      * Constructs a new {@link IdMap} instance with an empty identifier map.
      */
     public IdMap() {
         this.id_map = new LinkedHashMap<>();
         this.dynamic_var_map = new LinkedHashMap<>();
+        this.defined_vars = new HashMap<>();
     }
 
     /**
@@ -116,6 +121,10 @@ public class IdMap {
         return this.dynamic_var_map.keySet().contains(id);
     }
 
+    public boolean isDefined(String id) {
+        return this.defined_vars.get(id);
+    }
+
     /**
      * Adds a node reference to an id in the {@link #id_map}.
      * @param id the identifier of the function or variable.
@@ -123,6 +132,7 @@ public class IdMap {
      */
     public void add(String id, Jott_Node node) {
         this.id_map.put(id, node);
+        this.defined_vars.put(id, false); // defined_vars should only be used for variables
     }
 
     /**
@@ -133,6 +143,13 @@ public class IdMap {
     public void addDynamicVar(String id, Jott_Node node) {
         this.id_map.put(id, null);
         this.dynamic_var_map.put(id, node);
+        this.defined_vars.put(id, false);
+    }
+
+    public void define_var(String id) {
+        assert this.contains(id);
+        // this.id_map.put(id, node); // PROBLEM: x = x + 1 (circular reference)
+        this.defined_vars.replace(id, true); 
     }
 
     /**

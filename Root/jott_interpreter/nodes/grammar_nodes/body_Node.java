@@ -84,13 +84,11 @@ public class body_Node extends Jott_Node{
         boolean valid = true;
         boolean early_exit = false;
 
-        valid &= returnStmt.validateTree();
-
         for (bodyStmt_Node bodyStmt : this.stmts) {
             if(early_exit) {
                 new SemanticError("Body with unreachable code")
                     .print(Jott_Node.filename, super.linenum);
-                valid = false;
+                return false;
             }
             valid &= bodyStmt.validateTree();
             if(bodyStmt.getType() != ReturnType.Void) {
@@ -105,6 +103,7 @@ public class body_Node extends Jott_Node{
             }
         }
 
+        if(!early_exit) { valid &= returnStmt.validateTree(); }
         return valid;
     }
 
