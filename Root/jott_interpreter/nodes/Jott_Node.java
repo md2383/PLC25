@@ -68,10 +68,7 @@ public abstract class Jott_Node implements JottTree{
     abstract public boolean validateTree();
 
     @Override
-    public void execute() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'execute'");
-    }
+    abstract public void execute();
 
     /**
      * 
