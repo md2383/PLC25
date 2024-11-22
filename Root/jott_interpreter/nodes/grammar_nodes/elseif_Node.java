@@ -93,7 +93,23 @@ public class elseif_Node extends Jott_Node{
     }
 
     @Override
+    public void execute() {
+        this.expression.execute();
+        Object exprVal = this.expression.getValue();
+        assert (exprVal instanceof Boolean);
+
+        if((Boolean)(exprVal)) {
+            this.body.execute();
+        }
+    }
+
+    @Override
     public ReturnType getType() {
         return this.body.getType();
+    }
+
+    @Override
+    public Object getValue() {
+        return this.expression.getValue();
     }
 }

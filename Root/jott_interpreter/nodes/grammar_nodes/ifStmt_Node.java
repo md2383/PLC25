@@ -189,6 +189,28 @@ public class ifStmt_Node extends Jott_Node{
     }
 
     @Override
+    public void execute() {
+        this.expressionN.execute();
+        Object exprVal = this.expressionN.getValue();
+        assert (exprVal instanceof Boolean);
+
+        // IF
+        if((Boolean)(exprVal)) {
+            this.bodyN.execute();
+        } else {
+            // ELSE IF
+            for(elseif_Node elif : this.elseifN) {
+                elif.execute();
+                exprVal = elif.getValue();
+                assert (exprVal instanceof Boolean);
+                if((Boolean)(exprVal)) { return; } // Early exit
+            }
+            // ELSE
+            this.elseN.execute();
+        }
+    }
+
+    @Override
     public ReturnType getType() {
         return returnType;
     }
