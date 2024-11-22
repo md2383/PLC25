@@ -74,4 +74,9 @@ public class else_Node extends Jott_Node{
         if(this.isVoid()) { return ReturnType.Void; } 
         else { return this.body.getType(); }
     }
+
+    @Override
+    public void execute() {
+        this.body.execute();
+    }
 }
