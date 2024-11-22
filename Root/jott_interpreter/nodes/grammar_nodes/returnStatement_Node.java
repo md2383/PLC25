@@ -81,16 +81,29 @@ public class returnStatement_Node extends Jott_Node{
     public String convertToJott() {
         // checks if the return is void
         return this.isVoid() ?
-            "" : "Return " + returnExpr.convertToJott() + ";";
+            "" : "Return " + this.returnExpr.convertToJott() + ";";
     }
 
     @Override
     public boolean validateTree() {
-        return this.isVoid() ? true : returnExpr.validateTree();
+        return this.isVoid() ? true : this.returnExpr.validateTree();
+    }
+
+    @Override
+    public void execute() {
+        this.returnExpr.execute();
+        
     }
 
     @Override
     public ReturnType getType() {
-        return this.isVoid() ? ReturnType.Void : returnExpr.getType();
+        return this.isVoid() ? 
+            ReturnType.Void : 
+            this.returnExpr.getType();
+    }
+
+    @Override
+    public Object getValue() {
+        return this.isVoid() ? null : this.returnExpr.getValue();
     }
 }

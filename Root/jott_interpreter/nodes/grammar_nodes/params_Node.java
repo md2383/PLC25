@@ -158,7 +158,8 @@ public class params_Node extends Jott_Node {
         }
 
         param_map.replaceAll(
-            (String id, Jott_Node node) -> node = expressions.poll()
+            (@SuppressWarnings("unused") String id, @SuppressWarnings("unused") Jott_Node node) -> 
+            node = expressions.poll()
         );
     }
 }
