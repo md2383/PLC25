@@ -91,7 +91,22 @@ public class operand_Node extends Jott_Node{
     }
 
     @Override
+    public void execute() {
+        this.child.execute();
+    }
+
+    @Override
     public ReturnType getType() {
         return child.getType();
+    }
+
+    @Override
+    public Object getValue() {
+        if(this.neg) {
+            assert (this.child.getType() == ReturnType.Integer || this.child.getType() == ReturnType.Double);
+            return -((Double)(this.child.getValue()));
+        } else {
+            return this.child.getValue();
+        }
     }
 }
