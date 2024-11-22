@@ -21,6 +21,9 @@ public class funcCall_Node extends Jott_Node{
     /** The parameter object storing the list of parameters being called for the function */
     private final params_Node params;
 
+    /** The return value of this function */
+    private Object value = null;
+
     /**
      * Private Constructor 
      * (validation of the node done in {@link #parseFunctionCallNode})
@@ -82,8 +85,8 @@ public class funcCall_Node extends Jott_Node{
 
         // Checking if function has been defined/declared
         if(Jott_Node.declared_functions.contains(this.id.toString())) {
-            Jott_Node.current_function_ID.push(this.id.toString());
-            isValid = params.validateTree();
+            Jott_Node.current_function_ID.push(this.id.toString()); // Popped by params validation
+            isValid = this.params.validateTree();
         // Else: function hasn't been defined/declared
         } else {
             new SemanticError("Function id: {" + this.id.toString() + "} is not defined/declared")
@@ -95,7 +98,24 @@ public class funcCall_Node extends Jott_Node{
     }
 
     @Override
+    public void execute() {
+        Jott_Node.current_function_ID.push(this.id.toString()); // Popped by params execution
+        this.params.execute();
+
+        // Asserting params.execute() popped function from the call stack
+        assert (Jott_Node.current_function_ID.peek() != this.id.toString());
+
+        this.id.execute();
+        this.value = this.id.getValue();
+    }
+
+    @Override
     public ReturnType getType() {
         return this.id.getType();
+    }
+
+    @Override
+    public Object getValue() {
+        return this.value;
     }
 }

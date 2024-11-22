@@ -21,7 +21,7 @@ public class customFunc_Node extends Jott_Node{
     private final String ID;
 
     /** The return value of this function */
-    private Object value;
+    private Object value = null;
 
     /**
      * Constructs a new {@link customFunc_Node} with the specified identifier,
@@ -68,11 +68,16 @@ public class customFunc_Node extends Jott_Node{
                 break;
             case "concat" :
                 IdMap scope = Jott_Node.function_scope.get("concat");
+
+                assert (scope.getNode("input_a").getValue() instanceof String);
+                assert (scope.getNode("input_b").getValue() instanceof String);
+
                 this.value = 
                     (String)(scope.getNode("input_a").getValue()) + 
                     (String)(scope.getNode("input_b").getValue());
                 break;
             case "length" :
+                assert (Jott_Node.function_scope.get("length").getNode("input_a").getValue() instanceof String);
                 this.value = (
                     (String)(Jott_Node.function_scope.get("length").getNode("input_a").getValue())
                 ).length();

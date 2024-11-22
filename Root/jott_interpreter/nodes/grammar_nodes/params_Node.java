@@ -1,6 +1,9 @@
 package jott_interpreter.nodes.grammar_nodes;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.Queue;
 
 import jott_interpreter.SemanticError;
 import jott_interpreter.SyntaxError;
@@ -131,5 +134,31 @@ public class params_Node extends Jott_Node {
         }
 
         return valid;
+    }
+
+    @Override
+    public void execute() {
+        String function_id = Jott_Node.current_function_ID.pop();
+        LinkedHashMap<String, Jott_Node> param_map = Jott_Node.function_scope
+            .get(function_id).getDynamicVars();
+        // pop() from function call node
+
+        this.firstNode.execute();
+        for(params_t_Node param : this.followingNodes) { param.execute(); }
+
+        Queue<expr_Node> expressions = new LinkedList<>();
+        expressions.add(firstNode);
+        
+        Object temp_param;
+        for(int i = 0; i < followingNodes.size(); i++) {
+            temp_param = followingNodes.get(i).getValue();
+            // getValue here should get entire expression node, not just the value
+            assert (temp_param instanceof expr_Node);
+            expressions.add((expr_Node)(temp_param));
+        }
+
+        param_map.replaceAll(
+            (String id, Jott_Node node) -> node = expressions.poll()
+        );
     }
 }

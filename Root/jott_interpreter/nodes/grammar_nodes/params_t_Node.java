@@ -30,9 +30,22 @@ public class params_t_Node extends Jott_Node {
     public boolean validateTree() {
         return expr.validateTree();
     }
+
+    @Override
+    public void execute() {
+        // Logic moved to params_Node.execute()
+        this.expr.execute();
+    }
     
     @Override
     public ReturnType getType() {
         return this.expr.getType();
+    }
+
+    @Override
+    public Object getValue() {
+        //! DOES NOT RETURN TYPE
+        //  Used by param node for function parameter logic
+        return this.expr;
     }
 }

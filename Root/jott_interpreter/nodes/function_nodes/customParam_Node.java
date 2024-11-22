@@ -20,6 +20,13 @@ public class customParam_Node extends Jott_Node {
     public boolean validateTree() {
         return true;
     }
+
+    @Override
+    public void execute() {
+        // This class should never be executed
+        // This class is a placeholder for validating types in custom functions
+        assert (false); 
+    }
     
     @Override
     public ReturnType getType() {

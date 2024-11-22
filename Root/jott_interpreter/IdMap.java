@@ -165,4 +165,8 @@ public class IdMap {
         );
         return orderedNodes.toArray(new Jott_Node[orderedNodes.size()]);
     }
+
+    public LinkedHashMap<String, Jott_Node> getDynamicVars() {
+        return this.dynamic_var_map;
+    }
 }

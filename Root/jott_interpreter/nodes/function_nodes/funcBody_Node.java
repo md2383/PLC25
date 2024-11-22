@@ -49,7 +49,7 @@ public class funcBody_Node extends Jott_Node{
     public boolean validateTree() {
         boolean isValid = true;
 
-        for (varDec_Node varDec : vars) {
+        for (varDec_Node varDec : this.vars) {
             isValid &= varDec.validateTree();
         }
 
@@ -59,7 +59,19 @@ public class funcBody_Node extends Jott_Node{
     }
 
     @Override
+    public void execute() {
+        // var decs shouldn't do anything
+        for(varDec_Node varDec : this.vars) { varDec.execute(); };
+        this.body.execute();
+    }
+
+    @Override
     public ReturnType getType() {
         return this.body.getType();
+    }
+
+    @Override
+    public Object getValue() {
+        return this.body.getValue();
     }
 }
