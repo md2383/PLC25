@@ -1,7 +1,6 @@
 package jott_interpreter.nodes.token_nodes;
 
 import java.util.ArrayList;
-
 import jott_interpreter.ReturnType;
 import jott_interpreter.SyntaxError;
 import jott_interpreter.nodes.Jott_Node;
@@ -110,5 +109,10 @@ public class type_Node extends Jott_Node {
     @Override
     public ReturnType getType() {
         return this.type;
+    }
+
+    @Override
+    public void execute() {
+        // Do Nothing
     }
 }
