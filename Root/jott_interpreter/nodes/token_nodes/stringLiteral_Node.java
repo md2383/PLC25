@@ -1,7 +1,6 @@
 package jott_interpreter.nodes.token_nodes;
 
 import java.util.ArrayList;
-
 import jott_interpreter.ReturnType;
 import jott_interpreter.SyntaxError;
 import jott_interpreter.nodes.Jott_Node;
@@ -77,4 +76,13 @@ public class stringLiteral_Node extends Jott_Node {
         return ReturnType.String;
     }
 
+    @Override
+    public void execute() {
+        // Do Nothing
+    }
+
+    @Override
+    public Object getValue() {
+        return this.stringLiteral.getToken();
+    }
 }
