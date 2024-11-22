@@ -1,7 +1,6 @@
 package jott_interpreter.nodes.token_nodes;
 
 import java.util.ArrayList;
-
 import jott_interpreter.ReturnType;
 import jott_interpreter.SyntaxError;
 import jott_interpreter.nodes.*;
@@ -64,5 +63,16 @@ public class number_Node extends Jott_Node {
         } else {
             return ReturnType.Integer;
         }
+    }
+
+    @Override
+    public void execute() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'execute'");
+    }
+
+    @Override
+    public Object getValue() {
+        return Double.parseDouble(this.num.getToken());
     }
 }

@@ -1,7 +1,6 @@
 package jott_interpreter.nodes.token_nodes;
 
 import java.util.ArrayList;
-
 import jott_interpreter.ReturnType;
 import jott_interpreter.SyntaxError;
 import jott_interpreter.nodes.Jott_Node;
@@ -69,5 +68,15 @@ public class mathop_Node extends Jott_Node {
         // using ReturnType.Integer as stand in for number, 
         // double/int logic pushed to expr_node
         return ReturnType.Integer; 
+    }
+
+    @Override
+    public void execute() {
+        // DO Nothing
+    }
+
+    @Override
+    public Object getValue() {
+        return this.mathop.getToken();
     }
 }
