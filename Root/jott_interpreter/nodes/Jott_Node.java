@@ -77,6 +77,10 @@ public abstract class Jott_Node implements JottTree{
     public ReturnType getType() {
         return null;
     }
+
+    public Object getValue() {
+        return null;
+    }
     
     /**
      * 
