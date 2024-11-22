@@ -67,8 +67,7 @@ public class number_Node extends Jott_Node {
 
     @Override
     public void execute() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'execute'");
+        // DO Nothing
     }
 
     @Override
