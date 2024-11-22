@@ -83,6 +83,6 @@ public class bool_Node extends Jott_Node {
 
     @Override
     public Object getValue() {
-        return this.bool;
+        return Boolean.valueOf(this.bool);
     }
 }

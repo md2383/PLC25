@@ -20,6 +20,9 @@ public class customFunc_Node extends Jott_Node{
     /** The identifier for this function */
     private final String ID;
 
+    /** The return value of this function */
+    private Object value;
+
     /**
      * Constructs a new {@link customFunc_Node} with the specified identifier,
      * method, and return type.
@@ -58,6 +61,28 @@ public class customFunc_Node extends Jott_Node{
     } 
 
     @Override
+    public void execute() {
+        switch (this.ID) {
+            case "print" :
+                System.out.println(Jott_Node.function_scope.get("print").getNode("input_a").getValue().toString());
+                break;
+            case "concat" :
+                IdMap scope = Jott_Node.function_scope.get("concat");
+                this.value = 
+                    (String)(scope.getNode("input_a").getValue()) + 
+                    (String)(scope.getNode("input_b").getValue());
+                break;
+            case "length" :
+                this.value = (
+                    (String)(Jott_Node.function_scope.get("length").getNode("input_a").getValue())
+                ).length();
+                break;
+            default:
+                assert (false); // function must be defined in switch case
+        }
+    }
+
+    @Override
     public ReturnType getType() {
         switch (this.ID) {
             case "print" :
@@ -70,5 +95,10 @@ public class customFunc_Node extends Jott_Node{
                 assert (false); // function must be defined in switch case
                 return ReturnType.Void;
         }
+    }
+
+    @Override
+    public Object getValue() {
+        return this.value;
     }
 }
