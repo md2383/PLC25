@@ -84,4 +84,9 @@ public class program_Node extends Jott_Node{
 
         return isValid;
     }
+
+    @Override
+    public void execute() {
+        Jott_Node.declared_functions.getNode("main").execute();
+    }
 }
