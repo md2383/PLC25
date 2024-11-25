@@ -1,9 +1,8 @@
 package jott_interpreter.nodes.grammar_nodes;
 
 import java.util.ArrayList;
-import jott_interpreter.ReturnType;
-import jott_interpreter.SemanticError;
-import jott_interpreter.SyntaxError;
+
+import jott_interpreter.*;
 import jott_interpreter.nodes.*;
 import jott_interpreter.nodes.token_nodes.*;
 import provided.*;
@@ -28,6 +27,12 @@ public class expr_Node extends Jott_Node{
 
     /** An array node representation of the expression. (Size 1 or 3) */
     private final Jott_Node[] expr;
+
+    // Used to avoid unnecessary calls through the parse tree:
+    /** The type of this expression's value. */
+    private ReturnType type = null;
+    /** The value of this expression. */
+    private Object value = null;
 
     /**
      * Private Constructor 
@@ -117,12 +122,12 @@ public class expr_Node extends Jott_Node{
             // Math-ops and Rel-ops can only support Ints or Doubles. 
             // Syntax only checks for operands.
             if(this.expr[0].getType() != ReturnType.Integer && this.expr[0].getType() != ReturnType.Double) {
-                new SemanticError("Invalid types in expression: must be double our int.")
-                    .print(Jott_Node.filename, super.linenum);
+                new SemanticError("Invalid types in expression: must be double our int.", super.linenum)
+                    .print(Jott_Node.filename);
                 valid = false;
             } else if (this.expr[0].getType() != this.expr[2].getType()) {
-                new SemanticError("Unmatched types in expression")
-                    .print(Jott_Node.filename, super.linenum);
+                new SemanticError("Unmatched types in expression", super.linenum)
+                    .print(Jott_Node.filename);
                 valid = false;
             } else if(
                 (this.expr[1].getType() == ReturnType.Integer) &&
@@ -133,8 +138,8 @@ public class expr_Node extends Jott_Node{
                         (c) -> ((c == '-') || (c == '.') || (c == '0'))
                     )
                 ) {
-                    new SemanticError("Division by zero")
-                        .print(Jott_Node.filename, super.linenum);
+                    new SemanticError("Division by zero", super.linenum)
+                        .print(Jott_Node.filename);
                     valid = false;
                 }
             }
@@ -144,20 +149,110 @@ public class expr_Node extends Jott_Node{
         return valid;
     }
 
+    /**
+     * Performs arithmetic and relational operations on two operands, 
+     * {@code x} and {@code y}, based on the specified operator.
+     * The result of the operation is stored in the {@code value} field of the class. 
+     * The method supports mathematical operations (addition, subtraction, multiplication, division) 
+     * and relational operations (greater-than, less-than, equality, etc.).
+     * 
+     * @param x         - The first operand for the operation
+     * @param operator  - The operator that determines the operation to be performed. Valid operators are:
+     *              <p> arithmetic: {@code "+"}, {@code "-"}, {@code "*"}, {@code "/"}; <\p>
+     *              <p> relational: {@code ">"}, {@code ">="}, {@code "<"}, {@code "<="}, {@code "=="} <\p>
+     * @param y         - The second operand for the operation
+     * @throws SemanticError Runtime Exception: Division by Zero
+     */
+    private void operate(double x, String operator, double y) throws SemanticError{
+        switch (operator) {
+            //! MATH OPERATIONS
+            case "/" :
+                // Runtime exception: Division by zero
+                //  ( Validation catches static values and variables, 
+                //    runtime catches dynamic variables and function calls )
+                if(y == 0) { throw new SemanticError("Division by zero", super.linenum); }
+
+                this.value = Double.valueOf(x / y);
+                // Truncating value if it's an Integer (only needed for int division)
+                if(this.getType() == ReturnType.Integer) { 
+                    this.value = Integer.valueOf( ((Double)(this.value)).intValue() ); 
+                }
+                break;
+            case "*" :
+                this.value = Double.valueOf(x * y);
+                break;
+            case "+" :
+                this.value = Double.valueOf(x + y);
+                break;
+            case "-" :
+                this.value = Double.valueOf(x - y);
+                break;
+
+            //! RELATIVE OPERATIONS
+            case ">" :
+                this.value = Boolean.valueOf(x > y);
+                break;
+            case ">=" :
+                this.value = Boolean.valueOf(x >= y);
+                break;
+            case "<" :
+                this.value = Boolean.valueOf(x < y);
+                break;
+            case "<=" :
+                this.value = Boolean.valueOf(x <= y);
+                break;
+            case "==" :
+                this.value = Boolean.valueOf(x == y);
+                break;
+                
+            // Invalid Operation
+            default :
+                assert (false);
+                break;
+        }
+    }
+
+    @Override
+    public void execute() throws SemanticError{
+        if(this.expr.length == 3) {
+
+            this.expr[0].execute();
+            this.expr[1].execute();
+            this.expr[2].execute();
+
+            double operand1 = (Double)(this.expr[0].getValue());
+            String operator = this.expr[1].toString();
+            double operand2 = (Double)(this.expr[2].getValue());
+
+            operate(operand1, operator, operand2);
+        } else {
+            this.expr[0].execute();
+            this.value = this.expr[0].getValue();
+        }
+    }
+
     @Override
     public ReturnType getType() {
-        // Rel-ops are booleans working against ints, 
+        // Rel-ops are booleans working against numbers, 
         // and math-ops have to be integers or doubles.
-        if(this.expr.length == 3) {
-            if(this.expr[1].getType() == ReturnType.Integer) {
-                if(
-                    (this.expr[0].getType() == ReturnType.Integer) && 
-                    (this.expr[2].getType() == ReturnType.Integer)
-                ) { return ReturnType.Integer; } 
-                else { return ReturnType.Double; }
-            } else { return ReturnType.Boolean; }
-        } else {
-            return this.expr[0].getType();
+        if(type != null) {
+            if(this.expr.length == 3) {
+                if(this.expr[1].getType() == ReturnType.Integer) {
+                    if(
+                        (this.expr[0].getType() == ReturnType.Integer) && 
+                        (this.expr[2].getType() == ReturnType.Integer)
+                    ) { this.type = ReturnType.Integer; } 
+                    else { this.type = ReturnType.Double; }
+                } else { this.type = ReturnType.Boolean; }
+            } else {
+                this.type = this.expr[0].getType();
+            }
         }
+        return this.type;
+    }
+
+    @Override
+    public Object getValue() {
+        return this.value;
     }
 }

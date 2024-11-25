@@ -55,8 +55,8 @@ public class whileLoop_Node extends Jott_Node{
         if(!valid) { return false; } // forced early function exit
         
         if(this.expr.getType() != ReturnType.Boolean) {
-            new SemanticError("Expression in while statement not of type: boolean")
-                .print(Jott_Node.filename, super.linenum);
+            new SemanticError("Expression in while statement not of type: boolean", super.linenum)
+                .print(Jott_Node.filename);
             valid = false;
         }
 

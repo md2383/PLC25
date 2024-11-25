@@ -86,8 +86,8 @@ public class body_Node extends Jott_Node{
 
         for (bodyStmt_Node bodyStmt : this.stmts) {
             if(early_exit) {
-                new SemanticError("Body with unreachable code")
-                    .print(Jott_Node.filename, super.linenum);
+                new SemanticError("Body with unreachable code", super.linenum)
+                    .print(Jott_Node.filename);
                 return false;
             }
             valid &= bodyStmt.validateTree();
@@ -96,8 +96,8 @@ public class body_Node extends Jott_Node{
                     returnStmt.SetExpression(bodyStmt);
                     early_exit = true;
                 } else {
-                    new SemanticError("Body with unreachable return statement")
-                        .print(Jott_Node.filename, super.linenum);
+                    new SemanticError("Body with unreachable return statement", super.linenum)
+                        .print(Jott_Node.filename);
                     valid = false;
                 }
             }

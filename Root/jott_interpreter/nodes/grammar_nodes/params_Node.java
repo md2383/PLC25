@@ -80,8 +80,8 @@ public class params_Node extends Jott_Node {
         // Empty parameter check
         if (this.firstNode == null) {
             if (orderedParamNodes.length != 0) {
-                new SemanticError("Invalid number of parameters, expected: " + orderedParamNodes.length)
-                    .print(Jott_Node.filename, super.linenum);
+                new SemanticError("Invalid number of parameters, expected: " + orderedParamNodes.length, super.linenum)
+                    .print(Jott_Node.filename);
                 return false;
             } else { return true; }
         }
@@ -90,13 +90,13 @@ public class params_Node extends Jott_Node {
 
         if (followingNodes == null) {
             if (orderedParamNodes.length != 1) {
-                new SemanticError("Invalid number of parameters, expected: " + orderedParamNodes.length + 1)
-                    .print(Jott_Node.filename, super.linenum);
+                new SemanticError("Invalid number of parameters, expected: " + orderedParamNodes.length + 1, super.linenum)
+                    .print(Jott_Node.filename);
                 valid = false;
             }
         } else if (orderedParamNodes.length != followingNodes.size() + 1) {
-            new SemanticError("Invalid number of parameters, expected: " + orderedParamNodes.length + 1)
-                .print(Jott_Node.filename, super.linenum);
+            new SemanticError("Invalid number of parameters, expected: " + orderedParamNodes.length + 1, super.linenum)
+                .print(Jott_Node.filename);
             valid = false;
         }
 
@@ -109,8 +109,9 @@ public class params_Node extends Jott_Node {
                     "Invalid Parameter type: " + 
                     firstNode.getType() + 
                     ", expected: " + 
-                    orderedParamNodes[0].getType()
-                ).print(Jott_Node.filename, super.linenum);
+                    orderedParamNodes[0].getType(),
+                    super.linenum
+                ).print(Jott_Node.filename);
                 valid = false;
             }
         }
@@ -125,8 +126,9 @@ public class params_Node extends Jott_Node {
                             "Invalid Parameter type: " + 
                             followingNodes.get(i).getType() + 
                             ", expected: " + 
-                            orderedParamNodes[i+1].getType()
-                        ).print(Jott_Node.filename, super.linenum);
+                            orderedParamNodes[i+1].getType(), 
+                            super.linenum
+                        ).print(Jott_Node.filename);
                         valid = false;
                     }
                 }
@@ -137,7 +139,7 @@ public class params_Node extends Jott_Node {
     }
 
     @Override
-    public void execute() {
+    public void execute() throws SemanticError {
         String function_id = Jott_Node.current_function_ID.pop();
         LinkedHashMap<String, Jott_Node> param_map = Jott_Node.function_scope
             .get(function_id).getDynamicVars();

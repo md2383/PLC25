@@ -76,13 +76,13 @@ public class operand_Node extends Jott_Node{
                     scope.isDefined(this.child.toString())
                     ) 
                 ) {
-                    new SemanticError("Variable id: {" + this.child.toString() + "} was declared but never defined")
-                        .print(Jott_Node.filename, super.linenum);
+                    new SemanticError("Variable id: {" + this.child.toString() + "} was declared but never defined", super.linenum)
+                        .print(Jott_Node.filename);
                     valid = false;
                 }
             } else {
-                new SemanticError("Variable id: {" + this.child.toString() + "} not declared")
-                    .print(Jott_Node.filename, super.linenum);
+                new SemanticError("Variable id: {" + this.child.toString() + "} not declared", super.linenum)
+                    .print(Jott_Node.filename);
                 valid = false;
             }
         }
@@ -91,7 +91,7 @@ public class operand_Node extends Jott_Node{
     }
 
     @Override
-    public void execute() {
+    public void execute() throws SemanticError {
         this.child.execute();
     }
 

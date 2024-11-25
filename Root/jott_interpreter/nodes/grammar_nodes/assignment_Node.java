@@ -93,8 +93,8 @@ public class assignment_Node extends Jott_Node {
 
         // Id must be defined in scope
         if(!Jott_Node.function_scope.get(current_function_ID.peek()).contains(this.id.toString())) {
-            new SemanticError("Variable id: {" + this.id.toString() + "} not declared.")
-                .print(Jott_Node.filename, super.linenum);
+            new SemanticError("Variable id: {" + this.id.toString() + "} not declared.", super.linenum)
+                .print(Jott_Node.filename);
             return false;
         } 
 
@@ -105,8 +105,8 @@ public class assignment_Node extends Jott_Node {
 
         // Expression type must match id type
         if(id.getType() != expr.getType()) {
-            new SemanticError("Expression return does not match id type for assignment: " + this.id.toString())
-                .print(Jott_Node.filename, super.linenum);
+            new SemanticError("Expression return does not match id type for assignment: " + this.id.toString(), super.linenum)
+                .print(Jott_Node.filename);
             return false;
         }
 

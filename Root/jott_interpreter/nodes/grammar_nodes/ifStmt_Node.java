@@ -166,8 +166,8 @@ public class ifStmt_Node extends Jott_Node{
 
         // Expression must return a boolean
         if(this.expressionN.getType() != ReturnType.Boolean) {
-            new SemanticError("Expression in if statement not of type: boolean")
-                .print(Jott_Node.filename, super.linenum);
+            new SemanticError("Expression in if statement not of type: boolean", super.linenum)
+                .print(Jott_Node.filename);
             valid = false;
         }
 
@@ -180,8 +180,8 @@ public class ifStmt_Node extends Jott_Node{
 
         // Validates all nodes in the if-else chain return the same type, or ReturnType.VOID
         if(!checkReturn()) {
-            new SemanticError("Invalid if-else chain return type")
-                .print(Jott_Node.filename, super.linenum);
+            new SemanticError("Invalid if-else chain return type", super.linenum)
+                .print(Jott_Node.filename);
             valid = false;
         }
 
@@ -189,7 +189,7 @@ public class ifStmt_Node extends Jott_Node{
     }
 
     @Override
-    public void execute() {
+    public void execute() throws SemanticError {
         this.expressionN.execute();
         Object exprVal = this.expressionN.getValue();
         assert (exprVal instanceof Boolean);

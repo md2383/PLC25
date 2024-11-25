@@ -74,9 +74,4 @@ public class mathop_Node extends Jott_Node {
     public void execute() {
         // DO Nothing
     }
-
-    @Override
-    public Object getValue() {
-        return this.mathop.getToken();
-    }
 }

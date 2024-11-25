@@ -136,8 +136,8 @@ public class funcDef_Node extends Jott_Node {
 
         // Duplicate function check
         if(declared_functions.contains(this.id.toString())) {
-            new SemanticError("Duplicate Function: {" + this.id.toString() + "}")
-                .print(Jott_Node.filename, super.linenum);
+            new SemanticError("Duplicate Function: {" + this.id.toString() + "}", super.linenum)
+                .print(Jott_Node.filename);
             return false; // Ignores rest of checks in case of duplicate function
         }
             
@@ -153,8 +153,8 @@ public class funcDef_Node extends Jott_Node {
             isValid &= this.f_body.validateTree();
             // Function body return validation
             if(f_body.getType() != function_return.getType()) {
-                new SemanticError("Function Returns: '" + f_body.getType() + "', Expected: " + "'"+function_return.getType()+"'")
-                    .print(Jott_Node.filename, super.linenum);
+                new SemanticError("Function Returns: '" + f_body.getType() + "', Expected: " + "'"+function_return.getType()+"'", super.linenum)
+                    .print(Jott_Node.filename);
                 isValid = false;
             }
         }
@@ -163,15 +163,15 @@ public class funcDef_Node extends Jott_Node {
         if(this.id.toString().equals("main")) {
             // Parameter check (main has no params)
             if(!func_def_params.toString().equals("")) {
-                new SemanticError("Invalid {main} definition: main expects no parameters")
-                    .print(Jott_Node.filename, super.linenum);
+                new SemanticError("Invalid {main} definition: main expects no parameters", super.linenum)
+                    .print(Jott_Node.filename);
                 isValid = false;
             }
 
             // Return check (main must return Void)
             if(function_return.getType() != ReturnType.Void) {
-                new SemanticError("Invalid {main} return type: '" + function_return.getType() + "', expected: 'Void'")
-                    .print(Jott_Node.filename, super.linenum);
+                new SemanticError("Invalid {main} return type: '" + function_return.getType() + "', expected: 'Void'", super.linenum)
+                    .print(Jott_Node.filename);
                 isValid = false;
             }
         }
@@ -183,7 +183,7 @@ public class funcDef_Node extends Jott_Node {
     }
 
     @Override
-    public void execute() {
+    public void execute() throws SemanticError {
         this.f_body.execute();
     }
 

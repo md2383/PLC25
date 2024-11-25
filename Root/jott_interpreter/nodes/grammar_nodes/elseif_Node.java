@@ -84,8 +84,8 @@ public class elseif_Node extends Jott_Node{
         if(!valid) { return false; } // forced early function exit
         
         if(this.expression.getType() != ReturnType.Boolean) {
-            new SemanticError("Expression in elseif statement not of type: boolean")
-                .print(Jott_Node.filename, super.linenum);
+            new SemanticError("Expression in elseif statement not of type: boolean", super.linenum)
+                .print(Jott_Node.filename);
             valid = false;
         }
 
@@ -93,7 +93,7 @@ public class elseif_Node extends Jott_Node{
     }
 
     @Override
-    public void execute() {
+    public void execute() throws SemanticError {
         this.expression.execute();
         Object exprVal = this.expression.getValue();
         assert (exprVal instanceof Boolean);

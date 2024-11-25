@@ -2,6 +2,7 @@ package main;
 import java.util.ArrayList;
 
 import jott_interpreter.Interpreter;
+import jott_interpreter.SemanticError;
 import provided.JottParser;
 import provided.JottTree;
 import provided.Token;
@@ -62,9 +63,12 @@ public class Jott {
         /** Evaluate the JottTree */
         try {
 
-            // root.execute(); // commented out until phase 4
+            root.execute();
 
-        } catch (Exception e) {
+        } catch (SemanticError error) { 
+            // Runtime Exception
+            error.print(filename);
+        }catch (Exception e) {
             System.err.println("Error Evaluating JottTree: \n");
             e.printStackTrace();
             System.exit(1);

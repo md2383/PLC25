@@ -76,8 +76,8 @@ public class varDec_Node extends Jott_Node {
 
         // checking if variable already declared in function scope
         if(Jott_Node.function_scope.get(current_function_ID.peek()).contains(this.id.toString())) {
-            new SemanticError("Function already contains variable id: " + this.id.toString())
-                .print(Jott_Node.filename, super.linenum);
+            new SemanticError("Function already contains variable id: " + this.id.toString(), super.linenum)
+                .print(Jott_Node.filename);
             isValid = false;
         } else {
             // Adding variable to current function scope

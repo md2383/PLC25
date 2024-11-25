@@ -6,6 +6,7 @@ import java.util.Stack;
 
 import jott_interpreter.IdMap;
 import jott_interpreter.ReturnType;
+import jott_interpreter.SemanticError;
 import provided.*;
 
 /* Used only by documentation */
@@ -68,7 +69,7 @@ public abstract class Jott_Node implements JottTree{
     abstract public boolean validateTree();
 
     @Override
-    abstract public void execute();
+    abstract public void execute() throws SemanticError;
 
     /**
      * 

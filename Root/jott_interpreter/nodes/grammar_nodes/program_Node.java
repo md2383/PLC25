@@ -77,8 +77,8 @@ public class program_Node extends Jott_Node{
         }
 
         if(!declared_functions.contains("main")) {
-            new SemanticError("Expected function 'Def main[]:Void' not present")
-                .print(Jott_Node.filename, 0);
+            new SemanticError("Expected function 'Def main[]:Void' not present", 0)
+                .print(Jott_Node.filename);
             isValid = false;
         } 
 
@@ -86,7 +86,7 @@ public class program_Node extends Jott_Node{
     }
 
     @Override
-    public void execute() {
+    public void execute() throws SemanticError {
         Jott_Node.declared_functions.getNode("main").execute();
     }
 }

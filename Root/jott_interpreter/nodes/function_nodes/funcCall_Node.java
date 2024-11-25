@@ -89,8 +89,8 @@ public class funcCall_Node extends Jott_Node{
             isValid = this.params.validateTree();
         // Else: function hasn't been defined/declared
         } else {
-            new SemanticError("Function id: {" + this.id.toString() + "} is not defined/declared")
-                .print(Jott_Node.filename, super.linenum);
+            new SemanticError("Function id: {" + this.id.toString() + "} is not defined/declared", super.linenum)
+                .print(Jott_Node.filename);
             isValid = false;
         }
 
@@ -98,14 +98,14 @@ public class funcCall_Node extends Jott_Node{
     }
 
     @Override
-    public void execute() {
+    public void execute() throws SemanticError {
         Jott_Node.current_function_ID.push(this.id.toString()); // Popped by params execution
         this.params.execute();
 
         // Asserting params.execute() popped function from the call stack
         assert (Jott_Node.current_function_ID.peek() != this.id.toString());
 
-        this.id.execute();
+        this.id.execute(); // id only executes functions
         this.value = this.id.getValue();
     }
 

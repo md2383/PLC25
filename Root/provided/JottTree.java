@@ -1,5 +1,7 @@
 package provided;
 
+import jott_interpreter.SemanticError;
+
 /**
  * Interface for all Jott parse tree nodes
  *
@@ -22,6 +24,7 @@ public interface JottTree {
 	
 	/**
 	 * This will execute the Jott code represented by this JottTree node.
+	 * @throws SemanticError 
 	 */
-	public void execute();
+	public void execute() throws SemanticError;
 }

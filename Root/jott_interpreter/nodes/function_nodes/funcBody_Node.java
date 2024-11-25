@@ -3,6 +3,7 @@ package jott_interpreter.nodes.function_nodes;
 import java.util.ArrayList;
 
 import jott_interpreter.ReturnType;
+import jott_interpreter.SemanticError;
 import jott_interpreter.SyntaxError;
 import jott_interpreter.nodes.*;
 import jott_interpreter.nodes.grammar_nodes.body_Node;
@@ -59,7 +60,7 @@ public class funcBody_Node extends Jott_Node{
     }
 
     @Override
-    public void execute() {
+    public void execute() throws SemanticError {
         // var decs shouldn't do anything
         for(varDec_Node varDec : this.vars) { varDec.execute(); };
         this.body.execute();

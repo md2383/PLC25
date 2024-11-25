@@ -73,9 +73,4 @@ public class relop_Node extends Jott_Node {
     public void execute() {
         // Do Nothing
     }
-
-    @Override
-    public Object getValue() {
-        return this.relop.getToken();
-    }
 }

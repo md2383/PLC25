@@ -3,6 +3,7 @@ package jott_interpreter.nodes.grammar_nodes;
 import java.util.ArrayList;
 
 import jott_interpreter.ReturnType;
+import jott_interpreter.SemanticError;
 import jott_interpreter.SyntaxError;
 import jott_interpreter.nodes.*;
 import provided.*;
@@ -76,7 +77,7 @@ public class else_Node extends Jott_Node{
     }
 
     @Override
-    public void execute() {
+    public void execute() throws SemanticError {
         this.body.execute();
     }
 }
