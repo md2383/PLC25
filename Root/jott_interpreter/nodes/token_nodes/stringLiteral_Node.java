@@ -77,9 +77,7 @@ public class stringLiteral_Node extends Jott_Node {
     }
 
     @Override
-    public void execute() {
-        // Do Nothing
-    }
+    public void execute() { /* Do Nothing */ }
 
     @Override
     public Object getValue() {

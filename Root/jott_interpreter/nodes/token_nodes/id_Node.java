@@ -72,4 +72,13 @@ public class id_Node extends Jott_Node {
                 .getReturnType(this.toString());
         }
     }
+
+    @Override
+    public void execute() { /* Do Nothing */ }
+
+    @Override
+    public Object getValue() {
+        return Jott_Node.function_scope.get(current_function_ID.peek())
+            .getNode(this.id.toString()).getValue();
+    }
 }

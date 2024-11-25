@@ -71,7 +71,5 @@ public class mathop_Node extends Jott_Node {
     }
 
     @Override
-    public void execute() {
-        // DO Nothing
-    }
+    public void execute() { /* Do Nothing */ }
 }

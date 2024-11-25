@@ -16,6 +16,8 @@ public class elseif_Node extends Jott_Node{
     private final expr_Node expression;
     private final body_Node body;
 
+    private Object value = null;
+
     /**
      * Private Constructor
      * (validation of the node done in {@link #parseElseifNode})
@@ -100,6 +102,7 @@ public class elseif_Node extends Jott_Node{
 
         if((Boolean)(exprVal)) {
             this.body.execute();
+            this.value = this.body.getValue();
         }
     }
 
@@ -110,6 +113,6 @@ public class elseif_Node extends Jott_Node{
 
     @Override
     public Object getValue() {
-        return this.expression.getValue();
+        return this.value;
     }
 }

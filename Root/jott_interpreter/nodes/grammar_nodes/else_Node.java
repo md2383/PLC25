@@ -78,6 +78,6 @@ public class else_Node extends Jott_Node{
 
     @Override
     public void execute() throws SemanticError {
-        this.body.execute();
+        if(!this.isVoid()) { this.body.execute(); }
     }
 }

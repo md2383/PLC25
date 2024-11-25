@@ -111,7 +111,5 @@ public class type_Node extends Jott_Node {
     }
 
     @Override
-    public void execute() {
-        // Do Nothing
-    }
+    public void execute() { /* Do Nothing */ }
 }

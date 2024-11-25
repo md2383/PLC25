@@ -77,9 +77,7 @@ public class bool_Node extends Jott_Node {
     }
 
     @Override
-    public void execute() {
-        // DO Nothing
-    }
+    public void execute() { /* Do Nothing */ }
 
     @Override
     public Object getValue() {

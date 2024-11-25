@@ -20,6 +20,7 @@ public class ifStmt_Node extends Jott_Node{
     private final else_Node elseN;
 
     private ReturnType returnType = ReturnType.Void;
+    private Object value = null;
 
     /**
      * Private Constructor
@@ -197,21 +198,30 @@ public class ifStmt_Node extends Jott_Node{
         // IF
         if((Boolean)(exprVal)) {
             this.bodyN.execute();
+            this.value = this.bodyN.getValue();
         } else {
             // ELSE IF
             for(elseif_Node elif : this.elseifN) {
                 elif.execute();
                 exprVal = elif.getValue();
-                assert (exprVal instanceof Boolean);
-                if((Boolean)(exprVal)) { return; } // Early exit
+                if(exprVal != null) { // Early exit
+                    this.value = exprVal;
+                    return; 
+                } 
             }
             // ELSE
             this.elseN.execute();
+            this.value = this.elseN.getValue();
         }
     }
 
     @Override
     public ReturnType getType() {
         return returnType;
+    }
+
+    @Override
+    public Object getValue() {
+        return this.value; // If-Else logic in execute() method
     }
 }
