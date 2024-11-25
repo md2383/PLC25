@@ -153,6 +153,19 @@ public class IdMap {
     }
 
     /**
+     * Sets the value of a variable to some expression node. 
+     *  (replacing a varDec_node or previously assigned expr_node)
+     * @param id
+     * @param node
+     * @hidden This function is for the assignment node, it can be achieved with 
+     *      an add() and define_var() call on the id, but this is obviously cleaner.
+     */
+    public void assign_var(String id, Jott_Node node) {
+        assert (this.contains(id));
+        this.id_map.put(id, node);
+    }
+
+    /**
      * Gets the node references to all the declared dynamic variables in order
      * @return the array of ordered {@link Jott_Node} variable declarations
      */

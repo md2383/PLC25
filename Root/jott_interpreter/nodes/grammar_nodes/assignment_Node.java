@@ -112,4 +112,10 @@ public class assignment_Node extends Jott_Node {
 
         return isValid;
     }
+
+    @Override
+    public void execute() {
+        Jott_Node.function_scope.get(current_function_ID.peek())
+            .assign_var(this.id.toString(), this.expr);
+    }
 }
