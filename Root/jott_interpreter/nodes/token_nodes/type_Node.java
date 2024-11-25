@@ -93,7 +93,6 @@ public class type_Node extends Jott_Node {
             case String :
                 return "String";
             case Void :
-                assert (false); // unreachable: debugging purpose
                 return "Void";
             default :
                 assert (false); // unreachable: debugging purpose

@@ -183,7 +183,17 @@ public class funcDef_Node extends Jott_Node {
     }
 
     @Override
+    public void execute() {
+        this.f_body.execute();
+    }
+
+    @Override
     public ReturnType getType() {
         return this.function_return.getType();
+    }
+
+    @Override
+    public Object getValue() {
+        return this.f_body.getValue();
     }
 }

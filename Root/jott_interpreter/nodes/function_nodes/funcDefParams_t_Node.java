@@ -93,6 +93,11 @@ public class funcDefParams_t_Node extends Jott_Node {
     }
 
     @Override
+    public void execute() {
+        // Do Nothing
+    }
+
+    @Override
     public ReturnType getType() {
         return this.type.getType();
     }

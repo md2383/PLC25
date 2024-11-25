@@ -53,6 +53,11 @@ public class funcReturn_Node extends Jott_Node{
     }
 
     @Override
+    public void execute() {
+        // Do Nothing
+    }
+
+    @Override
     public ReturnType getType() {
         return this.type == null ? 
             ReturnType.Void : this.type.getType();
