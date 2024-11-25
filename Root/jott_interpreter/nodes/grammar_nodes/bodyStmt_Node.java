@@ -103,10 +103,21 @@ public class bodyStmt_Node extends Jott_Node {
     public boolean validateTree() {
         return statement.validateTree();
     }
+
+    @Override
+    public void execute() {
+        this.statement.execute();
+    }
     
     @Override
     public ReturnType getType() {
         if(this.isIfStmt) { return statement.getType(); }
         else { return ReturnType.Void; }
+    }
+
+    @Override
+    public Object getValue() {
+        assert (this.isIfStmt);
+        return statement.getType();
     }
 }
