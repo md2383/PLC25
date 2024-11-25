@@ -20,7 +20,7 @@ public class ifStmt_Node extends Jott_Node{
     private final else_Node elseN;
 
     private ReturnType returnType = ReturnType.Void;
-    private ReturnType possibleReturn = null;
+    private ReturnType possibleReturn = ReturnType.Void;
     private Object value = null;
 
     /**
@@ -234,7 +234,6 @@ public class ifStmt_Node extends Jott_Node{
     }
 
     public ReturnType getPossibleReturn() {
-        assert (possibleReturn != null);
         return this.possibleReturn;
     }
 }

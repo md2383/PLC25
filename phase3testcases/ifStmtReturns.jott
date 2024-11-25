@@ -1,0 +1,17 @@
+#this will fail phase 3
+
+Def foo[]:Integer{
+    Double x;
+    Integer y;
+    x = 5.0;
+    If[x > 1.0]{
+        Return x;
+    } Else {
+        y = 5;
+    }
+    Return 5;
+}
+
+Def main[]:Void{
+    ::foo[];
+}
