@@ -111,4 +111,12 @@ public class body_Node extends Jott_Node{
     public ReturnType getType() {
         return this.returnStmt.getType();
     }
+
+    public ReturnType[] getPossibleReturn() {
+        ReturnType[] types = new ReturnType[this.stmts.length];
+        for(int i = 0; i < this.stmts.length; i++) {
+            types[i] = this.stmts[i].getPossibleReturn();
+        }
+        return types;
+    }
 }

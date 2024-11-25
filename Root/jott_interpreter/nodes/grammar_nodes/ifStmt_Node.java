@@ -20,6 +20,7 @@ public class ifStmt_Node extends Jott_Node{
     private final else_Node elseN;
 
     private ReturnType returnType = ReturnType.Void;
+    private ReturnType possibleReturn = null;
     private Object value = null;
 
     /**
@@ -158,6 +159,13 @@ public class ifStmt_Node extends Jott_Node{
         if(returnVoid) { assert (this.returnType == ReturnType.Void); } 
         else { this.returnType = IfNodeReturn; }
 
+        // Possible Return references the return of any node in the if-else
+        // in order to determine the return type is the proper type for the function.
+        // This is only used in the edge case where 1 or more nodes return void, 
+        // and it's therefore required to asses whether the nodes that don't return void
+        // are of the proper type.
+        this.possibleReturn = IfNodeReturn;
+
         return returnCheck;
     }
 
@@ -223,5 +231,10 @@ public class ifStmt_Node extends Jott_Node{
     @Override
     public Object getValue() {
         return this.value; // If-Else logic in execute() method
+    }
+
+    public ReturnType getPossibleReturn() {
+        assert (possibleReturn != null);
+        return this.possibleReturn;
     }
 }

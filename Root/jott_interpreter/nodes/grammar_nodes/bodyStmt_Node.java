@@ -121,4 +121,8 @@ public class bodyStmt_Node extends Jott_Node {
         assert (this.isIfStmt);
         return statement.getType();
     }
+
+    public ReturnType getPossibleReturn() {
+        return isIfStmt ? ((ifStmt_Node)(statement)).getPossibleReturn() : ReturnType.Void;
+    }
 }

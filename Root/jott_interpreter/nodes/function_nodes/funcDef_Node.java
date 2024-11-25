@@ -153,9 +153,18 @@ public class funcDef_Node extends Jott_Node {
             isValid &= this.f_body.validateTree();
             // Function body return validation
             if(f_body.getType() != function_return.getType()) {
-                new SemanticError("Function Returns: '" + f_body.getType() + "', Expected: " + "'"+function_return.getType()+"'", super.linenum)
+                new SemanticError("Function Returns: '" + f_body.getType() + "', Expected: '" + function_return.getType() + "'", super.linenum)
                     .print(Jott_Node.filename);
                 isValid = false;
+            } else { 
+                // Checking any possible returns (in if stmts) to validate against function return type
+                for (ReturnType possibleReturn : f_body.getPossibleReturn()) {
+                    if(possibleReturn != ReturnType.Void && possibleReturn != function_return.getType()) {
+                        new SemanticError("Function Can Return: '" + possibleReturn + "', Expected: '" + function_return.getType() + "'", super.linenum)
+                            .print(Jott_Node.filename);
+                        isValid = false;
+                    }
+                }
             }
         }
 

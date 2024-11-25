@@ -75,4 +75,8 @@ public class funcBody_Node extends Jott_Node{
     public Object getValue() {
         return this.body.getValue();
     }
+
+    public ReturnType[] getPossibleReturn() {
+        return this.body.getPossibleReturn();
+    }
 }
