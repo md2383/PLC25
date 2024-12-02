@@ -92,8 +92,7 @@ public class returnStatement_Node extends Jott_Node{
 
     @Override
     public void execute() throws SemanticError {
-        this.returnExpr.execute();
-        
+        if(this.returnExpr != null) { this.returnExpr.execute(); }
     }
 
     @Override

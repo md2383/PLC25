@@ -6,7 +6,7 @@ import main.Jott;
 
 public class JottValidTester {
     public static void main(String[] args) {
-        final File testCaseParent = new File("phase3testcases");
+        final File testCaseParent = new File("phase4testcases");
         final File[] testCases = testCaseParent.listFiles();
 
         for(File testCase : testCases) {

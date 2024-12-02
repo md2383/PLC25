@@ -100,19 +100,16 @@ public class funcCall_Node extends Jott_Node{
 
     @Override
     public void execute() throws SemanticError {
-        Jott_Node.current_function_ID.push(this.id.toString()); // Popped by params execution
+        Jott_Node.current_function_ID.push(this.id.toString()); 
         IdMap id_map_copy = Jott_Node.function_scope.get(Jott_Node.current_function_ID.peek()).copy();
         
         this.params.execute();
 
-        // Asserting params.execute() popped function from the call stack
-        assert (Jott_Node.current_function_ID.peek() != this.id.toString());
-
         this.id.execute(); // id only executes functions
         this.value = this.id.getValue();
 
-        // Reverting any changes made to variables
-        Jott_Node.function_scope.put(this.id.toString(), id_map_copy);
+        // Reverting any changes made to variables, pop call stack
+        Jott_Node.function_scope.put(Jott_Node.current_function_ID.pop(), id_map_copy);
     }
 
     @Override

@@ -140,28 +140,32 @@ public class params_Node extends Jott_Node {
 
     @Override
     public void execute() throws SemanticError {
-        String function_id = Jott_Node.current_function_ID.pop();
+        // Early function exit given no parameters
+        if(this.firstNode == null) { return; }
+
+        String function_id = Jott_Node.current_function_ID.peek();
         LinkedHashMap<String, Jott_Node> param_map = Jott_Node.function_scope
             .get(function_id).getDynamicVars();
-        // pop() from function call node
+        // call stack popped in function call
 
         this.firstNode.execute();
-        for(params_t_Node param : this.followingNodes) { param.execute(); }
-
         Queue<expr_Node> expressions = new LinkedList<>();
         expressions.add(firstNode);
         
         Object temp_param;
-        for(int i = 0; i < followingNodes.size(); i++) {
-            temp_param = followingNodes.get(i).getValue();
-            // getValue here should get entire expression node, not just the value
-            assert (temp_param instanceof expr_Node);
-            expressions.add((expr_Node)(temp_param));
+        if(this.followingNodes != null) {
+            for(params_t_Node param : this.followingNodes) { 
+                param.execute(); 
+                temp_param = param.getValue();
+                // getValue here should get entire expression node, not just the value
+                assert (temp_param instanceof expr_Node);
+                expressions.add((expr_Node)(temp_param));
+            }
         }
 
-        param_map.replaceAll(
-            (@SuppressWarnings("unused") String id, @SuppressWarnings("unused") Jott_Node node) -> 
-            node = expressions.poll()
+        assert (expressions.size() == param_map.size());
+        param_map.forEach((String var_id, @SuppressWarnings("unused") Jott_Node var_node) -> 
+            Jott_Node.function_scope.get(function_id).assign_var(var_id, expressions.poll())
         );
     }
 }

@@ -3,6 +3,7 @@ package jott_interpreter.nodes.token_nodes;
 import java.util.ArrayList;
 
 import jott_interpreter.ReturnType;
+import jott_interpreter.SemanticError;
 import jott_interpreter.SyntaxError;
 import jott_interpreter.nodes.*;
 import provided.*;
@@ -74,11 +75,21 @@ public class id_Node extends Jott_Node {
     }
 
     @Override
-    public void execute() { /* Do Nothing */ }
+    public void execute() throws SemanticError{ 
+        // if id is a function, execute the function
+        assert (Jott_Node.declared_functions.contains(this.toString()));
+        Jott_Node.declared_functions.getNode(this.toString()).execute();
+    }
 
     @Override
     public Object getValue() {
-        return Jott_Node.function_scope.get(current_function_ID.peek())
-            .getNode(this.id.toString()).getValue();
+        // if id is a function, return function ReturnType
+        if(Jott_Node.declared_functions.contains(this.toString())) {
+            return Jott_Node.declared_functions.getNode(this.toString()).getValue();
+        // if id is a variable reference, return variable type
+        } else {
+            return Jott_Node.function_scope.get(current_function_ID.peek())
+                .getNode(this.toString()).getValue();
+        }
     }
 }
