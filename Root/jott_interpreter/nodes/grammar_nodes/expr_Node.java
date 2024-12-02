@@ -150,16 +150,20 @@ public class expr_Node extends Jott_Node{
     }
 
     /**
+     * <h>
      * Performs arithmetic and relational operations on two operands, 
      * {@code x} and {@code y}, based on the specified operator.
+     * </h>
+     * <p>
      * The result of the operation is stored in the {@code value} field of the class. 
      * The method supports mathematical operations (addition, subtraction, multiplication, division) 
      * and relational operations (greater-than, less-than, equality, etc.).
+     * </p>
      * 
      * @param x         - The first operand for the operation
      * @param operator  - The operator that determines the operation to be performed. Valid operators are:
-     *              <p> arithmetic: {@code "+"}, {@code "-"}, {@code "*"}, {@code "/"}; <\p>
-     *              <p> relational: {@code ">"}, {@code ">="}, {@code "<"}, {@code "<="}, {@code "=="} <\p>
+     *              <p> arithmetic: {@code "+"}, {@code "-"}, {@code "*"}, {@code "/"} </p>
+     *              <p> relational: {@code ">"}, {@code ">="}, {@code "<"}, {@code "<="}, {@code "=="} </p>
      * @param y         - The second operand for the operation
      * @throws SemanticError Runtime Exception: Division by Zero
      */
