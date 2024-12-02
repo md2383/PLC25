@@ -52,6 +52,16 @@ public class IdMap {
         this.defined_vars = new HashMap<>();
     }
 
+    private IdMap(
+            LinkedHashMap<String, Jott_Node> idm,
+            LinkedHashMap<String, Jott_Node> dvm,
+            HashMap<String, Boolean> def_vars
+        ) {
+            this.id_map = idm;
+            this.dynamic_var_map = dvm;
+            this.defined_vars = def_vars;
+    }
+
     /**
      * Declares built-in functions and maps them to their respective identifiers.
      * 
@@ -181,5 +191,13 @@ public class IdMap {
 
     public LinkedHashMap<String, Jott_Node> getDynamicVars() {
         return this.dynamic_var_map;
+    }
+
+    public IdMap copy() {
+        LinkedHashMap<String, Jott_Node> copy_id_map = new LinkedHashMap<>(this.id_map); 
+        LinkedHashMap<String, Jott_Node> copy_dv_map = new LinkedHashMap<>(this.dynamic_var_map);
+        HashMap<String, Boolean> copy_d_vars = new HashMap<>(this.defined_vars);
+
+        return new IdMap(copy_id_map, copy_dv_map, copy_d_vars);
     }
 }

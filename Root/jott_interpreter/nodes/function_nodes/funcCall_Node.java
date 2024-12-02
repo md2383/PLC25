@@ -2,6 +2,7 @@ package jott_interpreter.nodes.function_nodes;
 
 import java.util.ArrayList;
 
+import jott_interpreter.IdMap;
 import jott_interpreter.ReturnType;
 import jott_interpreter.SemanticError;
 import jott_interpreter.SyntaxError;
@@ -100,6 +101,8 @@ public class funcCall_Node extends Jott_Node{
     @Override
     public void execute() throws SemanticError {
         Jott_Node.current_function_ID.push(this.id.toString()); // Popped by params execution
+        IdMap id_map_copy = Jott_Node.function_scope.get(Jott_Node.current_function_ID.peek()).copy();
+        
         this.params.execute();
 
         // Asserting params.execute() popped function from the call stack
@@ -107,6 +110,9 @@ public class funcCall_Node extends Jott_Node{
 
         this.id.execute(); // id only executes functions
         this.value = this.id.getValue();
+
+        // Reverting any changes made to variables
+        Jott_Node.function_scope.put(this.id.toString(), id_map_copy);
     }
 
     @Override
