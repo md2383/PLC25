@@ -19,6 +19,8 @@ public class body_Node extends Jott_Node{
     /** the return statement for the body */
     private final returnStatement_Node returnStmt;
 
+    private Object value;
+
     /**
      * Private Constructor 
      * (validation of the node done in {@link #parseBodyNode})
@@ -103,13 +105,31 @@ public class body_Node extends Jott_Node{
             }
         }
 
+        // Validating return stmt if return stmt has not been validated already.
+        // Otherwise, removing duplicate (return) expressions from tree.
         if(!early_exit) { valid &= returnStmt.validateTree(); }
+        else { this.stmts[this.stmts.length-1] = null; } 
+
         return valid;
+    }
+
+    @Override
+    public void execute() throws SemanticError {
+        for(bodyStmt_Node stmt : this.stmts) {
+            if(stmt != null) { stmt.execute(); } // null check consideration from validation
+        }
+        this.returnStmt.execute();
+        this.value = this.returnStmt.getValue();
     }
 
     @Override
     public ReturnType getType() {
         return this.returnStmt.getType();
+    }
+
+    @Override
+    public Object getValue() {
+        return this.value;
     }
 
     public ReturnType[] getPossibleReturn() {
