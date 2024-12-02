@@ -89,6 +89,9 @@ public class varDec_Node extends Jott_Node {
     }
 
     @Override
+    public void execute() { /*  Doing nothing */ }
+
+    @Override
     public ReturnType getType() {
         return this.type.getType();
     }

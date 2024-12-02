@@ -62,4 +62,15 @@ public class whileLoop_Node extends Jott_Node{
 
         return valid && this.body.validateTree();
     }
+
+    @Override
+    public void execute() throws SemanticError{
+        this.expr.execute();
+        Boolean bool = (Boolean)(this.expr.getValue());
+        while(bool) {
+            this.body.execute();
+            this.expr.execute();
+            bool = (Boolean)(this.expr.getValue());
+        }
+    }
 }
