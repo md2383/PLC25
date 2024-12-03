@@ -11,5 +11,5 @@ Def foo[]:Integer{
 }
 
 Def main[]:Void{
-    ::foo[];
+    ::print[::foo[]];
 }

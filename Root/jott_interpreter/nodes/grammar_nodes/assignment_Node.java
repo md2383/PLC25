@@ -114,7 +114,8 @@ public class assignment_Node extends Jott_Node {
     }
 
     @Override
-    public void execute() {
+    public void execute() throws SemanticError {
+        this.expr.execute();
         Jott_Node.function_scope.get(current_function_ID.peek())
             .assign_var(this.id.toString(), this.expr);
     }

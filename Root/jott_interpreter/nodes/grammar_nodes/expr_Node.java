@@ -257,6 +257,7 @@ public class expr_Node extends Jott_Node{
 
     @Override
     public Object getValue() {
+        assert (this.value != null);
         return this.value;
     }
 }
