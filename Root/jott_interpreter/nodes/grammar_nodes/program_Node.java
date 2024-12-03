@@ -87,6 +87,8 @@ public class program_Node extends Jott_Node{
 
     @Override
     public void execute() throws SemanticError {
-        Jott_Node.declared_functions.getNode("main").execute();
+        Jott_Node.current_function_ID.push("main");
+        Jott_Node.declared_functions.getNode(Jott_Node.current_function_ID.peek()).execute();
+        Jott_Node.current_function_ID.pop();
     }
 }
