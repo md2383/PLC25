@@ -77,8 +77,9 @@ public class id_Node extends Jott_Node {
     @Override
     public void execute() throws SemanticError{ 
         // if id is a function, execute the function
-        assert (Jott_Node.declared_functions.contains(this.toString()));
-        Jott_Node.declared_functions.getNode(this.toString()).execute();
+        if(Jott_Node.declared_functions.contains(this.toString())) {
+            Jott_Node.declared_functions.getNode(this.toString()).execute();
+        } // else, do nothing
     }
 
     @Override
