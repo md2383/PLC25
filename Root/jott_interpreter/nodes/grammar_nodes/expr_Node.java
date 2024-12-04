@@ -175,11 +175,12 @@ public class expr_Node extends Jott_Node{
                 //  ( Validation catches static values and variables, 
                 //    runtime catches dynamic variables and function calls )
                 if(y == 0) { throw new SemanticError("Division by zero", super.linenum); }
-
                 this.value = Double.valueOf(x / y);
-                // Truncating value if it's an Integer (only needed for int division)
-                if(this.getType() == ReturnType.Integer) { 
-                    this.value = Integer.valueOf( ((Double)(this.value)).intValue() ); 
+                if(this.getType() == ReturnType.Integer) {
+                    // Truncating value if it's an Integer (Truncation needed for int division)
+                    this.value = Integer.valueOf( ((Double)(this.value)).intValue() );
+                    // Reverting to double for any further calculations
+                    this.value = Double.valueOf( ((Integer)(this.value)).doubleValue() );
                 }
                 break;
             case "*" :
@@ -208,7 +209,7 @@ public class expr_Node extends Jott_Node{
             case "==" :
                 this.value = Boolean.valueOf(x == y);
                 break;
-                
+
             // Invalid Operation
             default :
                 assert (false);
@@ -218,6 +219,7 @@ public class expr_Node extends Jott_Node{
 
     @Override
     public void execute() throws SemanticError{
+        this.getType(); // IMPORTANT: edge case type assignment to this.type
         if(this.expr.length == 3) {
 
             this.expr[0].execute();
