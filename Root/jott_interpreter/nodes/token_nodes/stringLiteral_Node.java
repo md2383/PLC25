@@ -13,7 +13,7 @@ import provided.TokenType;
 public class stringLiteral_Node extends Jott_Node {
 
     /** Valid {@code STRING} token reference */
-    private Token stringLiteral;
+    private String stringLiteral;
 
     /**
      * Private Constructor 
@@ -22,7 +22,9 @@ public class stringLiteral_Node extends Jott_Node {
      */
     public stringLiteral_Node(Token stringLiteral) {
         super(stringLiteral.getLineNum());
-        this.stringLiteral = stringLiteral;
+        this.stringLiteral = stringLiteral.getToken();
+        // Removing quotation marks {["..."] -> [...]}
+        this.stringLiteral = this.stringLiteral.substring(1, this.stringLiteral.length()-1);
     }
 
     /**
@@ -63,7 +65,7 @@ public class stringLiteral_Node extends Jott_Node {
      */
     @Override
     public String convertToJott() {
-        return stringLiteral.getToken();
+        return stringLiteral;
     }
 
     @Override
@@ -81,6 +83,6 @@ public class stringLiteral_Node extends Jott_Node {
 
     @Override
     public Object getValue() {
-        return this.stringLiteral.getToken();
+        return this.stringLiteral;
     }
 }
