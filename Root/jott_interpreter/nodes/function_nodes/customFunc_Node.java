@@ -66,14 +66,14 @@ public class customFunc_Node extends Jott_Node{
             case "print" :
                 // Grabs the input of the function, converts to an integer if applicable, prints the input value
                 Jott_Node input = Jott_Node.function_scope.get("print").getNode("input_a");
-                Object value = input.getValue();
+                this.value = input.getValue();
                 // Truncating value if it's an Integer (all numbers are doubles for expressions).
                 // This is only needed for print because doubles will always calculate the same as integers
                 // (except for integer division and that is handled in expr_Node).
                 if(input.getType() == ReturnType.Integer) {
-                    value = Integer.valueOf( ((Double)(value)).intValue() );
+                    this.value = Integer.valueOf( ((Double)(this.value)).intValue() );
                 }
-                System.out.println(value);
+                System.out.println(this.value);
                 break;
             case "concat" :
                 IdMap scope = Jott_Node.function_scope.get("concat");
