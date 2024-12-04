@@ -1,9 +1,7 @@
 #this will pass phase 3
 
-Def foo[]:Integer{
-    Integer x;
-    x = 5;
-    If[x == 5]{
+Def foo[x:Integer]:Integer{
+    If[x >= 5]{
         x = x - 1;
         Return x;
     }
@@ -11,5 +9,9 @@ Def foo[]:Integer{
 }
 
 Def main[]:Void{
-    ::print[::foo[]];
+    Integer x;
+    x = 5;
+    x = ::foo[x];
+    ::print[x];
+    ::print[::foo[x]];
 }
