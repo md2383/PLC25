@@ -143,10 +143,10 @@ public class params_Node extends Jott_Node {
         // Early function exit given no parameters
         if(this.firstNode == null) { return; }
 
-        String function_id = Jott_Node.current_function_ID.peek();
+        String function_id = Jott_Node.current_function_ID.pop();
         LinkedHashMap<String, Jott_Node> param_map = Jott_Node.function_scope
             .get(function_id).getDynamicVars();
-        // call stack popped in function call
+        // temporary call stack pop, re-introduce at end of function
 
         this.firstNode.execute();
         Queue<expr_Node> expressions = new LinkedList<>();
@@ -167,5 +167,7 @@ public class params_Node extends Jott_Node {
         param_map.forEach((String var_id, @SuppressWarnings("unused") Jott_Node var_node) -> 
             Jott_Node.function_scope.get(function_id).assign_var(var_id, expressions.poll())
         );
+
+        Jott_Node.current_function_ID.push(function_id); // callstack reversion
     }
 }
