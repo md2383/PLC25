@@ -1,0 +1,23 @@
+#this will pass phase 2 and phase 3
+
+Def foo[x:Integer]:Integer{
+	If[x > 0]{
+		Return ::foo[x-1];
+	} Else {
+		Return x;
+	}
+}
+
+Def bar[x:Integer]:Integer{
+	Integer y;
+	y = x;
+	x = x + 2;
+	Return y + x;
+}
+
+Def main[]:Void{
+    Integer x;
+	x = ::foo[20];
+	::print[x];
+	::print[::bar[::bar[::bar[x]]]];
+}
