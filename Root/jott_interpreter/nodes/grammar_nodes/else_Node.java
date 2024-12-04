@@ -16,6 +16,8 @@ public class else_Node extends Jott_Node{
 
     private final body_Node body;
 
+    private Object value = null;
+
     /**
      * Private Constructor
      * (validation of the node done in {@link #parseElseNode})
@@ -78,6 +80,14 @@ public class else_Node extends Jott_Node{
 
     @Override
     public void execute() throws SemanticError {
-        if(!this.isVoid()) { this.body.execute(); }
+        if(!this.isVoid()) { 
+            this.body.execute();
+            this.value = this.body.getValue(); 
+        }
+    }
+
+    @Override
+    public Object getValue() {
+        return this.value;
     }
 }

@@ -87,9 +87,9 @@ public class customFunc_Node extends Jott_Node{
                 break;
             case "length" :
                 assert (Jott_Node.function_scope.get("length").getNode("input_a").getValue() instanceof String);
-                this.value = (
+                this.value = Double.valueOf((
                     (String)(Jott_Node.function_scope.get("length").getNode("input_a").getValue())
-                ).length();
+                ).length());
                 break;
             default:
                 assert (false); // function must be defined in switch case

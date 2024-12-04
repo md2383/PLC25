@@ -6,6 +6,8 @@ Def foo[x:String]:String{
     str = x;
     bool = True;
 
+    ::print[str];
+
     # nested If with valid return
     If[False]{
         If[bool] {
@@ -33,7 +35,8 @@ Def main[]:Void{
         i = i - 1;
         j = i;
         While[j > 6] {
-            ::print[j - 1];
+            j = j - 1;
+            ::print[j];
         }
     }
 

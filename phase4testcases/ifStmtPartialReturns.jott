@@ -5,7 +5,7 @@ Def foo[x:Integer]:Integer{
         x = x - 1;
         Return x;
     }
-    Return x;
+    Return x+1;
 }
 
 Def main[]:Void{

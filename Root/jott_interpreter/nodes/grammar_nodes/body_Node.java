@@ -19,7 +19,7 @@ public class body_Node extends Jott_Node{
     /** the return statement for the body */
     private final returnStatement_Node returnStmt;
 
-    private Object value;
+    private Object value = null;
 
     /**
      * Private Constructor 
@@ -116,7 +116,11 @@ public class body_Node extends Jott_Node{
     @Override
     public void execute() throws SemanticError {
         for(bodyStmt_Node stmt : this.stmts) {
-            if(stmt != null) { stmt.execute(); } // null check consideration from validation
+            if(stmt != null) { // null check consideration from validation
+                stmt.execute(); 
+                this.value = stmt.getValue();
+                if(this.value != null) { return; } // Early exit (return stmt in incomplete if-else)
+            } 
         }
         this.returnStmt.execute();
         this.value = this.returnStmt.getValue();

@@ -118,8 +118,8 @@ public class bodyStmt_Node extends Jott_Node {
 
     @Override
     public Object getValue() {
-        assert (this.isIfStmt);
-        return statement.getType();
+        if(this.isIfStmt) { return statement.getValue(); }
+        else { return null; }
     }
 
     public ReturnType getPossibleReturn() {

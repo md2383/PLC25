@@ -6,7 +6,7 @@ Def foo[x:Integer]:Integer{
         Return x;
     }
     Else{
-        Return x;
+        Return x+1;
     }
 }
 

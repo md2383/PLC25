@@ -65,7 +65,7 @@ public class stringLiteral_Node extends Jott_Node {
      */
     @Override
     public String convertToJott() {
-        return stringLiteral;
+        return '\"' + stringLiteral + '\"';
     }
 
     @Override
