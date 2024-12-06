@@ -1,0 +1,11 @@
+Def main[]:Void{
+    String c;
+    String a;
+    String b;
+    
+    c = ::concat["Hello", " "];
+    a = ::concat["Testing Concat:", "This is the concat statement: "];
+    b = ::concat[c, "World"];
+    ::print[""]
+    ::print[::concat[a, b]];
+}
