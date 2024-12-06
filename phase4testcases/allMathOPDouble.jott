@@ -7,7 +7,7 @@ Def main[]:Void{
     a = 3.0 - 1.0;
     b = 1.0 * 2.0;
     c = 1.0 + 1.0;
-    d = 4.0 / 2.0;
+    d = 5.0 / 2.0;
     ::print[" Testing Math OP"];
     ::print[a];
     ::print[b];
@@ -17,7 +17,7 @@ Def main[]:Void{
     a = -3.0 - 1.0;
     b = -1.0 * 2.0;
     c = -1.0 + 1.0;
-    d = -4.0 / 2.0;
+    d = -5.0 / 2.0;
     ::print[" Testing Math OP w Negative Numbers a"];
     ::print[a];
     ::print[b];
@@ -27,17 +27,17 @@ Def main[]:Void{
     a = 3.0 - -1.0;
     b = 1.0 * -2.0;
     c = 1.0 + -1.0;
-    d = 4.0 / -2.0;
+    d = 5.0 / -2.0;
     ::print[" Testing Math OP w Negative Numbers b"];
     ::print[a];
     ::print[b];
     ::print[c];
     ::print[d];
 
-    a = 3.0 / -0.01;
-    b = 1.0 * 2.;
-    c = 3.0 / 0.01;
-    d = 4.0 * 2.;
+    a = a / -0.01;
+    b = b * 2.;
+    c = c / 0.01;
+    d = d * 2.;
     ::print[" Extra tests"];
     ::print[a];
     ::print[b];
