@@ -1,0 +1,13 @@
+# this should fail tests and not run. Should not divide by 0
+
+Def foo[x:Integer]:Integer{
+    Return 0;
+}
+
+Def main[]:Void{
+    Integer x;
+    Integer y;
+    x = 5;
+    y = x / ::foo[x];
+    ::print[y];
+}
