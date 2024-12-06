@@ -82,8 +82,8 @@ public class customFunc_Node extends Jott_Node{
                 assert (scope.getNode("input_b").getValue() instanceof String);
 
                 this.value = 
-                    (String)(scope.getNode("input_a").getValue()) + 
-                    (String)(scope.getNode("input_b").getValue());
+                    (String)(scope.getNode("input_b").getValue()) + 
+                    (String)(scope.getNode("input_a").getValue());
                 break;
             case "length" :
                 assert (Jott_Node.function_scope.get("length").getNode("input_a").getValue() instanceof String);
