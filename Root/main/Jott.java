@@ -27,7 +27,7 @@ public class Jott {
         /** Tokenize the file */
         tokens = Interpreter.tokenize(filename);
 
-        if(tokens == null) { System.exit(1); }
+        if(tokens == null) { return; }
 
         //  PHASE 2
         /** Parse the tokens into a root node of the JottTree */
