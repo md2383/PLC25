@@ -33,4 +33,14 @@ Def main[]:Void{
     ::print[b];
     ::print[c];
     ::print[d];
+
+    a = 3.0 / -0.01;
+    b = 1.0 * 2.;
+    c = 3.0 / 0.01;
+    d = 4.0 * 2.;
+    ::print[" Extra tests"];
+    ::print[a];
+    ::print[b];
+    ::print[c];
+    ::print[d];
 }
