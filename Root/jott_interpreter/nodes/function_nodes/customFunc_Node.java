@@ -72,6 +72,9 @@ public class customFunc_Node extends Jott_Node{
                 // (except for integer division and that is handled in expr_Node).
                 if(input.getType() == ReturnType.Integer) {
                     this.value = Integer.valueOf( ((Double)(this.value)).intValue() );
+                // Boolean changed to proper Jott types
+                } else if(input.getType() == ReturnType.Boolean) {
+                    this.value = (Boolean)(this.value) ? "True" : "False";
                 }
                 System.out.println(this.value);
                 break;

@@ -1,0 +1,10 @@
+Def main[]:Void{
+    Boolean b;
+    Boolean b2;
+    
+    b = 5 > 2;
+    b2 = 5 <= 2;
+    ::print[b];
+    ::print[b2];
+    #::print[b == True;]
+}
