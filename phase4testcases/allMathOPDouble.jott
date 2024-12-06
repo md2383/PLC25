@@ -1,0 +1,36 @@
+Def main[]:Void{
+    Double a;
+    Double b;
+    Double c;
+    Double d;
+    
+    a = 3.0 - 1.0;
+    b = 1.0 * 2.0;
+    c = 1.0 + 1.0;
+    d = 4.0 / 2.0;
+    ::print[" Testing Math OP"];
+    ::print[a];
+    ::print[b];
+    ::print[c];
+    ::print[d];
+
+    a = -3.0 - 1.0;
+    b = -1.0 * 2.0;
+    c = -1.0 + 1.0;
+    d = -4.0 / 2.0;
+    ::print[" Testing Math OP w Negative Numbers a"];
+    ::print[a];
+    ::print[b];
+    ::print[c];
+    ::print[d];
+
+    a = 3.0 - -1.0;
+    b = 1.0 * -2.0;
+    c = 1.0 + -1.0;
+    d = 4.0 / -2.0;
+    ::print[" Testing Math OP w Negative Numbers b"];
+    ::print[a];
+    ::print[b];
+    ::print[c];
+    ::print[d];
+}
