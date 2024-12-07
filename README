@@ -26,11 +26,24 @@ Directions on building the project in a Linux environment for the cs machines.
 
     Where input.jott is any generic jott file 
     ( assumed to be the full path from the current directory )
+
+  - ### PHASE 4: ###
+    This should be the same process as phase 3.
+    To run the main method; the program must have a Jott file input as a command line argument.
+
+    > [ java -cp Root main.Jott input.jott ]
+
+    Where input.jott is any generic jott file 
+    ( assumed to be the full path from the current directory )
     
-    There is also a tester class for use with the "phase3testcases" file if applicable. 
-    As long as everything is compiled from the folder containing "Root" and "phase3testcases",
-    the JottValidTester class will run through every file in the "phase3testcases" file, and 
+  - ### TESTING: ###
+    There is also a tester class for use with the test folders if applicable. 
+    As long as everything is compiled from the folder containing "Root" and the four test case folders,
+    the JottValidTester class will run through every file in each folder, and 
     output any syntax/semantic errors.
+    
+    The 4 folders needed are:
+    "tokenizerTestCases", "parserTestCases", "phase3testcases", "phase4testcases"
 
     > [ java -cp Root testers.JottValidTester ]
 
@@ -47,5 +60,8 @@ DEV NOTE: ---
         PHASE 2:
         > [ java -ea -cp Root testers.JottParserTester ]
         PHASE 3:
+        > [ java -ea -cp Root tester.JottValidTester ]
+        > [ java -ea -cp Root main.Jott [input.jott] ]
+        PHASE 4:
         > [ java -ea -cp Root tester.JottValidTester ]
         > [ java -ea -cp Root main.Jott [input.jott] ]
