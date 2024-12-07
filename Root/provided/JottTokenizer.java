@@ -236,11 +236,11 @@ public class JottTokenizer {
       }
     } catch (FileNotFoundException fnfE) {
       // Buffered Exception: possible future need
-      fnfE.printStackTrace();
+      System.err.println("File: '" + filename + "' not found.");
       System.exit(1);
     } catch (IOException ioE) {
       // Buffered Exception: possible future need
-      ioE.printStackTrace();
+      System.err.println("IO Operation Failed/Interrupted");
       System.exit(1);
     } catch(SyntaxError E) {
       E.print(filename, linenum);
