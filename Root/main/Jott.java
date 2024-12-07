@@ -23,13 +23,15 @@ public class Jott {
         /** Get the filename from the command line arguments */
         filename = args[0];
 
-        //  PHASE 1
+        //< PHASE 1
         /** Tokenize the file */
         tokens = Interpreter.tokenize(filename);
 
+        //! Prematurely End Program: 
+        //  Invalid Syntax 
         if(tokens == null) { return; }
 
-        //  PHASE 2
+        //< PHASE 2
         /** Parse the tokens into a root node of the JottTree */
         try{
 
@@ -45,7 +47,7 @@ public class Jott {
         //  Incorrect Parse Grammar
         if(root == null) { return; }
 
-        //  PHASE 3
+        //< PHASE 3
         /** Validate the ParseTree */
         try {
 
@@ -61,7 +63,7 @@ public class Jott {
         //  Invalid Jott Semantics
         if(!valid_semantics) { return; }
 
-        //  PHASE 4
+        //< PHASE 4
         /** Evaluate the JottTree */
         try {
 
